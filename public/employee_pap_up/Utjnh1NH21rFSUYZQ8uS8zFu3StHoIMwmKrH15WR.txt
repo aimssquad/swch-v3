@@ -1,0 +1,141 @@
+profile show details :
+http://medicorebd.com/restapi/check_profile.php?reg=U1&type=user
+ image url:http://medicorebd.com/upload/image name
+profile edit data:
+http://medicorebd.com/restapi/edit_profile.php?reg=U1&type=user&dob=14-11-1995&name=Ankita%20Das&gender=female
+
+profile image  edit:
+http://medicorebd.com/restapi/edit_image.php?reg=U1&type=user&img=
+
+ Additional address add:
+http://medicorebd.com/restapi/check_address.php?reg=U1&type=user&name=ankita%20DAS&phone_number=8975641235&flat_no=799mi&building=XYU3TV&street=trsfcv%20ffrfgv&landmark=efsdgdfgd%20jiklok&city=kolkata&state=West%20Bengal&pincode=798462
+
+addtional all address show:
+http://medicorebd.com/restapi/check_address_info.php?reg=U14&type=user
+
+app resgistration using  google id & facebook id:
+
+http://medicorebd.com/restapi/check_insert.php?type=user&email=hyy2@gmailcom&password=%20&name=jjmjmjmj%20kk&google_id=hdhvcjsdvjkikedf677u88
+
+http://medicorebd.com/restapi/check_insert.php?type=user&email=hyy2@gmailcom&password=%20&name=jjmjmjmj%20kk&facebook_id=hdhvcjsdvjkikedf677u88
+ edit addtional addresss:
+
+http://medicorebd.com/restapi/edit_address.php?reg=U14&type=user&id=1&flat_no=f/89&building=bc%20dc&street=kl%20das%20scharaip&landmark=malancha&city=xyz&state=WB&pincode=743135
+
+
+Delete  address api:
+http://medicorebd.com/restapi/delete_address.php?reg=U1&type=user&id=3
+
+
+
+
+
+medicine category:
+
+
+
+http://medicorebd.com/restapi/view_category.php
+
+ image url:
+http://medicorebd.com/category/1588250263Screen Shot 2020-04-30 at 6.37.22 PM.png
+
+
+news feed api,
+
+http://medicorebd.com/restapi/view_news.php
+
+
+   search api
+http://medicorebd.com/restapi/view_search.php?search=Calpol
+
+http://medicorebd.com/restapi/view_search.php
+
+category wise medicine show:
+http://medicorebd.com/restapi/view_medicine.php?cat_id=3
+
+image url:
+http://medicorebd.com/upload/imagename
+
+
+ faq
+
+http://medicorebd.com/restapi/view_faq.php
+
+terms
+http://medicorebd.com/restapi/view_terms.php
+privacy policy
+http://medicorebd.com/restapi/view_private.php
+
+
+    send feedback
+     http://medicorebd.com/restapi/send_feedback.php?reg=U14&type=user&name=sona%20das&email=dasankita406@gmail.com&phone_number=789461035&comment=jjj%20%27ujjj%20fvbgdbb%20fgb
+
+
+  medicine description api
+  http://medicorebd.com/restapi/medicine_description.php?m_id=M1
+
+Ask your question restapi
+ http://medicorebd.com/restapi/view_question.php?reg=U1&type=user&name=ankita%20das&email=dasankita45@gmail.com&phone_number=7894561230&comment=srfhbgf%20njhkm%20gjhg
+
+
+
+this is the prescription api
+:
+http://medicorebd.com/restapi/view_prescription.php?m_id=M3
+
+{"msg":"Prescription Is not needed","status":"0"}
+
+http://medicorebd.com/restapi/view_prescription.php?m_id=M1
+
+{"msg":"Prescription Is needed","status":"1"}
+
+
+
+ this is the Delivery Charges api
+:
+http://medicorebd.com/restapi/view_delivery.php?m_id=M1
+
+{"msg":"Delivery Charges Is not needed","status":"0"}
+
+http://medicorebd.com/restapi/view_delivery.php?m_id=M6
+
+{"msg":"Delivery Charges Is needed","status":"1","charge_value":"20"}
+
+
+ covid all bangladesh update
+http://medicorebd.com/restapi/view_covid.php 
+
+ covid all world update
+http://medicorebd.com/restapi/view_covid_world.php
+
+
+covid -19 question
+http://medicorebd.com/restapi/view_covid_question.php 
+
+  covid -19 question  and answer save
+
+http://medicorebd.com/restapi/view_covid_answer.php?reg=U11&type=user&question1=1&answer1=None%20of%20the%20Above&question2=2&answer2=None%20of%20the%20Above&question3=3&answer3=No&question4=4&answer4=None%20of%20the%20Above
+  
+version:
+http://medicorebd.com/restapi/version_check.php 
+
+covid video link: 
+http://medicorebd.com/restapi/covid_video.php
+  
+area
+http://medicorebd.com/restapi/view_area.php 
+hospital
+http://medicorebd.com/restapi/view_hospital.php
+ 
+search
+http://medicorebd.com/restapi/view_hos_search.php?search=1 
+ image folder
+ http://medicorebd.com/hospital/img name
+
+ prescription 
+medicorebd.com/restapi/user_prescription.php?type=user&reg=U1&pres= image 
+
+http://medicorebd.com/restapi/save_order.php 
+ 
+{"reg":"U4","type":"user","orderid":"1199","billing_add":"Belghoria, Kolkata - 700056","shipping_add":"120, gkg, 120\/3 I.c, kll, Kolkata - 700098, w.b, 9830476120","delivery_date":"2020-05-22","remarks":"test","subtotal":"602.00","delivery_charge":"100.00","total":"702.00"," pres_img ":"","medicinelist":[{"m_id":"M3","price":"100","price_sal":"100","quantity":"1","del_charge":"0.00"},{"m_id":"M1","price_sal":"502","quantity":"1","del_charge":"100","price":"500.0"}]}
+

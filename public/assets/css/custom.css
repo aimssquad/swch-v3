@@ -1,0 +1,20 @@
+.card-header-fixed-loan{
+    text-align: right;
+    padding-right: 16px;
+    margin: -30px;
+}
+.float-right{
+    float:right;
+}
+.form-loan-fixed{
+    padding:0;
+    background:none;
+}
+.excel-button{
+    margin-top:-7px;
+    background:none;
+}
+.page-header-fixed{
+    margin-bottom:0px !important;
+    padding-bottom:0px !important;
+}

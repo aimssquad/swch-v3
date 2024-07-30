@@ -1,0 +1,212 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use view;
+use Validator;
+use Session;
+use DB;
+use Illuminate\Support\Facades\Input;
+use Auth;
+class CompanyController extends Controller
+{
+     public function viewdash()
+    {
+    	
+
+            $email = Session::get('emp_email'); 
+      if(!empty($email))
+      {
+                 
+               $data['Roledata'] = DB::table('registration')      
+                 
+                  ->where('email','=',$email) 
+                  ->first();
+				
+      	return View('company/dashboard',$data);        
+       }
+       else
+       {
+            return redirect('/');
+       }
+    }
+
+public function getCompanies()
+	{
+		  $email = Session::get('emp_email'); 
+		$data['companies_rs']= DB::table('registration')      
+                 
+                  ->where('email','=',$email) 
+                  ->first();
+				    $data['Roledata'] = DB::table('registration')      
+                 
+                  ->where('email','=',$email) 
+                  ->first();
+		return view('company/company', $data);	
+	} 
+	public function viewAddCompany()
+	{
+            $email = Session::get('emp_email'); 
+      if(!empty($email))
+      {
+                 
+               $data['Roledata'] = DB::table('registration')      
+                 
+                  ->where('email','=',$email) 
+                  ->first();
+				$data['cuurenci_master']=DB::table('currencies')->get();
+				$data['nat_or_master']=DB::table('nat_or')->get();
+				$data['type_or_master']=DB::table('type_or')->get();
+   $data['employee_upload_rs'] = DB::table('company_upload')
+                      ->where('emid','=',$data['Roledata']->reg)
+                 ->get();
+      	return View('company/edit-company',$data);        
+       }
+       else
+       {
+            return redirect('/');
+       }
+           
+	}
+
+public function saveCompany(Request $request)
+	{        
+           
+ 
+					   $email = Session::get('emp_email'); 
+					 if($request->has('image')){
+
+            $file = $request->file('image');
+            $extension = $request->image->extension();
+            $path = $request->image->store('employee','public');
+            $dataimg=array(
+                 'logo'=>$path,
+                );
+				  DB::table('registration')->where('email',$email)->update($dataimg);
+        }
+
+                    
+$data=array(
+                'com_name'=>$request->com_name,
+                'f_name'=>$request->f_name,
+
+                'l_name'=>$request->l_name,
+				
+				  'p_no'=>$request->p_no,
+                 'pan'=>$request->pan,
+				 'address'=>$request->address,
+				  'website'=>$request->website,
+				   'fax'=>$request->fax,
+				   
+				   
+				   'com_reg'=>$request->com_reg,
+				   'com_type'=>$request->com_type,
+				   'com_year'=>$request->com_year,
+				   'com_nat'=>$request->com_nat,
+				   'no_em'=>$request->no_em,
+				    'work_per'=>$request->work_per,
+					'no_dire'=>$request->no_dire,
+					
+					'bank_name'=>$request->bank_name,
+					'acconut_name'=>$request->acconut_name,
+					
+					'sort_code'=>$request->sort_code,
+					'others_type'=>$request->others_type,
+					
+					'nature_type'=>$request->nature_type,
+					'no_em_work'=>$request->no_em_work,
+					
+					'country'=>$request->country,
+					'currency'=>$request->currency,
+					'desig'=>$request->desig,
+					'trad_name'=>$request->trad_name,
+					'con_num'=>$request->con_num,
+					
+					'address2'=>$request->address2,
+					'road'=>$request->road,
+					'city'=>$request->city,
+					'zip'=>$request->zip,
+                );
+if(!empty($request->id_up_doc)){
+
+ $tot_item_nat_edit=count($request->id_up_doc);
+        		
+        		foreach($request->id_up_doc  as $valuee){
+   
+if($request->input('type_doc_'.$valuee)!=''){
+
+
+if($request->has('docu_nat_'.$valuee)){
+
+            $extension_doc_edit_up = $request->file('docu_nat_'.$valuee)->extension();
+         
+            $path_quli_doc_edit_up  = $request->file('docu_nat_'.$valuee)->store('company_upload_doc','public');
+             $dataimgeditup=array(
+                 'docu_nat'=>$path_quli_doc_edit_up,
+                );
+
+  DB::table('company_upload')
+            ->where('id', $valuee)
+            ->update($dataimgeditup);
+
+
+        }
+
+ $datauploadedit=array(
+                        'emid'=>$request->reg,
+                        'type_doc' => $request->input('type_doc_'.$valuee),
+                        
+                        
+                       );
+ DB::table('company_upload')
+            ->where('id', $valuee)
+            ->update($datauploadedit);
+
+
+	}
+     }
+
+}
+
+if(!empty($request->type_doc)){
+ $tot_item_nat=count($request->type_doc);
+        		
+        		for($i=0;$i<$tot_item_nat;$i++)
+    {
+if($request->type_doc[$i]!=''){
+if($request->has('docu_nat')){
+
+           
+            $extension_upload_doc = $request->docu_nat[$i]->extension();
+            $path_upload_doc  = $request->docu_nat[$i]->store('company_upload_doc','public');
+            
+
+
+        }
+ $dataupload=array(
+                         'emid'=>$request->reg,
+                        'type_doc' =>$request->type_doc[$i],
+                        
+                         'docu_nat' =>$path_upload_doc,
+                       );
+ DB::table('company_upload')->insert($dataupload);
+	}
+     }  
+}
+
+                DB::table('registration')->where('email',$email)->update($data);
+                  
+					Session::flash('message','Company Information Successfully saved.');
+		return redirect('company-profile/company');
+                 
+                
+	
+		
+		
+	}
+	
+  
+	
+}
+

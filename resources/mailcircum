@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>SWCH</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+</head>
+
+<body>
+	
+	<table width="900px" style="margin:auto;font-family: calibri;margin: auto;
+    font-family: calibri;
+    border: 5px solid #add5f7;
+    padding: 10px;">
+		<tr>
+			<td><h3>{{ $job->emp_fname }} {{ $job->emp_mname }} {{ $job->emp_lname }}</h3></td>
+			<td>@if($Roledata->logo!='') <img width="100" src="http://workpermitcloud.co.uk/hrms/public/{{ $Roledata->logo }}" alt="" /> @endif</td>
+		</tr>
+		<tr>
+			<td colspan="2">{{ $offer->emp_pr_street_no}} @if( $offer->emp_per_village) ,{{ $offer->emp_per_village}} @endif @if( $offer->emp_pr_state) ,{{ $offer->emp_pr_state}} @endif @if( $offer->emp_pr_city) ,{{ $offer->emp_pr_city}} @endif
+  @if( $offer->emp_pr_pincode) ,{{ $offer->emp_pr_pincode}} @endif  @if( $offer->emp_pr_country) ,{{ $offer->emp_pr_country}} @endif</h3></td>
+			
+		</tr>
+		<tr>
+			<td colspan="2">Date : {{date('d/m/Y',strtotime($date))}}</h3></td>
+			
+		</tr>
+
+		<tr>
+			<tr><td>
+				<p><b>Subject: Annual  Reminder.</b>
+<p>Please fill up your Change Of Circumstances of data.</p>
+
+
+<p>Yours sincerely</p><p>{{ $Roledata->f_name }} {{ $Roledata->l_name }}</p>
+<p>{{ $Roledata->desig }}</p>
+<p>{{ $Roledata->com_name }}</p>
+			</td></tr>
+		</tr>
+	</table>
+</body>
+
+</html>

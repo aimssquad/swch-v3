@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>HRMS</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	
+	
+	<!-- Fonts and icons -->
+	<link rel="icon" href="{{ asset('assets/img/icon.ico')}}" type="image/x-icon"/>
+	<script src="{{ asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
+			<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['{{ asset('assets/css/fonts.min.css')}}']},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" href="{{ asset('assets/css/atlantis.min.css')}}">
+
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="{{ asset('assets/css/demo.css')}}">
+</head>
+<body>
+	<div class="wrapper">
+		
+  @include('company.include.header')
+		<!-- Sidebar -->
+		
+		  @include('company.include.sidebar')
+		<!-- End Sidebar -->
+		<div class="main-panel">
+			<div class="content">
+				<div class="page-inner">
+					<div class="page-header">
+						<h4 class="page-title">Organisation Profile</h4>
+						<ul class="breadcrumbs">
+							<li class="nav-home">
+								<a href="#">
+									<i class="flaticon-home"></i>
+								</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="{{url('company-profile/company')}}">Organisation Profile</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Edit Organisation Profile</a>
+							</li>
+							
+						</ul>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title"> Profile Update</h4>
+									@if(Session::has('message'))										
+							<div class="alert alert-danger" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
+					@endif
+								</div>
+								<div class="card-body" style="">
+									<form action="{{url('company-profile/editcompany')}}" method="post" enctype="multipart/form-data">
+											 {{csrf_field()}}
+											 <input  type="hidden" class="form-control input-border-bottom" required=""  name="reg"  value="{{ $Roledata->reg}}">
+										<div class="row">
+										 
+										<div class="col-md-4">
+						<div class="form-group form-floating-label">
+												<input id="inputFloatingLabel" type="text" class="form-control input-border-bottom" required=""  name="com_name"  value="{{ $Roledata->com_name}}">
+												<label for="inputFloatingLabel" class="placeholder">Organisation Name</label>
+											</div>
+					</div>
+							<div class="col-md-4">
+										     <div class="form-group form-floating-label">
+												<select class="form-control input-border-bottom" id="selectFloatingLabel" required="" name="com_type">
+													<option value="">&nbsp;</option>
+													 @foreach($type_or_master as $type_or)
+                     <option value="{{$type_or->name}}" <?php   if($Roledata->com_type==$type_or->name){ echo 'selected';}  ?>>{{$type_or->name}}</option>
+                       @endforeach
+													<option value="others-type"  <?php  if($Roledata->com_type=='others-type'){ echo 'selected';}  ?>>Others</option>
+												</select>
+												<label for="selectFloatingLabel" class="placeholder">Type of Organisation </label>
+											</div>
+										   </div>
+										     <div class="col-md-4 write-type" id="others-type"  <?php  if($Roledata->com_type=='others-type'){ ?> style="display:block;" <?php }else{?> style="display:none;" <?php }  ?>>
+										   	<div class="form-group form-floating-label">
+												<input id="inputFloatingLabel8" type="text" class="form-control input-border-bottom"  name="others_type"  value="@if($Roledata->others_type){{  $Roledata->others_type }}@endif">
+												<label for="inputFloatingLabel8" class="placeholder">Type Name</label>
+											</div>
+										   </div>
+							<div class="col-md-4">
+											<div class="form-group form-floating-label">
+												<input id="inputFloatingLabel7" type="text" class="form-control input-border-bottom" required="" name="com_reg"  value="@if($Roledata->com_reg){{  $Roledata->com_reg }}@endif">
+												<label for="inputFloatingLabel7" class="placeholder"> Registration No.</label>
+											</div>
+											</div>
+											
+	
+									
+									
+										</div>
+										
+										
+									    <div class="row form-group">	
+									
+									<div class="col-md-4">
+									<div class="form-group form-floating-label">
+												<input id="inputFloatingLabel4" type="text" class="form-control input-border-bottom" required="" name="p_no"  value="{{  $Roledata->p_no }}">
+												<label for="inputFloatingLabel4" class="placeholder">Contact No.</label>
+											</div>
+									</div>
+										<div class="col-md-4">
+									<div class="form-group">
+									<label for="inputFloatingLabel3" class="placeholder">Organisation Email ID</label>
+												<input id="inputFloatingLabel3" type="text" class="form-control " required=""readonly name="email"  value="{{  $Roledata->email }}">
+												
+											</div>
+									</div>
+						
+					
+					<div class="col-md-4">
+											<div class="form-group form-floating-label">
+												<input id="inputFloatingLabel5" type="text" class="form-control input-border-bottom" name="website" required=""  value="@if ($Roledata->website){{  $Roledata->website }}@endif">
+												<label for="inputFloatingLabel5" class="placeholder">Website</label>
+											</div>
+											</div>
+									</div>
+										
+										
+									
+										
+										
+										<div class="row form-group">
+										   
+										   <div class="col-md-4">
+										     <div class="form-group form-floating-label">
+												<input id="trad_name" type="text" class="form-control input-border-bottom" required="" name="trad_name"  value="@if($Roledata->trad_name){{  $Roledata->trad_name }}@endif">
+												<label for="trad_name" class="placeholder">Trading Name</label>
+											</div>
+										   </div>
+										   
+										   <div class="col-md-4">
+										     <div class="form-group form-floating-label">
+											 <select class="form-control input-border-bottom" id="inputFloatingLabel9" required="" name="com_year">
+													<option value="">&nbsp;</option>
+													<option value="0 to 6 months"  <?php  if($Roledata->com_year=='0 to 6 months'){ echo 'selected';}  ?>>0 to 6 months</option>
+													<option value="Over 6 to 12 months"  <?php  if($Roledata->com_year=='Over 6 to 12 months'){ echo 'selected';}  ?>>Over 6 to 12 months</option>
+													<option value="Over 12 to 18 months"  <?php  if($Roledata->com_year=='Over 12 to 18 months'){ echo 'selected';}  ?>>Over 12 to 18 months</option>
+													<option value="Over 18 to 36 months"  <?php  if($Roledata->com_year=='Over 18 to 36 months'){ echo 'selected';}  ?>>Over 18 to 36 months</option>
+                                                    <option value="Over 36 months+"  <?php  if($Roledata->com_year=='Over 36 months+'){ echo 'selected';}  ?>>Over 36 months+</option>
+												</select>
+												
+												<label for="inputFloatingLabel9" class="placeholder">Trading Period</label>
+											</div>
+										   </div>
+										   <div class="col-md-4">
+										     <div class="form-group form-floating-label">
+												<select class="form-control input-border-bottom" id="selectFloatingLabel1" required="" name="com_nat">
+													<option value="">&nbsp;</option>
+													 @foreach($nat_or_master as $nat_or)
+                     <option value="{{$nat_or->name}}" <?php   if($Roledata->com_nat==$nat_or->name){ echo 'selected';}  ?>>{{$nat_or->name}}</option>
+                       @endforeach
+													
+												</select>
+												<label for="selectFloatingLabel1" class="placeholder">Name Of Sector</label>
+											</div>
+										   </div>
+										   <div class="col-md-4 Other-service-activities" id="Other-service-activities" <?php  if($Roledata->com_nat=='Other service activities'){  ?> style="display:block;" <?php }else{ ?> style="display:none;" <?php }  ?>>
+										    <div class="form-group form-floating-label">
+												<input id="inputFloatingLabel10" type="text" class="form-control input-border-bottom" name="nature_type"  value="@if($Roledata->nature_type){{  $Roledata->nature_type }}@endif" >
+												<label for="inputFloatingLabel10" class="placeholder">Name Of Sector</label>
+											</div>
+										   </div>
+										   
+										   <div class="col-md-4">
+										     <div class="form-group form-floating-label">
+												<input id="inputFloatingLabel11" type="number" class="form-control input-border-bottom"  required="" name="no_em"  value="@if($Roledata->no_em){{  $Roledata->no_em }}@endif">
+												<label for="inputFloatingLabel11" class="placeholder">No. of employee (Local)</label>
+											</div>
+										   </div>
+										    <div class="col-md-4 ">
+										     <div class="form-group form-floating-label">
+												<input id="inputFloatingLabel13" type="number" class="form-control input-border-bottom" name="no_em_work"  required="" value="@if($Roledata->no_em_work){{  $Roledata->no_em_work }}@endif">
+												<label for="inputFloatingLabel13" class="placeholder">No. of employee (Migrant)</label>
+											</div>
+										   </div>
+										   <div class="col-md-4">
+										      <div class="form-group form-floating-label">
+												<select class="form-control input-border-bottom" id="selectFloatingLabel2" required="" name="work_per">
+													<option value="">&nbsp;</option>
+													<option value="Tier 1"  <?php  if($Roledata->work_per=='Tier 1'){ echo 'selected';}  ?>>Tier 1</option>
+													<option value="Tier 2 (General)"  <?php  if($Roledata->work_per=='Tier 2 (General)'){ echo 'selected';}  ?>>Tier 2 (General)</option>
+													<option value="Tier 2 (ICT)"  <?php  if($Roledata->work_per=='Tier 2 (ICT)'){ echo 'selected';}  ?>>Tier 2 (ICT)</option>
+													<option value="Tier 2 (Other)"  <?php  if($Roledata->work_per=='Tier 2 (Other)'){ echo 'selected';}  ?>>Tier 2 (Other)</option>
+														<option value="Tier 5"  <?php  if($Roledata->work_per=='Tier 5'){ echo 'selected';}  ?>>Tier 5</option>
+														<option value="International Job Permit"  <?php  if($Roledata->work_per=='International Job Permit'){ echo 'selected';}  ?>>International Job Permit</option>
+													<option value="others-permit"  <?php  if($Roledata->work_per=='others-permit'){ echo 'selected';}  ?>>Others</option>
+												</select>
+												<label for="selectFloatingLabel2" class="placeholder">Work Permit Type</label>
+											</div>
+										   </div>
+										   
+										   <div class="col-md-4">
+										      <div class="form-group form-floating-label">
+												<input id="inputFloatingLabel14" type="number" class="form-control input-border-bottom" required="" name="no_dire"  value="@if($Roledata->no_dire){{  $Roledata->no_dire }}@endif">
+												<label for="inputFloatingLabel14" class="placeholder">How Many Directors</label>
+										   </div>
+										</div>
+													<div class="col-md-4">
+					<div class="form-group">
+												<label for="exampleFormControlFile1">Your Logo</label>
+																	<img src="{{ asset($Roledata->logo) }}" height="50px" width="50px"/>
+												<input type="file" class="form-control-file" id="exampleFormControlFile1"  name="image" >
+											</div>
+					</div>
+										</div>
+										
+										<h3 class="card-title" style="border-bottom: 1px solid #ccc;padding: 15px 0;margin-bottom: 16px;">Authorised Person Details</h3>
+										
+										<div class="row">
+											<div class="col-md-4">
+										<div class="form-group form-floating-label">
+												<input id="inputFloatingLabel1" type="text" class="form-control input-border-bottom" required=""  name="f_name"  value="{{ $Roledata->f_name}}">
+												<label for="inputFloatingLabel1" class="placeholder">First Name</label>
+											</div>
+										</div>
+										
+										<div class="col-md-4">
+										<div class="form-group form-floating-label">
+												<input id="inputFloatingLabel2" type="text" class="form-control input-border-bottom" required="" name="l_name"  value="{{ $Roledata->l_name}}">
+												<label for="inputFloatingLabel2" class="placeholder">Last Name</label>
+											</div>
+										</div>
+										<div class="col-md-4">
+										<div class="form-group form-floating-label">
+												<input id="inputFloatingLabel2" type="text" class="form-control input-border-bottom" required="" name="desig"  value="{{ $Roledata->desig}}">
+												<label for="inputFloatingLabel2" class="placeholder">Designation </label>
+											</div>
+										</div>
+										<div class="col-md-4">
+										<div class="form-group form-floating-label">
+												<input id="con_num" type="text" class="form-control input-border-bottom" required="" name="con_num"  value="{{ $Roledata->con_num}}">
+												<label for="con_num" class="placeholder">Phone No </label>
+											</div>
+										</div>
+										</div>
+										<h3 class="card-title" style="border-bottom: 1px solid #ccc;padding: 15px 0;margin-bottom: 16px;">Organisation Address</h3>
+										
+										<div class="row">
+											<div class="col-md-3">
+											  <div class="form-group form-floating-label">
+												<input id="inputFloatingLabel15" type="text" class="form-control input-border-bottom" required="" name="address"  value="@if($Roledata->address){{  $Roledata->address }}@endif">
+												<label for="inputFloatingLabel15" class="placeholder">Address Line 1</label>
+										   </div>
+											</div>
+											<div class="col-md-3">
+											  <div class="form-group form-floating-label">
+												<input id="address2" type="text" class="form-control input-border-bottom"  name="address2"  value="@if($Roledata->address2){{  $Roledata->address2 }}@endif">
+												<label for="address2" class="placeholder">Address Line 2</label>
+										   </div>
+											</div>
+											<div class="col-md-3">
+											  <div class="form-group form-floating-label">
+												<input id="road" type="text" class="form-control input-border-bottom" required="" name="road"  value="@if($Roledata->road){{  $Roledata->road }}@endif">
+												<label for="road" class="placeholder">Road Name</label>
+										   </div>
+											</div>
+												<div class="col-md-3">
+											  <div class="form-group form-floating-label">
+												<input id="city" type="text" class="form-control input-border-bottom" required="" name="city"  value="@if($Roledata->city){{  $Roledata->city }}@endif">
+												<label for="city" class="placeholder">City</label>
+										   </div>
+											</div>
+												<div class="col-md-3">
+											  <div class="form-group form-floating-label">
+												<input id="zip" type="text" class="form-control input-border-bottom" required="" name="zip"  value="@if($Roledata->zip){{  $Roledata->zip }}@endif">
+												<label for="zip" class="placeholder">Post Code</label>
+										   </div>
+											</div>
+											<div class="col-md-3">
+											
+											 <div class="form-group form-floating-label">
+												<select class="form-control input-border-bottom" id="selectFloatingLabel" required="" name="country" onchange="countryfun(this.value);">
+													 @foreach($cuurenci_master as $desig)
+                     <option value="{{$desig->country}}" <?php   if($Roledata->country==$desig->country){ echo 'selected';}  ?>>{{$desig->country}}</option>
+                       @endforeach
+												</select>
+												<label for="selectFloatingLabel" class="placeholder">Country</label>
+											</div>
+											 
+												
+											</div>
+											<div class="col-md-3">
+												<div class="form-group form-floating-label">
+												<select class="form-control input-border-bottom" id="currency" required="" name="currency">
+													@foreach($cuurenci_master as $desig)
+                     <option value="{{$desig->code}}" <?php   if($Roledata->currency==$desig->code){ echo 'selected';}  ?>>{{$desig->code}}</option>
+                       @endforeach
+												</select>
+												<label for="currency" class="placeholder">Currency</label>
+											</div>
+											</div>
+										</div>
+										
+										
+										<h3 class="card-title" style="border-bottom: 1px solid #ccc;padding: 15px 0;margin-bottom: 16px;"> Organisation Banking Details</h3>
+										
+										<div class="row form-group">
+										<div class="col-md-4">
+										  <div class="form-group form-floating-label">
+												<input id="selectFloatingLabel" type="text" class="form-control input-border-bottom" required="" name="bank_name"  value="@if($Roledata->bank_name){{  $Roledata->bank_name }}@endif">
+												<label for="selectFloatingLabel" class="placeholder">Name of Bank</label>
+											</div>
+										</div>
+										
+										
+										<div class="col-md-4">
+										  <div class="form-group form-floating-label">
+												<input id="inputFloatingLabel15" type="text" class="form-control input-border-bottom" required="" name="acconut_name"  value="@if($Roledata->acconut_name){{  $Roledata->acconut_name }}@endif">
+												<label for="inputFloatingLabel15" class="placeholder">Account No.</label>
+											</div>
+										</div>
+										<div class="col-md-4">
+										  <div class="form-group form-floating-label">
+												<input id="inputFloatingLabel16" type="text" class="form-control input-border-bottom" required="" name="sort_code"  value="@if($Roledata->sort_code){{  $Roledata->sort_code }}@endif">
+												<label for="inputFloatingLabel16" class="placeholder">Sort Code</label>
+											</div>
+										</div>
+										</div>
+										
+										<h3 class="card-title" style="border-bottom: 1px solid #ccc;padding: 15px 0;margin-bottom: 16px;">Upload Documents</h3>
+										<div id="education_fields">
+										<?php   $trupload_id=0;
+$countpayuppas= count($employee_upload_rs)			;?>
+		@if ($countpayuppas!=0)
+											
+@foreach($employee_upload_rs as $empuprs)
+
+										<div class="row form-group">
+										<div class="col-md-4">
+										  <div class="form-group form-floating-label">
+										  	<select class="form-control input-border-bottom" id="selectFloatingLabel2" required="" name="type_doc_{{ $empuprs->id}}">
+													<option value="">&nbsp;</option>
+													
+													
+													<option value="Registered Business License or Certificate"  <?php  if($empuprs->type_doc=='Registered Business License or Certificate'){ echo 'selected';}  ?>>Registered Business License or Certificate</option>
+													<option value="Business Bank statement for 3 Month"  <?php  if($empuprs->type_doc=='Business Bank statement for 3 Month'){ echo 'selected';}  ?>>Business Bank statement for 3 Month</option>
+													<option value="Proof of Business Premises (Tenancy Agreement)"  <?php  if($empuprs->type_doc=='Proof of Business Premises (Tenancy Agreement)'){ echo 'selected';}  ?>>Proof of Business Premises (Tenancy Agreement)</option>
+												<option value="Franchise Agreement"  <?php  if($empuprs->type_doc=='Franchise Agreement'){ echo 'selected';}  ?>>Franchise Agreement</option>
+												<option value="Copy Of Lease Or Freehold Property"  <?php  if($empuprs->type_doc=='Copy Of Lease Or Freehold Property'){ echo 'selected';}  ?>>Copy Of Lease Or Freehold Property</option>
+												<option value="Employer Liability Insurance Certificate"  <?php  if($empuprs->type_doc=='Employer Liability Insurance Certificate'){ echo 'selected';}  ?>>Employer Liability Insurance Certificate</option>
+												<option value="PAYEE And Account Reference Letter From HMRC"  <?php  if($empuprs->type_doc=='PAYEE And Account Reference Letter From HMRC'){ echo 'selected';}  ?>>PAYEE And Account Reference Letter From HMRC</option>
+												<option value="Governing Body Registration"  <?php  if($empuprs->type_doc=='Governing Body Registration'){ echo 'selected';}  ?>>Governing Body Registration</option>
+												<option value="Copy Of Health & Safety Star Rating"  <?php  if($empuprs->type_doc=='Copy Of Health & Safety Star Rating'){ echo 'selected';}  ?>>Copy Of Health & Safety Star Rating</option>
+												<option value="VAT Certificate (if you have)"  <?php  if($empuprs->type_doc=='VAT Certificate (if you have)'){ echo 'selected';}  ?>>VAT Certificate (if you have)</option>
+																<option value="Audited Annual Account (if you have)"  <?php  if($empuprs->type_doc=='Audited Annual Account (if you have)'){ echo 'selected';}  ?>>Audited Annual Account (if you have)</option>
+												<option value="Others Document"  <?php  if($empuprs->type_doc=='Others Document'){ echo 'selected';}  ?>>Others Document</option>
+												</select>
+										  
+												
+												<label class="placeholder">Type of Document</label>
+												<input  type="hidden" class="form-control input-border-bottom" required="" name="id_up_doc[]" value="{{ $empuprs->id}}">
+											</div>
+										  
+										</div>
+										
+										
+										<div class="col-md-4">
+										  <div class="form-group">
+												<label for="exampleFormControlFile1">Upload Document</label>
+												 @if($empuprs->docu_nat!='')
+<a href="{{ asset('public/'.$empuprs->docu_nat) }}" target="_blank" download />download</a>
+</br>
+@endif
+												<input type="file" class="form-control-file" id="exampleFormControlFile1" name="docu_nat_{{ $empuprs->id}}">
+											</div>
+										  <span>*Document Size not more than 300 KB</span>
+										</div>
+										<?php $trupload_id++; ?>
+										 
+				
+				
+				@if ($trupload_id==($countpayuppas))
+										<div class="col-md-4">
+										 <div class="input-group-btn">
+										  <button class="btn btn-success" type="button"  onclick="education_fields();"> <i class="fas fa-plus"></i> </button>
+										  </div>
+										</div>
+										@endif
+										</div>
+										
+										@endforeach   
+										@endif
+										@if ($countpayuppas==0)
+											<?php $trupload_id=0; ?>
+											<div class="row form-group">
+										<div class="col-md-4">
+										  <div class="form-group form-floating-label">
+										  
+										  <select class="form-control input-border-bottom" id="selectFloatingLabel2" required="" name="type_doc[]">
+													<option value="">&nbsp;</option>
+													
+													
+													<option value="Registered Business License or Certificate"  >Registered Business License or Certificate</option>
+													<option value="Business Bank statement for 3 Month"  >Business Bank statement for 3 Month</option>
+													<option value="Proof of Business Premises (Tenancy Agreement)" >Proof of Business Premises (Tenancy Agreement)</option>
+												<option value="Franchise Agreement" >Franchise Agreement</option>
+												<option value="Copy Of Lease Or Freehold Property" >Copy Of Lease Or Freehold Property</option>
+												<option value="Employer Liability Insurance Certificate"  >Employer Liability Insurance Certificate</option>
+												<option value="PAYEE And Account Reference Letter From HMRC" >PAYEE And Account Reference Letter From HMRC</option>
+												<option value="Governing Body Registration"  >Governing Body Registration</option>
+												<option value="Copy Of Health & Safety Star Rating"  >Copy Of Health & Safety Star Rating</option>
+												<option value="VAT Certificate (if you have)"  >VAT Certificate (if you have)</option>
+																<option value="Audited Annual Account (if you have)"  >Audited Annual Account (if you have)</option>
+												<option value="Others Document"  >Others Document</option>
+												</select>
+												
+												<label class="placeholder">Type of Document</label>
+											</div>
+										  
+										</div>
+										
+										
+										<div class="col-md-4">
+										  <div class="form-group">
+												<label for="exampleFormControlFile1">Upload Document</label>
+												<input type="file" class="form-control-file" id="exampleFormControlFile1"  name="docu_nat[]">
+											</div>
+										  <span>*Document Size not more than 300 KB</span>
+										</div>
+										
+										<div class="col-md-4">
+										 <div class="input-group-btn">
+										  <button class="btn btn-success" type="button"  onclick="education_fields();"> <i class="fas fa-plus"></i> </button>
+										  </div>
+										</div>
+										</div>
+										@endif
+										
+										</div>
+										<div class="row form-group">
+										  <div class="col-md-12">
+										   <button type="submit" class="btn btn-default">Submit</button>
+										  </div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+						
+
+						
+					</div>
+				</div>
+			</div>
+			 @include('company.include.footer')
+		</div>
+		
+	</div>
+	<!--   Core JS Files   -->
+<script src="{{ asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
+	<script src="{{ asset('assets/js/core/popper.min.js')}}"></script>
+	<script src="{{ asset('assets/js/core/bootstrap.min.js')}}"></script>
+
+	<!-- jQuery UI -->
+	<script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js')}}"></script>
+	<script src="{{ asset('assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')}}"></script>
+
+	<!-- jQuery Scrollbar -->
+	<script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
+	<!-- Datatables -->
+	<script src="{{ asset('assets/js/plugin/datatables/datatables.min.js')}}"></script>
+	<!-- Atlantis JS -->
+	<script src="{{ asset('assets/js/atlantis.min.js')}}"></script>
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="{{ asset('assets/js/setting-demo2.js')}}"></script>
+	<script >
+		$(document).ready(function() {
+			$('#basic-datatables').DataTable({
+			});
+
+			$('#multi-filter-select').DataTable( {
+				"pageLength": 5,
+				initComplete: function () {
+					this.api().columns().every( function () {
+						var column = this;
+						var select = $('<select class="form-control"><option value=""></option></select>')
+						.appendTo( $(column.footer()).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+								);
+
+							column
+							.search( val ? '^'+val+'$' : '', true, false )
+							.draw();
+						} );
+
+						column.data().unique().sort().each( function ( d, j ) {
+							select.append( '<option value="'+d+'">'+d+'</option>' )
+						} );
+					} );
+				}
+			});
+
+			// Add Row
+			$('#add-row').DataTable({
+				"pageLength": 5,
+			});
+
+			var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+			$('#addRowButton').click(function() {
+				$('#add-row').dataTable().fnAddData([
+					$("#addName").val(),
+					$("#addPosition").val(),
+					$("#addOffice").val(),
+					action
+					]);
+				$('#addRowModal').modal('hide');
+
+			});
+		});
+	</script>
+	
+<script> 
+   $('#selectFloatingLabel').change(function() {
+        $('.write-type').hide();
+        $('#' + $(this).val()).show();
+ });
+ 
+ 
+ 
+</script>
+
+<script>
+$('#selectFloatingLabel1').change(function() {
+        $('.Other-service-activities').hide();
+        $('#' + $(this).val()).show();
+ });
+ </script>
+ <script>
+$('#selectFloatingLabel2').change(function() {
+        $('.prmt').hide();
+        $('#' + $(this).val()).show();
+ });
+ </script>
+<script>
+var room = 1;
+function education_fields() {
+ 
+    room++;
+    var objTo = document.getElementById('education_fields')
+    var divtest = document.createElement("div");
+	divtest.setAttribute("class", "form-group removeclass"+room);
+	var rdiv = 'removeclass'+room;
+    divtest.innerHTML = '<div class="row form-group"><div class="col-md-4"><div class="form-group form-floating-label"><select class="form-control input-border-bottom" required="" name="type_doc[]"><option value="">&nbsp;</option><option value="Registered Business License or Certificate"  >Registered Business License or Certificate</option><option value="Business Bank statement for 3 Month"  >Business Bank statement for 3 Month</option><option value="Proof of Business Premises (Tenancy Agreement)" >Proof of Business Premises (Tenancy Agreement)</option><option value="Franchise Agreement" >Franchise Agreement</option><option value="Copy Of Lease Or Freehold Property" >Copy Of Lease Or Freehold Property</option><option value="Employer Liability Insurance Certificate"  >Employer Liability Insurance Certificate</option><option value="PAYEE And Account Reference Letter From HMRC" >PAYEE And Account Reference Letter From HMRC</option><option value="Governing Body Registration"  >Governing Body Registration</option><option value="Copy Of Health & Safety Star Rating"  >Copy Of Health & Safety Star Rating</option><option value="VAT Certificate (if you have)"  >VAT Certificate (if you have)</option><option value="Audited Annual Account (if you have)"  >Audited Annual Account (if you have)</option><option value="Others Document"  >Others Document</option></select><label class="placeholder">Type of Document</label></div></div><div class="col-md-4"><div class="form-group"><label for="exampleFormControlFile1">Upload Document</label><input type="file" class="form-control-file" id="exampleFormControlFile1" name="docu_nat[]"></div><span>*Document Size not more than 300 KB</span></div><div class="col-md-4"><div class="input-group-btn"><button class="btn btn-success" style="margin-right: 15px;" type="button"  onclick="education_fields();"> <i class="fas fa-plus"></i> </button><button class="btn btn-danger" type="button" onclick="remove_education_fields('+ room +');"><i class="fas fa-minus"></i></button></div></div></div>';
+    
+    objTo.appendChild(divtest)
+}
+   function remove_education_fields(rid) {
+	   $('.removeclass'+rid).remove();
+   }
+   
+   
+    function countryfun(empid){
+	   
+	   	$.ajax({
+		type:'GET',
+		url:'{{url('pis/getcompanycountryById')}}/'+empid,
+        cache: false,
+		success: function(response){
+			
+			
+			document.getElementById("currency").innerHTML = response;
+		}
+		});
+   }
+</script>
+</body>
+</html>

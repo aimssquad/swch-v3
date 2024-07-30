@@ -1,0 +1,8 @@
+.error {
+  color: red !important;
+}
+.btn.btn-danger {
+  background-color: red !important;
+  width: auto !important;
+  height: auto !important;
+}
