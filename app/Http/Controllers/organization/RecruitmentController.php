@@ -12,6 +12,7 @@ use Session;
 use view;
 use ZipArchive;
 use File;
+use DB;
 
 use App\Models\candidate;
 use App\Models\CandidateOffer;
@@ -27,13 +28,52 @@ class RecruitmentController extends Controller
         $this->_routePrefix = 'employeer.recruitment';
         $this->_model       = new CompanyJobs();
     }
-    public function jobList(Request $request){
 
-        return view($this->_routePrefix . '.job-list');
+    public function jobList(Request $request){ 
+        if (!empty(Session::get('emp_email'))) {
+            $email = Session::get('emp_email');    
+            $data['Roledata'] = Registration::where('status', '=', 'active')
+                ->where('email', '=', $email)
+                ->first();
+            $data['recruitment_job_rs'] = DB::table('company_job_list')->where('emid', '=', $data['Roledata']->reg)->get();
+            //dd($data);
+            return view($this->_routePrefix . '.job-list',$data);
+        } else {
+            return redirect('/');
+        }
     }
+
     public function jobPosting(Request $request){
-        return view($this->_routePrefix . '.job-posting');
+        if (!empty(Session::get('emp_email'))) {
+            $email = Session::get('emp_email');
+            //dd($email);
+            $Roledata = Registration::where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = Registration::where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $data['company_job_rs'] = DB::Table('company_job')
+                ->join('company_job_list', 'company_job.soc', '=', 'company_job_list.soc')
+
+                ->where('company_job.emid', '=', $Roledata->reg)
+                ->select('company_job.*', 'company_job_list.soc')
+                ->get();
+            return view($this->_routePrefix . '.job-posting',$data);
+        } else {
+            return redirect('/');
+        }
     }
+    // public function jobList(Request $request){
+
+    //     return view($this->_routePrefix . '.job-list');
+    // }
+    // public function jobPosting(Request $request){
+    //     return view($this->_routePrefix . '.job-posting');
+    // }
     public function jobPublished(Request $request){
         return view($this->_routePrefix . '.job-published');
     }

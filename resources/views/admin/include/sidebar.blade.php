@@ -311,7 +311,11 @@ $userType = Session::get('usersu_type');
                                         <span class="sub-item">Admin Role Management</span>
                                     </a>
                                 </li>
-
+                                <li>
+                                    <a href="{{url('superadmin/view-sidebar-role')}}">
+                                        <span class="sub-item">Side Bar Permission</span>
+                                    </a>
+                                </li>
 
 
 

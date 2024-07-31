@@ -35,9 +35,11 @@ Route::get('organization/emplist', 'App\Http\Controllers\organization\LandingCon
 
 Route::get('organization/add_employee', 'App\Http\Controllers\organization\LandingController@addEmployee')->name('new_employeee_new');
 
-// Recruitment 
+// --------------------------------Start Recruitment Section ---------------------------------------------------------------
+//---------------------------------Job List--------------------------
 Route::get('recruitment/job_list', 'App\Http\Controllers\organization\RecruitmentController@jobList')->name('recruitment.job-list');
 Route::get('recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@addJobList')->name('recruitment.add-job-list');
+
 
 Route::get('recruitment/job_posting', 'App\Http\Controllers\organization\RecruitmentController@jobPosting')->name('recruitment.job-posting');
 Route::get('recruitment/job_published', 'App\Http\Controllers\organization\RecruitmentController@jobPublished')->name('recruitment.job-published');
@@ -47,6 +49,7 @@ Route::get('recruitment/interview', 'App\Http\Controllers\organization\Recruitme
 Route::get('recruitment/hired', 'App\Http\Controllers\organization\RecruitmentController@hired')->name('recruitment.hired');
 Route::get('recruitment/offer_letter', 'App\Http\Controllers\organization\RecruitmentController@offerLetter')->name('recruitment.offer-letter');
 Route::get('recruitment/rejected', 'App\Http\Controllers\organization\RecruitmentController@rejected')->name('recruitment.rejected');
+//-----------------------------End Recruitment Section -------------------------------------------------------------
 
 Route::get('/', 'App\Http\Controllers\LandingController@index');
 Route::get('login-pay', 'App\Http\Controllers\LandingController@indexloginpay');
@@ -633,12 +636,15 @@ Route::get('superadmin/vw-user-config/{user_id}', 'App\Http\Controllers\AdminCon
 
 Route::get('superadmin/user-role', 'App\Http\Controllers\AdminController@viewUserAccessRightsForm');
 Route::get('superadmin/admin-role', 'App\Http\Controllers\AdminController@viewAdminAccessRightsForm');
+Route::get('superadmin/view-sidebar-permission', 'App\Http\Controllers\AdminController@viewSidebarPermissionForm');
 
 Route::post('superadmin/user-role', 'App\Http\Controllers\AdminController@UserAccessRightsFormAuth');
 Route::post('superadmin/admin-role', 'App\Http\Controllers\AdminController@AdminAccessRightsFormAuth');
+Route::post('superadmin/view-sidebar-permission', 'App\Http\Controllers\AdminController@UserAccessRightsSidebarFormAuth');
 
 Route::get('superadmin/view-users-role', 'App\Http\Controllers\AdminController@viewUserAccessRights');
 Route::get('superadmin/view-admin-role', 'App\Http\Controllers\AdminController@viewAdminAccessRights');
+Route::get('superadmin/view-sidebar-role', 'App\Http\Controllers\AdminController@viewSidebarRole');
 
 Route::get('superadmin/view-users-role/{role_authorization_id}', 'App\Http\Controllers\AdminController@deleteUserAccess');
 Route::get('superadmin/view-admin-role/{role_authorization_id}', 'App\Http\Controllers\AdminController@deleteAdminUserAccess');

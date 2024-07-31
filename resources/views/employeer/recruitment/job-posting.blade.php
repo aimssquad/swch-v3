@@ -71,36 +71,49 @@
                                         <th>Job Location</th>
                                         <th>Job Post Date</th>
                                         <th>Closing Date</th>
-                                        <th>Email</th>
-                                        <th>Phone No</th>
-                                        <th>Status</th>
+                                        {{-- <th>Email</th> --}}
+                                        {{-- <th>Phone No</th>
+                                        <th>Status</th> --}}
                                         <th class="text-end no-sort">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     
-                                    <tr>
-                                        <td>1</td>
-                                        <td>JOB102</td>
-                                        <td>Developer</td>
-                                        <td>1</td>
-                                        <td>JOB102</td>
-                                        <td>Developer</td>
-                                        <td>1</td>
-                                        <td>JOB102</td>
-                                        <td>Developer</td>
-                                        <td>JOB102</td>
-                                        <td>Developer</td>
-                                        <td class="text-end">
-                                            <div class="dropdown dropdown-action">
-                                                <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_employee"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
-                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_employee"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                                    <?php $i = 1; ?>
+									@foreach($company_job_rs as $recruitment_job)
+                                        <tr>
+                                            <td><?php echo $i++; ?></td>
+                                            <td>{{ $recruitment_job->soc }}</td>
+                                            <td>{{ $recruitment_job->title }}</td>
+                                            <td style="text-align:center" id="myInput">
+                                                @if( $recruitment_job->post_date<=date('Y-m-d') && $recruitment_job->clos_date>=date('Y-m-d'))
+                                                
+                                                <a target="_blank" href="{{ $recruitment_job->job_link }}">
+                                                    @endif {{ $recruitment_job->job_link }}</a>
+                                                    @if( $recruitment_job->post_date<=date('Y-m-d') && $recruitment_job->clos_date>=date('Y-m-d'))
+                                                <button type="button" class="btn btn-default btn-copy js-tooltip js-copy" data-toggle="tooltip" data-placement="bottom" data-copy="{{ $recruitment_job->job_link }}" title="Copy Link">
+                                                    <!-- icon from google's material design library -->
+                                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M17,9H7V7H17M17,13H7V11H17M14,17H7V15H14M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>
+                                                    </button>  @endif
+                                            </td>
+                                            <td>{{ $recruitment_job->no_vac }}</td>
+                                            <td>{{ $recruitment_job->job_loc }}</td>
+                                            <td>{{ date('d/m/Y',strtotime($recruitment_job->post_date)) }}</td>
+                                            <td>{{ date('d/m/Y',strtotime($recruitment_job->clos_date)) }}</td>
+                                            {{-- <td>{{ $recruitment_job->email }}</td> --}}
+                                            {{-- <td>{{ $recruitment_job->con_num }}</td>
+                                            <td>{{ $recruitment_job->status }}</td> --}}
+                                            <td class="text-end">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_employee"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_employee"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
