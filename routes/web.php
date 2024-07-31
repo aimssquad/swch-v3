@@ -37,6 +37,8 @@ Route::get('organization/add_employee', 'App\Http\Controllers\organization\Landi
 
 // Recruitment 
 Route::get('recruitment/job_list', 'App\Http\Controllers\organization\RecruitmentController@jobList')->name('recruitment.job-list');
+Route::get('recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@addJobList')->name('recruitment.add-job-list');
+
 Route::get('recruitment/job_posting', 'App\Http\Controllers\organization\RecruitmentController@jobPosting')->name('recruitment.job-posting');
 Route::get('recruitment/job_published', 'App\Http\Controllers\organization\RecruitmentController@jobPublished')->name('recruitment.job-published');
 Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@jobApplied')->name('recruitment.job-applied');
