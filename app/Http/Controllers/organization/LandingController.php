@@ -416,5 +416,43 @@ class LandingController extends Controller
         }
     }
 
+    public function Doforgot(Request $request)
+    {
+        $Employee = DB::table("users")
+            ->where("email", "=", $request->email)
+            ->where("status", "=", "active")
+            ->where("user_type", "!=", "admin")
+            ->first();
+
+        if (!empty($Employee)) {
+            $Roledata = DB::table("users")
+
+                ->where("employee_id", "=", $Employee->emid)
+                ->where("status", "=", "active")
+                ->first();
+            $base_url = env('BASE_URL');
+
+            $data = ["pass" => $Employee->password, "name" => $Employee->name,"web"=>$base_url ];
+            $toemail = $request->email;
+            Mail::send("mailforgot", $data, function ($message) use ($toemail) {
+                $message
+                    ->to($toemail, env('MAIL_FROM_NAME'))
+                    ->subject("Forgot  Password ");
+                $message->from(env('MAIL_USERNAME'),env('MAIL_FROM_NAME'));
+            });
+
+            Session::flash("message", "Mail sent successfully.");
+            return redirect("forgot-password");
+        } else {
+            Session::flash("error", "Your email id was wrong!!");
+            return redirect("forgot-password");
+        }
+    }
+
+    public function indexfor()
+    {
+        return view("forgot-password");
+    }
+
 
 }

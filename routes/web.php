@@ -28,6 +28,8 @@ use App\Http\Controllers\LandingController;
 // new route
 
 Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\LandingController@Dashboard')->name('organization/home');
+Route::get('forgot-password', 'App\Http\Controllers\organization\LandingController@indexfor');
+Route::post('forgot-password', 'App\Http\Controllers\organization\LandingController@Doforgot');
 
 // Employee 
 Route::get('organization/employeeee', 'App\Http\Controllers\organization\LandingController@allempcard')->name('organization/employee-card');
@@ -66,8 +68,8 @@ Route::get('/get-country-code','App\Http\Controllers\LandingController@getCountr
 
 //Route::get('employerdashboard','LandingController@employerdashboard');
 Route::post('register', 'App\Http\Controllers\LandingController@Doregister');
-Route::get('forgot-password', 'App\Http\Controllers\LandingController@indexfor');
-Route::post('forgot-password', 'App\Http\Controllers\LandingController@Doforgot');
+// Route::get('forgot-password', 'App\Http\Controllers\LandingController@indexfor');
+// Route::post('forgot-password', 'App\Http\Controllers\LandingController@Doforgot');
 Route::post('/', 'App\Http\Controllers\LandingController@DoLogin');
 Route::get('otpvalidate', 'App\Http\Controllers\LandingController@otp');
 Route::post('otpvalidate', 'App\Http\Controllers\LandingController@otpvalidate');
