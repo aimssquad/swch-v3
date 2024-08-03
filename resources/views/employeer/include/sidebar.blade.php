@@ -421,9 +421,16 @@ $user_type = Session::get("user_type");
                         <span>Main</span>
                     </li>
                     <li class="submenu ">
-                        <a href="{{url('organization/employerdashboard')}}"><i class="la la-dashcube {{Request::is('organization/employerdashboard')?'noti-dot':'';}}"></i> <span> Dashboard</span> <span class="menu-arrow"></span></a>
+                        <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-cube"></i> <span> Organization</span> <span class="menu-arrow"></span></a>
                         <ul>                         
-                            <li><a  href="employee-dashboard.html">Organization</a></li>  
+                            <li><a  href="{{ route('organization.home') }}">Dashboard</a></li>  
+                            <li><a href="#">Employees According to RTI</a></li>
+                            <li><a href="contacts.html">Authorizing Officer</a></li>
+                            <li><a href="inbox.html">Key Contact</a></li>
+                            <li><a href="file-manager.html">level 1 user</a></li>
+                            <li><a href="file-manager.html">level 2 user</a></li>
+                            <li><a href="file-manager.html">Sponsor Compliance</a></li>
+                            <li><a href="file-manager.html">Governance</a></li>
                         </ul>
                     </li>
                     @endif 

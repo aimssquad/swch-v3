@@ -285,10 +285,17 @@ $user_type = Session::get("user_type");
                 <span class="status online"></span></span>
                 <span>Admin</span>
             </a>
-            <div class="dropdown-menu">       
-                <a class="dropdown-item" href="profile.html">My Profile</a>
-                <a class="dropdown-item" href="settings.html">Settings</a>
-                <a class="dropdown-item" href="index.html">Logout</a>
+            <div class="dropdown-menu">  
+                @if(Session::get('admin_userp_user_type')=='user')     
+                    <a class="dropdown-item" href="profile.html">My Profile</a>
+                @else
+                    <a class="dropdown-item" href="{{ route('organization.profile') }}">Organization Profile</a>
+                @endif
+                @if(Session::get('admin_userp_user_type')=='user')
+                    <a class="dropdown-item" href="{{url('mainuesrLogout')}}">Logout</a>
+                @else
+                    <a class="dropdown-item" href="{{url('mainLogout')}}">Logout</a>
+                @endif
             </div>
         </li>
     </ul>
@@ -298,9 +305,16 @@ $user_type = Session::get("user_type");
     <div class="dropdown mobile-user-menu">
         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical"></i></a>
         <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="profile.html">My Profile</a>
-            <a class="dropdown-item" href="settings.html">Settings</a>
-            <a class="dropdown-item" href="index.html">Logout</a>
+            @if(Session::get('admin_userp_user_type')=='user')     
+                <a class="dropdown-item" href="profile.html">My Profile</a>
+            @else
+                <a class="dropdown-item" href="{{ route('organization.profile') }}">Organization Profile</a>
+            @endif
+            @if(Session::get('admin_userp_user_type')=='user')
+                <a class="dropdown-item" href="{{url('mainuesrLogout')}}">Logout</a>
+            @else
+                <a class="dropdown-item" href="{{url('mainLogout')}}">Logout</a>
+            @endif
         </div>
     </div>
     <!-- /Mobile Menu -->
