@@ -261,6 +261,7 @@ class EmployeeController extends Controller
     public function viewAddEmployee(Request $request)
     {
          //dd($request->all());
+         //return view($this->_routePrefix . '.employees-list', $data);
 
         if (!empty(Session::get('emp_email'))) {
             $email = Session::get('emp_email');
@@ -375,6 +376,7 @@ class EmployeeController extends Controller
                 }
                 // dd($data['nation_master']);
                 return view('employee/edit-employee', $data);
+                //return view($this->_routePrefix . '.employees-list', $data);
 
             } else {
                 $emp_cof = DB::table('registration')
@@ -485,6 +487,7 @@ class EmployeeController extends Controller
                 $data['employeelists'] = DB::table('employee')->where('emid', '=', $Roledata->reg)->get();
                 //echo "<pre>";print_r($data['states']);exit;
                 return view('employee/add-employee', $data);
+                
             }
 
         } else {
