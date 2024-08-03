@@ -29,14 +29,22 @@ use App\Http\Controllers\LandingController;
 
 Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\LandingController@Dashboard')->name('organization.home');
 Route::get('organization/profile', 'App\Http\Controllers\organization\LandingController@profile')->name('organization.profile');
+Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\LandingController@Dashboard')->name('organization/home');
+Route::get('forgot-password', 'App\Http\Controllers\organization\LandingController@indexfor');
+Route::post('forgot-password', 'App\Http\Controllers\organization\LandingController@Doforgot');
+
 // Employee 
 Route::get('organization/employeeee', 'App\Http\Controllers\organization\LandingController@allempcard')->name('organization/employee-card');
 Route::get('organization/emplist', 'App\Http\Controllers\organization\LandingController@allEmpList')->name('organization/emp-list');
 
 Route::get('organization/add_employee', 'App\Http\Controllers\organization\LandingController@addEmployee')->name('new_employeee_new');
 
-// Recruitment 
+// --------------------------------Start Recruitment Section ---------------------------------------------------------------
+//---------------------------------Job List--------------------------
 Route::get('recruitment/job_list', 'App\Http\Controllers\organization\RecruitmentController@jobList')->name('recruitment.job-list');
+Route::get('recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@addJobList')->name('recruitment.add-job-list');
+
+
 Route::get('recruitment/job_posting', 'App\Http\Controllers\organization\RecruitmentController@jobPosting')->name('recruitment.job-posting');
 Route::get('recruitment/job_published', 'App\Http\Controllers\organization\RecruitmentController@jobPublished')->name('recruitment.job-published');
 Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@jobApplied')->name('recruitment.job-applied');
@@ -45,6 +53,7 @@ Route::get('recruitment/interview', 'App\Http\Controllers\organization\Recruitme
 Route::get('recruitment/hired', 'App\Http\Controllers\organization\RecruitmentController@hired')->name('recruitment.hired');
 Route::get('recruitment/offer_letter', 'App\Http\Controllers\organization\RecruitmentController@offerLetter')->name('recruitment.offer-letter');
 Route::get('recruitment/rejected', 'App\Http\Controllers\organization\RecruitmentController@rejected')->name('recruitment.rejected');
+//-----------------------------End Recruitment Section -------------------------------------------------------------
 
 Route::get('/', 'App\Http\Controllers\LandingController@index');
 Route::get('login-pay', 'App\Http\Controllers\LandingController@indexloginpay');
@@ -61,8 +70,8 @@ Route::get('/get-country-code','App\Http\Controllers\LandingController@getCountr
 
 //Route::get('employerdashboard','LandingController@employerdashboard');
 Route::post('register', 'App\Http\Controllers\LandingController@Doregister');
-Route::get('forgot-password', 'App\Http\Controllers\LandingController@indexfor');
-Route::post('forgot-password', 'App\Http\Controllers\LandingController@Doforgot');
+// Route::get('forgot-password', 'App\Http\Controllers\LandingController@indexfor');
+// Route::post('forgot-password', 'App\Http\Controllers\LandingController@Doforgot');
 Route::post('/', 'App\Http\Controllers\LandingController@DoLogin');
 Route::get('otpvalidate', 'App\Http\Controllers\LandingController@otp');
 Route::post('otpvalidate', 'App\Http\Controllers\LandingController@otpvalidate');
@@ -631,12 +640,15 @@ Route::get('superadmin/vw-user-config/{user_id}', 'App\Http\Controllers\AdminCon
 
 Route::get('superadmin/user-role', 'App\Http\Controllers\AdminController@viewUserAccessRightsForm');
 Route::get('superadmin/admin-role', 'App\Http\Controllers\AdminController@viewAdminAccessRightsForm');
+Route::get('superadmin/view-sidebar-permission', 'App\Http\Controllers\AdminController@viewSidebarPermissionForm');
 
 Route::post('superadmin/user-role', 'App\Http\Controllers\AdminController@UserAccessRightsFormAuth');
 Route::post('superadmin/admin-role', 'App\Http\Controllers\AdminController@AdminAccessRightsFormAuth');
+Route::post('superadmin/view-sidebar-permission', 'App\Http\Controllers\AdminController@UserAccessRightsSidebarFormAuth');
 
 Route::get('superadmin/view-users-role', 'App\Http\Controllers\AdminController@viewUserAccessRights');
 Route::get('superadmin/view-admin-role', 'App\Http\Controllers\AdminController@viewAdminAccessRights');
+Route::get('superadmin/view-sidebar-role', 'App\Http\Controllers\AdminController@viewSidebarRole');
 
 Route::get('superadmin/view-users-role/{role_authorization_id}', 'App\Http\Controllers\AdminController@deleteUserAccess');
 Route::get('superadmin/view-admin-role/{role_authorization_id}', 'App\Http\Controllers\AdminController@deleteAdminUserAccess');

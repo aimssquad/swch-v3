@@ -20280,4 +20280,131 @@ class AdminController extends Controller
 
     }
 
+
+    public function viewSidebarPermissionForm()
+    {
+        //dd(Session::get('empsu_email'));
+        try {
+            if (!empty(Session::get('empsu_email'))) {
+
+                $data['users'] = DB::table('users')
+                    ->where('user_type','=','employer')
+                    ->where('status','=','active')
+                    ->get();
+                $data['module'] = DB::table('module')->get();
+                $data['menu'] = DB::table('module_config')->get();
+                //dd($data);
+                return view('admin/view-sidebar-permission', $data);
+            } else {
+                return redirect('superadmin');
+            }
+        } catch (Exception $e) {
+            throw new \App\Exceptions\AdminException($e->getMessage());
+        }
+    }
+
+    public function UserAccessRightsSidebarFormAuth(Request $request)
+    {
+        try {
+            $email = Session::get('empsu_email');
+            $userType = Session::get('usersu_type');
+    
+            if (!empty($email)) {
+    
+                if ($userType == 'user') {
+                    $arrrole = Session::get('empsu_role');
+                    if (!in_array('5', $arrrole)) {
+                        throw new \App\Exceptions\AdminException('You are not authorized to access this section.');
+                    }
+                }
+    
+                foreach ($request['member_id'] as $valuemenm) {
+                    foreach ($request['module_name'] as $key => $value) {
+                        $va = explode('(Code :', $valuemenm);
+                        $vag = explode(')', $va[1]);
+                        $member_id = trim($vag[0]);
+    
+                        if ($value == 'all') {
+                            $modules = DB::table('module')->get();
+    
+                            foreach ($modules as $module) {
+                                $module_id = $module->id;
+    
+                                // Check if the data already exists
+                                $exists = DB::table('othorized_organization_module')
+                                    ->where('employee_id', $member_id)
+                                    ->where('module_name', $module_id)
+                                    ->exists();
+    
+                                if (!$exists) {
+                                    // Insert the data
+                                    DB::table('othorized_organization_module')->insert([
+                                        'module_name' => $module_id,
+                                        'employee_id' => $member_id,
+                                    ]);
+                                    Session::flash('message', 'Role Successfully Saved.');
+                                } else {
+                                    Session::flash('message', 'User Permission already exists!');
+                                }
+                            }
+    
+                        } else {
+                            $module_id = $value;
+    
+                            // Check if the data already exists
+                            $exists = DB::table('othorized_organization_module')
+                                ->where('employee_id', $member_id)
+                                ->where('module_name', $module_id)
+                                ->exists();
+    
+                            if (!$exists) {
+                                // Insert the data
+                                DB::table('othorized_organization_module')->insert([
+                                    'module_name' => $module_id,
+                                    'employee_id' => $member_id,
+                                ]);
+                                Session::flash('message', 'Role Successfully Saved.');
+                            } else {
+                                Session::flash('message', 'User Permission already exists!');
+                            }
+                        }
+                    }
+                }
+    
+                $this->addAdminLog(5, 'User role added.');
+                return redirect('superadmin/view-sidebar-permission');
+            } else {
+                return redirect('superadmin');
+            }
+    
+        } catch (Exception $e) {
+            throw new \App\Exceptions\AdminException($e->getMessage());
+        }
+    }
+
+    public function viewSidebarRole()
+    {
+        try {
+            if (!empty(Session::get('empsu_email'))) {
+
+                $data['roles'] = DB::table('othorized_organization_module')
+                    ->join('module', 'othorized_organization_module.module_name', '=', 'module.id')
+
+                    ->select('othorized_organization_module.*', 'module.module_name')
+                    ->groupBy('othorized_organization_module.employee_id')
+
+                    ->orderBy('othorized_organization_module.id', 'DESC')
+                    ->get();
+
+                $this->addAdminLog(5, 'Admin user role list view.');
+                return view('admin/view-sidebar-role', $data);
+            } else {
+                return redirect('superadmin');
+            }
+        } catch (Exception $e) {
+            throw new \App\Exceptions\AdminException($e->getMessage());
+        }
+    }
+
+
 } //end class

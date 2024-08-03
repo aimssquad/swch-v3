@@ -26,10 +26,10 @@ class LandingController extends Controller
     {
         return view("user-login");
     }
-    public function indexfor()
-    {
-        return view("forgot-password");
-    }
+    // public function indexfor()
+    // {
+    //     return view("forgot-password");
+    // }
 
     public function register($org_code = null)
     {
@@ -51,17 +51,17 @@ class LandingController extends Controller
         return view("register",$data);
     }
     public function getCountryCode(Request $request)
-{
-    $countryName = $request->country;
-    // Assuming you have a model `Country` with `name` and `phonecode` attributes
-    $country = DB::table('country')->where('name', $countryName)->first();
+    {
+        $countryName = $request->country;
+        // Assuming you have a model `Country` with `name` and `phonecode` attributes
+        $country = DB::table('country')->where('name', $countryName)->first();
 
-    if ($country) {
-        return response()->json(['phonecode' => $country->phonecode]);
-    } else {
-        return response()->json(['phonecode' => null], 404);
+        if ($country) {
+            return response()->json(['phonecode' => $country->phonecode]);
+        } else {
+            return response()->json(['phonecode' => null], 404);
+        }
     }
-}
 
 
     public function employerdashboard()
@@ -139,7 +139,7 @@ class LandingController extends Controller
                    if(empty($subadmin_data)){
                         $sub_comname = '';
                    } else {
-                        $sub_comname = $subadmin_data->company_name;
+                        $sub_comname = $subadmin_data->com_name;
                    }
                    
                     //dd($sub_email);
