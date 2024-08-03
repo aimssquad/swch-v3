@@ -24,5 +24,8 @@
 <!-- Datetimepicker CSS -->
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap-datetimepicker.min.css') }}">
 
+<!-- Tagsinput CSS -->
+<link rel="stylesheet" href="{{ asset('frontend/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}">
+
 <!-- Main CSS -->
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">

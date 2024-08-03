@@ -5,7 +5,7 @@
 @section('content')
 
 
-<!-- Page Content -->
+        <!-- Page Content -->
             <div class="content container-fluid pb-0">
             
                 <!-- Page Header -->
@@ -84,7 +84,7 @@
 					@endforeach
                 </div>
             </div>
-            <!-- /Page Content -->
+        <!-- /Page Content -->
 
 
 @endsection

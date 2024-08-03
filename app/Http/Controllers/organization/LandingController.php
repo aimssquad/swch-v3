@@ -83,6 +83,15 @@ class LandingController extends Controller
             return redirect("/");
         }
     }
+    // organization profile made by abbas
+    public function profile(Request $request){
+        if (!empty(Session::get('emp_email'))) {
+            return view($this->_routePrefix . '.profile');
+
+        }else{
+            return redirect('/');
+        }
+    }
 
     public function allempcard(){
         if (!empty(Session::get('emp_email'))) {

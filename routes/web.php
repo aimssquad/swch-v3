@@ -27,8 +27,8 @@ use App\Http\Controllers\LandingController;
 
 // new route
 
-Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\LandingController@Dashboard')->name('organization/home');
-
+Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\LandingController@Dashboard')->name('organization.home');
+Route::get('organization/profile', 'App\Http\Controllers\organization\LandingController@profile')->name('organization.profile');
 // Employee 
 Route::get('organization/employeeee', 'App\Http\Controllers\organization\LandingController@allempcard')->name('organization/employee-card');
 Route::get('organization/emplist', 'App\Http\Controllers\organization\LandingController@allEmpList')->name('organization/emp-list');
