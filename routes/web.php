@@ -80,6 +80,8 @@ Route::get('recruitment/offer_letter', 'App\Http\Controllers\organization\Recrui
 Route::get('recruitment/rejected', 'App\Http\Controllers\organization\RecruitmentController@rejected')->name('recruitment.rejected');
 //-----------------------------End Recruitment Section -------------------------------------------------------------
 
+
+// old route
 Route::get('/', 'App\Http\Controllers\LandingController@index');
 Route::get('login-pay', 'App\Http\Controllers\LandingController@indexloginpay');
 Route::post('login-pay', 'App\Http\Controllers\LandingController@DoLoginpay');
