@@ -86,7 +86,17 @@ class LandingController extends Controller
     // organization profile made by abbas
     public function profile(Request $request){
         if (!empty(Session::get('emp_email'))) {
-            return view($this->_routePrefix . '.profile');
+            $email = Session::get('emp_email');
+            $data['companies_rs'] = DB::table('registration')
+                ->where('status', '=', 'active')
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')
+                ->where('status', '=', 'active')
+                ->where('email', '=', $email)
+                ->first();
+            // dd($data);
+            return view($this->_routePrefix . '.profile',$data);
 
         }else{
             return redirect('/');

@@ -29,7 +29,8 @@ use App\Http\Controllers\LandingController;
 
 Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\LandingController@Dashboard')->name('organization.home');
 Route::get('organization/profile', 'App\Http\Controllers\organization\LandingController@profile')->name('organization.profile');
-Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\LandingController@Dashboard')->name('organization/home');
+Route::post('organization/update', 'App\Http\Controllers\organization\LandingController@update')->name('organization.update');
+
 Route::get('forgot-password', 'App\Http\Controllers\organization\LandingController@indexfor');
 Route::post('forgot-password', 'App\Http\Controllers\organization\LandingController@Doforgot');
 
