@@ -10,14 +10,7 @@
    .active {
    display: block;
    }
-   .btn {
-   margin: 10px;
-   padding: 10px;
-   /* background-color: #007BFF; */
-   color: white;
-   border: none;
-   cursor: pointer;
-   }
+ 
    .btn:disabled {
    background-color: #dcdcdc;
    cursor: not-allowed;
@@ -33,6 +26,9 @@
     .right-buttons {
       display: flex;
     }
+    #basicform {
+    height: auto !important; 
+   }
 </style>
 @endsection
 @section('content')
@@ -1568,7 +1564,7 @@
                                 <div class="multisteps-form__panel rounded bg-white" data-animation="scaleIn">
                                     <h3 class="multisteps-form__title" style="color: #1269db;border-bottom: 1px solid #ddd;padding-bottom: 11px;">Pay Structure</h3>
                                     <div class="multisteps-form__content">
-                                    <h3 class="multisteps-form__title" style="background: #1572e8;color: #fff;padding: 4px 15px;">Payment (Taxable)</h3>
+                                    <h3 class="multisteps-form__title" style="background: #FF902F;color: #fff;padding: 4px 15px;">Payment (Taxable)</h3>
                                     <div class="row form-group">
                                         <label class="col-md-3 checkbox-inline"><input type="checkbox"   name="da" value="1" <?php if (request()->get('q') != '') {if ($employee_rs[0]->da == '1') {echo 'checked';} else {}}?>> Dearness Allowance</label>
                                         <label class="col-md-3 checkbox-inline"><input type="checkbox"  name="hra" value="1"  <?php if (request()->get('q') != '') {if ($employee_rs[0]->hra == '1') {echo 'checked';} else {}}?>> House Rent Allowance</label>
@@ -1576,7 +1572,7 @@
                                         <label class="col-md-3 checkbox-inline"><input type="checkbox"  name="perfomance" value="1" <?php if (request()->get('q') != '') {if ($employee_rs[0]->perfomance == '1') {echo 'checked';} else {}}?>> Performance Allowance</label>
                                         <label class="col-md-3 checkbox-inline"><input type="checkbox"  name="monthly_al" value="1" <?php if (request()->get('q') != '') {if ($employee_rs[0]->monthly_al == '1') {echo 'checked';} else {}}?>> Monthly Fixed Allowance</label>
                                     </div>
-                                    <h3 class="multisteps-form__title" style="background: #1572e8;color: #fff;padding: 4px 15px;">Deduction</h3>
+                                    <h3 class="multisteps-form__title" style="background: #FF902F;color: #fff;padding: 4px 15px;">Deduction</h3>
                                     <div class="row form-group">
                                         <label class="col-md-3 checkbox-inline"><input type="checkbox" name="pf_al" value="1" <?php if (request()->get('q') != '') {if ($employee_rs[0]->pf_al == '1') {echo 'checked';} else {}}?>> NI Deduction</label>
                                         <label class="col-md-3 checkbox-inline"><input type="checkbox" name="income_tax" value="1"  <?php if (request()->get('q') != '') {if ($employee_rs[0]->income_tax == '1') {echo 'checked';} else {}}?>> I. Tax Deduction</label>
