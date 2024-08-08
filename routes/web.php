@@ -35,8 +35,34 @@ Route::post('forgot-password', 'App\Http\Controllers\organization\LandingControl
 // Employee 
 Route::get('organization/employeeee', 'App\Http\Controllers\organization\LandingController@allempcard')->name('organization/employee-card');
 Route::get('organization/emplist', 'App\Http\Controllers\organization\LandingController@allEmpList')->name('organization/emp-list');
+Route::get('organization/view-add-employee', 'App\Http\Controllers\organization\EmployeeController@viewAddEmployee')->name('organization/view-add-employee');
+Route::post('organization/view-add-employee', 'App\Http\Controllers\organization\EmployeeController@saveEmployee');
 
 Route::get('organization/add_employee', 'App\Http\Controllers\organization\LandingController@addEmployee')->name('new_employeee_new');
+//Route::post('organization/save-employee', 'App\Http\Controllers\EmployeeController@saveEmployee');
+Route::get('organization/example', 'App\Http\Controllers\organization\EmployeeController@example');
+
+//----------------------------- Holiday List ------------------------------------
+Route::get('organization/holiday-list', 'App\Http\Controllers\organization\HolidayController@holidayList')->name('organization/holiday-list');
+Route::get('organization/add-holiday-list', 'App\Http\Controllers\organization\HolidayController@addHolidayList')->name('organization/add-holiday-list');
+Route::post('organization/save-holiday-list', 'App\Http\Controllers\organization\HolidayController@saveHolidayList')->name('organization/save-holiday-list');
+Route::get('organization/add-holiday-list/{holiday_id}', 'App\Http\Controllers\organization\HolidayController@getHolidayDtl');
+Route::get('organization/delete-holiday-list/{holiday_id}','App\Http\Controllers\organization\HolidayController@deleteHoliday');
+
+Route::get('organization/holiday-type', 'App\Http\Controllers\organization\HolidayController@viewHolidayTypeDetails')->name('organization/holiday-type');
+Route::get('organization/add-holiday-type', 'App\Http\Controllers\organization\HolidayController@viewAddHolidayType')->name('organization/add-holiday-type');
+Route::post('organization/add-holiday-type', 'App\Http\Controllers\organization\HolidayController@saveHolidayTypeData');
+Route::get('organization/add-holiday-type/{holiday_id}', 'App\Http\Controllers\organization\HolidayController@getHolidayTypeDtl');
+Route::get('organization/delete-holiday-type/{holiday_id}', 'App\Http\Controllers\organization\HolidayController@deleteHolidayType');
+//----------------------------- End Holiday List ---------------------------------
+//------------------------------Leave Management --------------------------------------------
+Route::get('leave/leave-type-listing', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveType')->name('leave/leave-type-listing');
+Route::get('leave/leave-type-listing/{holiday_id}', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveTypeDtl');
+Route::get('leave/new-leave-type', 'App\Http\Controllers\organization\LeaveManagementController@viewAddLeaveType')->name('leave/new-leave-type');
+Route::post('leave/new-leave-type', 'App\Http\Controllers\organization\LeaveManagementController@saveLeaveType');
+
+
+//------------------------------End Leave Management -----------------------------------------
 
 // --------------------------------Start Recruitment Section ---------------------------------------------------------------
 //---------------------------------Job List--------------------------
@@ -2367,7 +2393,7 @@ Route::get('settings/get-add-row-item-upload-other/{row}', function ($row) {
 				   <div class="col-md-3">
 
 <div class="form-group ">
-<label for="inputFloatingLabeldn' . $row . '" class="placeholder">Document name.</label>
+<label for="inputFloatingLabeldn' . $row . '" class="col-form-label">Document name.</label>
 <input id="inputFloatingLabeldn' . $row . '" type="text" class="form-control"  name="doc_name[]">
 
 
@@ -2376,7 +2402,7 @@ Route::get('settings/get-add-row-item-upload-other/{row}', function ($row) {
 				   		<div class="col-md-3">
 
 <div class="form-group">
-<label for="inputFloatingLabeldn' . $row . '" class="placeholder">Document reference number.</label>
+<label for="inputFloatingLabeldn' . $row . '" class="col-form-label">Document reference number.</label>
 <input id="inputFloatingLabeldn' . $row . '" type="text" class="form-control"  name="doc_ref_no[]">
 
 
@@ -2386,7 +2412,7 @@ Route::get('settings/get-add-row-item-upload-other/{row}', function ($row) {
 
 			            <div class="col-md-3">
 				  <div class="form-group">
-				  	<label for="selectFloatingLabelntp" class="placeholder">Nationality</label>
+				  	<label for="selectFloatingLabelntp" class="col-form-label">Nationality</label>
 												<select class="form-control" id="selectFloatingLabelntp"  name="doc_nation[]" >
 												<option value="">&nbsp;</option>
 												' . $country . '
@@ -2398,20 +2424,20 @@ Route::get('settings/get-add-row-item-upload-other/{row}', function ($row) {
 				   	<div class="col-md-3">
 
 						<div class="form-group">
-							<label for="inputFloatingLabelid' . $row . '" class="placeholder">Issued Date</label>
+							<label for="inputFloatingLabelid' . $row . '" class="col-form-label">Issued Date</label>
 						<input id="inputFloatingLabelid' . $row . '" type="date" class="form-control" name="doc_issue_date[]">
 																													</div>
 			</div>
 
 				   <div class="col-md-3">
-							<div class="form-group" >	<label for="doc_exp_date" class="placeholder">Expiry Date</label>	<input id="doc_exp_date' . $row . '" type="date" class="form-control" name="doc_exp_date[]"
+							<div class="form-group" >	<label for="doc_exp_date" class="col-form-label">Expiry Date</label>	<input id="doc_exp_date' . $row . '" type="date" class="form-control" name="doc_exp_date[]"
 onchange="getreviewnatdateother(' . $row . ');">
 																													</div>
 			</div>
 				   		<div class="col-md-3">
 
 					<div class="form-group">
-						<label for="doc_review_date" class="placeholder"  style="margin-top:-12px;">Eligible Review Date</label>
+						<label for="doc_review_date" class="col-form-label"  style="margin-top:-12px;">Eligible Review Date</label>
 					<input id="doc_review_date' . $row . '" type="date" readonly class="form-control" name="doc_review_date[]">
 																														</div>
 			</div>
@@ -2440,7 +2466,7 @@ onchange="getreviewnatdateother(' . $row . ');">
 						<div class="col-md-3">
 
 								<div class="form-group">
-									<label for="inputFloatingLabelrm' . $row . '" class="placeholder">Remarks</label>
+									<label for="inputFloatingLabelrm' . $row . '" class="col-form-label">Remarks</label>
 												<input id="inputFloatingLabelrm' . $row . '" type="text" class="form-control" name="doc_remarks[]" >
 
 											</div>
@@ -2981,7 +3007,7 @@ Route::get('settings/get-add-row-item-edu/{row}', function ($row) {
 				  <div class="col-md-4">
 
 		<div class="form-group">
-	<label for="inputFloatingLabel-jobt" class="placeholder">Job Title</label>
+	<label for="inputFloatingLabel-jobt" class="col-form-label">Job Title</label>
 		<input id="inputFloatingLabel-jobt" type="text" class="form-control input-border-bottom"  name="job_name[]">
 
 	</div>
@@ -2989,14 +3015,14 @@ Route::get('settings/get-add-row-item-edu/{row}', function ($row) {
 	<div class="col-md-4">
 
 		<div class="form-group">
-	    <label for="inputFloatingLabel-jobs" class="placeholder">Start Date</label>
+	    <label for="inputFloatingLabel-jobs" class="col-form-label">Start Date</label>
 		<input id="inputFloatingLabel-jobs" type="date" class="form-control input-border-bottom" name="job_start_date[]">
 	</div>
 	</div>
 	<div class="col-md-4">
 
 		<div class="form-group">
-		    <label for="inputFloatingLabel-jobe" class="placeholder">End Date </label>
+		    <label for="inputFloatingLabel-jobe" class="col-form-label">End Date </label>
 		<input id="inputFloatingLabel-jobe" type="date" class="form-control input-border-bottom" name="job_end_date[]">
 
 	</div>
@@ -3006,7 +3032,7 @@ Route::get('settings/get-add-row-item-edu/{row}', function ($row) {
 		          <div class="row">
 				  <div class="col-md-4">
 <div class="form-group">
-   <label for="selectFloatingLabelexp" class="placeholder">Year of Experience</label>
+   <label for="selectFloatingLabelexp" class="col-form-label">Year of Experience</label>
 <select class="form-control input-border-bottom" id="selectFloatingLabelexp"  name="exp[]">
 <option value="">&nbsp;</option>';
     for ($i = 0; $i <= 10; $i++) {
@@ -3022,7 +3048,7 @@ Route::get('settings/get-add-row-item-edu/{row}', function ($row) {
 </div><div class="col-md-6">
 
 				  <div class="form-group">
-<label for="inputFloatingLabel-jobs" class="placeholder">Job Description</label>
+<label for="inputFloatingLabel-jobs" class="col-form-label">Job Description</label>
 	<textarea id="inputFloatingLabel-jobs"  rows="5" class="form-control"  style="height:135px !important;resize:none;"  name="des[]"> </textarea>
 
 </div>
@@ -3050,21 +3076,21 @@ Route::get('settings/get-add-row-item-train/{row}', function ($row) {
                   <div class="row">
 				   <div class="col-md-4">
 				     <div class="form-group">
-				         	<label for="inputFloatingLabeltr1" class="placeholder">Title</label>
+				         	<label for="inputFloatingLabeltr1" class="col-form-label">Title</label>
 						<input id="inputFloatingLabeltr1" type="text" class="form-control input-border-bottom"  name="tarin_name[]">
 
 					</div>
 				   </div>
 				   <div class="col-md-4">
 				     <div class="form-group">
-				         <label for="inputFloatingLabeltr2" class="placeholder">Start Date</label>
+				         <label for="inputFloatingLabeltr2" class="col-form-label">Start Date</label>
 						<input id="inputFloatingLabeltr2" type="date" class="form-control input-border-bottom" name="tarin_start_date[]">
 
 					</div>
 				   </div>
 				    <div class="col-md-4">
 				    <div class="form-group">
-				         <label for="inputFloatingLabeltr2" class="placeholder">End Date</label>
+				         <label for="inputFloatingLabeltr2" class="col-form-label">End Date</label>
 						<input id="inputFloatingLabeltr2" type="date" class="form-control input-border-bottom"  name="tarin_end_date[]">
 
 					</div>
@@ -3074,7 +3100,7 @@ Route::get('settings/get-add-row-item-train/{row}', function ($row) {
 				  <div class="row">
 				  <div class="col-md-4">
 				      <div class="form-group">
-				         	<label for="inputFloatingLabeltr4" class="placeholder">Description</label>
+				         	<label for="inputFloatingLabeltr4" class="col-form-label">Description</label>
 					<textarea id="inputFloatingLabeltr4"  rows="5" class="form-control"  style="height:135px !important;resize:none;"  name="train_des[]"> </textarea>
 
 
@@ -3096,7 +3122,7 @@ Route::get('settings/get-add-row-item-upload/{row}', function ($row) {
 				  <div class="row itemslotupload" id="' . $row . '">
 				  <div class="col-md-4">
 				    <div class="form-group">
-				    <label for="selectFloatingLabel" class="placeholder">Type of Document</label>
+				    <label for="selectFloatingLabel" class="col-form-label">Type of Document</label>
 					<input id="selectFloatingLabel" type="text" class="form-control" required="" name="type_doc[]">
 
 
@@ -3841,7 +3867,7 @@ Route::get('pis/getEmployeetaxempByIdnewemployee/{empid}', function ($empid) {
 				   <div class="col-md-3">
 
 <div class="form-group">
-    <label for="inputFloatingLabeldn' . $truotherdocpload_id . '" class="placeholder">Document name.</label>
+    <label for="inputFloatingLabeldn' . $truotherdocpload_id . '" class="col-form-label">Document name.</label>
     <input id="inputFloatingLabeldn' . $truotherdocpload_id . '" type="text" class="form-control input-border-bottom"  name="doc_name_' . $empuprs->id . '" value="' . $empuprs->doc_name . '">
 
 
@@ -3850,7 +3876,7 @@ Route::get('pis/getEmployeetaxempByIdnewemployee/{empid}', function ($empid) {
 				   		<div class="col-md-3">
 
 <div class="form-group">
-    <label for="inputFloatingLabeldn' . $truotherdocpload_id . '" class="placeholder">Document reference number.</label>
+    <label for="inputFloatingLabeldn' . $truotherdocpload_id . '" class="col-form-label">Document reference number.</label>
     <input id="inputFloatingLabeldn' . $truotherdocpload_id . '" type="text" class="form-control input-border-bottom"   name="doc_ref_no_' . $empuprs->id . '" value="' . $empuprs->doc_ref_no . '">
 
 
@@ -3860,7 +3886,7 @@ Route::get('pis/getEmployeetaxempByIdnewemployee/{empid}', function ($empid) {
 
 			            <div class="col-md-3">
 				  <div class="form-group">
-				      <label for="selectFloatingLabelntp" class="placeholder">Nationality</label>
+				      <label for="selectFloatingLabelntp" class="col-form-label">Nationality</label>
 												<select class="form-control input-border-bottom" id="selectFloatingLabelntp"  name="doc_nation_' . $empuprs->id . '" >
 												<option value="">&nbsp;</option>';
 
@@ -3879,7 +3905,7 @@ Route::get('pis/getEmployeetaxempByIdnewemployee/{empid}', function ($empid) {
 				   	<div class="col-md-3">
 
 						<div class="form-group">
-						    <label for="inputFloatingLabelid' . $truotherdocpload_id . '" class="placeholder">Issued Date</label>
+						    <label for="inputFloatingLabelid' . $truotherdocpload_id . '" class="col-form-label">Issued Date</label>
 						<input id="inputFloatingLabelid' . $truotherdocpload_id . '" type="date" class="form-control input-border-bottom"   name="doc_issue_date_' . $empuprs->id . '" value="' . $doc_date . '" >
 																														</div>
 			</div>
@@ -3887,7 +3913,7 @@ Route::get('pis/getEmployeetaxempByIdnewemployee/{empid}', function ($empid) {
 
 				   <div class="col-md-3">
 							<div class="form-group" >
-							    	<label for="doc_exp_date" class="placeholder">Expiry Date</label>
+							    	<label for="doc_exp_date" class="col-form-label">Expiry Date</label>
 							    <input id="doc_exp_date' . $truotherdocpload_id . '" type="date" class="form-control input-border-bottom"  name="doc_exp_date_' . $empuprs->id . '" value="' . $doc_exp_date . '"
 onchange="getreviewnatdateother(' . $truotherdocpload_id . ');">
 																														</div>
@@ -3895,7 +3921,7 @@ onchange="getreviewnatdateother(' . $truotherdocpload_id . ');">
 				   		<div class="col-md-3">
 
 					<div class="form-group">
-					    <label for="doc_review_date" class="placeholder"  style="margin-top:-12px;">Eligible Review Date</label>
+					    <label for="doc_review_date" class="col-form-label"  style="margin-top:-12px;">Eligible Review Date</label>
 					    <input id="doc_review_date' . $truotherdocpload_id . '" type="date" readonly class="form-control input-border-bottom"  name="doc_review_date_' . $empuprs->id . '" value="' . $doc_review_date . '">
 																															</div>
 			</div>

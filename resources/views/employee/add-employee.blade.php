@@ -1753,7 +1753,7 @@ onchange="getreviewnatdateother(<?php echo $truotherdocpload_id; ?>);">
 	<!-- Atlantis DEMO methods, don't include it in your project! -->
 	<script src="{{ asset('employeeassets/js/setting-demo2.js')}}"></script>
 	<!--<script type="text/javascript" src="jquery-ui-1.10.3/ui/jquery.ui.datepicker.js"></script>-->
-	<script >
+	<script>
 		$(document).ready(function() {
 			$('#basic-datatables').DataTable({
 			});

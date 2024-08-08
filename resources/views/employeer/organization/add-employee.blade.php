@@ -1,5 +1,5 @@
 @extends('employeer.organization.include.app')
-@section('title', 'Home - HRMS admin template')
+@section('title', 'Add Employee')
 @section('content')
 <!-- Page Content -->
 <div class="content container-fluid pb-0">

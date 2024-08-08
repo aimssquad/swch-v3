@@ -45,13 +45,14 @@ class Helper
 
                 foreach ($Roles_auth as $role) {
                     $sidebarItems[] = [
-                        'module_name' => $role->module_name
-                       // 'module_display_name' => $role->module_display_name // Assuming you have a display name
+                        'module_name' => $role->module_name,
+                        'menu' => $role->menu,
+                        'rights' => $role->rights
                     ];
                 }
             }
         }
-        //dd($sidebarItems);
+        //  dd($sidebarItems);
         return $sidebarItems;
     }
 }
