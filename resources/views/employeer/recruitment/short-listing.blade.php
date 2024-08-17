@@ -14,7 +14,7 @@
                         <div class="col">
                             <h3 class="page-title">Employee</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="admin-dashboard.html">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('recruitment/dashboard') }}">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Employee</li>
                             </ul>
                         </div>
@@ -75,16 +75,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <?php $i=1; ?>
+                                    @foreach($candidate_rs as $short_list)
                                     <tr>
-                                        <td>1</td>
-                                        <td>JOB102</td>
-                                        <td>Developer</td>
-                                        <td>1</td>
-                                        <td>JOB102</td>
-                                        <td>Developer</td>
-                                        <td>1</td>
-                                        <td>JOB102</td>
+                                        <td><?=$i++;?></td>
+                                        <td>{{ $short_list->job_id }}</td>
+                                        <td>{{ $short_list->job_title }}</td>
+                                        <td>{{ $short_list->name }}</td>
+                                        <td>{{ $short_list->email }}</td>
+                                        <td>{{ $short_list->phone }}</td>
+                                        <td>{{ $short_list->status }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($short_list->date)->format('Y-m-d') }}</td>
                                         <td class="text-end">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -95,6 +96,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

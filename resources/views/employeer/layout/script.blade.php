@@ -13,6 +13,10 @@
 <script src="{{ asset('frontend/assets/js/chart.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/greedynav.js') }}"></script>
 
+<!-- Chart JS -->
+<script src="{{ asset('frontend/assets/plugins/chartjs/chart.min.js')}}"></script>
+<script src="{{ asset('frontend/assets/plugins/chartjs/chart-data.js')}}"></script>
+
 <!-- Select2 JS -->
 <script src="{{ asset('frontend/assets/js/select2.min.js') }}"></script>
 		

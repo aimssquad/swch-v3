@@ -14,7 +14,7 @@
                         <div class="col">
                             <h3 class="page-title">Job Applied</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="admin-dashboard.html">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('recruitment/dashboard') }}">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Job Applied</li>
                             </ul>
                         </div>
@@ -26,7 +26,7 @@
                 <!-- /Page Header -->
                 
                 <!-- Search Filter -->
-                <div class="row filter-row">
+                {{-- <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">  
                         <div class="input-block mb-3 form-focus">
                             <input type="text" class="form-control floating">
@@ -40,21 +40,11 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3"> 
-                        {{-- <div class="input-block mb-3 form-focus select-focus">
-                            <select class="select floating"> 
-                                <option>Select Designation</option>
-                                <option>Web Developer</option>
-                                <option>Web Designer</option>
-                                <option>Android Developer</option>
-                                <option>Ios Developer</option>
-                            </select>
-                            <label class="focus-label">Designation</label>
-                        </div> --}}
                     </div>
                     <div class="col-sm-6 col-md-3">  
                         <a href="#" class="btn btn-success w-100"> Search </a>  
                     </div>     
-                </div>
+                </div> --}}
                 <!-- /Search Filter -->
                 
                 <div class="row">
@@ -75,16 +65,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+                                    <?php $i = 1; ?>
+                                    @foreach($candidate_rs as $applied_job)                               
                                     <tr>
-                                        <td>1</td>
-                                        <td>JOB102</td>
-                                        <td>Developer</td>
-                                        <td>1</td>
-                                        <td>JOB102</td>
-                                        <td>Developer</td>
-                                        <td>1</td>
-                                        <td>JOB102</td>
+                                        <td><?php echo $i++; ?></td>
+                                        <td>{{ $applied_job->job_id }}</td>
+                                        <td>{{ $applied_job->job_title }}</td>
+                                        <td>{{ $applied_job->name }}</td>
+                                        <td>{{ $applied_job->email }}</td>
+                                        <td>{{ $applied_job->phone }}</td>
+                                        <td>{{ $applied_job->status }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($applied_job->date)->format('Y-m-d') }}</td>
                                         <td class="text-end">
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -95,6 +86,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -14,7 +14,7 @@
                         <div class="col">
                             <h3 class="page-title">Employee</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="admin-dashboard.html">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{ url('recruitment/dashboard') }}">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Employee</li>
                             </ul>
                         </div>
@@ -26,7 +26,7 @@
                 <!-- /Page Header -->
                 
                 <!-- Search Filter -->
-                <div class="row filter-row">
+                {{-- <div class="row filter-row">
                     <div class="col-sm-6 col-md-3">  
                         <div class="input-block mb-3 form-focus">
                             <input type="text" class="form-control floating">
@@ -54,7 +54,7 @@
                     <div class="col-sm-6 col-md-3">  
                         <a href="#" class="btn btn-success w-100"> Search </a>  
                     </div>     
-                </div>
+                </div> --}}
                 <!-- /Search Filter -->
                 
                 <div class="row">

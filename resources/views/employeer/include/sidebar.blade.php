@@ -542,14 +542,15 @@ $user_type = Session::get("user_type");
                                 <li class="submenu">
                                     <a href="#" class="{{Request::is('recruitment/dashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Recruitment</span> <span class="menu-arrow"></span></a>
                                     <ul>
+                                        <li><a href="{{ route('recruitment.dashboard') }}">Dashboard</a></li>
                                         <li><a href="{{ route('recruitment.job-list') }}">Job List</a></li>
                                         <li><a href="{{ route('recruitment.job-posting') }}">Job Posting</a></li>
                                         <li><a href="{{ route('recruitment.job-published') }}">Job Published</a></li>
                                         <li><a href="{{ route('recruitment.job-applied') }}">Job Applied</a></li>
                                         <li><a href="{{ route('recruitment.short-listing') }}">Short listing</a></li>
-                                        {{-- <li><a href="{{ route('recruitment.interview') }}">Interview</a></li> --}}
-                                        {{-- <li><a href="{{ route('recruitment.hired') }}">Hired</a></li>
-                                        <li><a href="{{ route('recruitment.offer-letter') }}">Generate Offer Letter</a></li>
+                                        <li><a href="{{ route('recruitment.interview_result') }}">Interview</a></li>
+                                        <li><a href="{{ url('recruitment/hired_list') }}">Hired</a></li>
+                                        {{-- <li><a href="{{ route('recruitment.offer-letter') }}">Generate Offer Letter</a></li>
                                         <li><a href="{{ route('recruitment.rejected') }}">Rejected</a></li> --}}
                                     </ul>
                                 </li>

@@ -191,20 +191,22 @@ $name='';
 $num='';
 $email='';
 $desig='';
-if(!empty($candidate->reportauthor)){
-   
-    $employee=DB::table('employee')->where('emid', '=',$Roledata->reg )->where('emp_code', '=',$candidate->reportauthor)->first();
-//    dd($employee);
-    $name=$employee->emp_fname.' '.$employee->emp_mname.' '.$employee->emp_lname;
-    $num=$employee->em_phone;
-    $email=$employee->em_email;
-    $desig=$employee->emp_designation;
-}else{
-   $name=$job_d->author;
-    $num=$job_d->con_num;
-    $email=$job_d->email;
-    $desig=$job_d->desig; 
-}
+
+// if(!empty($candidate->reportauthor)){
+// //    dd($candidate);
+//     $employee=DB::table('employee')->where('emid', '=',$Roledata->reg )->where('emp_code', '=',$candidate->reportauthor)->first();
+// //    dd($employee);
+//     $name=$employee->emp_fname.' '.$employee->emp_mname.' '.$employee->emp_lname;
+
+//     $num=$employee->em_phone;
+//     $email=$employee->em_email;
+//     $desig=$employee->emp_designation;
+// }else{
+//    $name=$job_d->author;
+//     $num=$job_d->con_num;
+//     $email=$job_d->email;
+//     $desig=$job_d->desig; 
+// }
  
  ?>
 	
@@ -429,18 +431,18 @@ if(!empty($candidate->reportauthor)){
 	
 	<script type="text/javascript">
 		$.fn.extend({
-	print: function() {
-		var frameName = 'printIframe';
-		var doc = window.frames[frameName];
-		if (!doc) {
-			$('<iframe>').hide().attr('name', frameName).appendTo(document.body);
-			doc = window.frames[frameName];
-		}
-		doc.document.body.innerHTML = this.html();
-		doc.window.print();
-		return this;
-	}
-});
+			print: function() {
+				var frameName = 'printIframe';
+				var doc = window.frames[frameName];
+				if (!doc) {
+					$('<iframe>').hide().attr('name', frameName).appendTo(document.body);
+					doc = window.frames[frameName];
+				}
+				doc.document.body.innerHTML = this.html();
+				doc.window.print();
+				return this;
+			}
+		});
 	</script>
 </body>
 </html>

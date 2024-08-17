@@ -1203,8 +1203,9 @@ class RecruitmentController extends Controller
 
                 ->select('candidate.*', 'company_job.soc')
                 ->get();
-
+                // dd($data);
             return view('recruitment/candidate-hired', $data);
+            
         } else {
             return redirect('/');
         }
@@ -1212,12 +1213,14 @@ class RecruitmentController extends Controller
 
     public function viewhiredcandidatedetails($hired_id)
     {
+        dd("hii");
         if (!empty(Session::get('emp_email'))) {
             $data['job'] = DB::table('candidate')->where('id', '=', base64_decode($hired_id))->where('status', '=', 'Hired')->first();
 
             $data['job_details'] = DB::table('candidate_history')->where('user_id', '=', base64_decode($hired_id))->orderBy('id', 'DESC')->first();
 
             return View('recruitment/hired-edit', $data);
+            
         } else {
             return redirect('/');
         }
@@ -1947,7 +1950,7 @@ class RecruitmentController extends Controller
                 'date' => $can_d->date, 'from_time' => $job->from_time, 'to_time' => $job->to_time, 'place' => $job->place, 'panel' => $job->panel, 'Roledata' => $Roledata, 'job_d' => $job_d, 'can_d' => $can_d);
 
             return View('recruitment/interview', $data);
-
+            dd($data);
         } else {
             return redirect('/');
         }

@@ -29,3 +29,6 @@
 
 <!-- Main CSS -->
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
+
+<!-- Customize CSS -->
+<link rel="stylesheet" href="{{ asset('frontend/assets/css/customize.css') }}">

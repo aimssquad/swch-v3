@@ -370,7 +370,7 @@ $(document).ready(function() {
 
 	if($('.datatable').length > 0) {
 		$('.datatable').DataTable({
-			"bFilter": false,
+			"bFilter": true,
 			"language": {
                 paginate: {
                     next: ' <i class=" fa fa-angle-double-right"></i>',

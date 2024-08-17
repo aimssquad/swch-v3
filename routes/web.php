@@ -67,6 +67,9 @@ Route::post('leave/new-leave-type', 'App\Http\Controllers\organization\LeaveMana
 // --------------------------------Start Recruitment Section ---------------------------------------------------------------
 //---------------------------------Job List--------------------------
 Route::get('recruitment/job_list', 'App\Http\Controllers\organization\RecruitmentController@jobList')->name('recruitment.job-list');
+Route::get('recruitment/dashboard', 'App\Http\Controllers\organization\RecruitmentController@dashboard')->name('recruitment.dashboard');
+// Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@appliedjob')->name('recruitment.job-applied');
+
 Route::get('recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@addJobList')->name('recruitment.add-job-list');
 
 
@@ -74,10 +77,15 @@ Route::get('recruitment/job_posting', 'App\Http\Controllers\organization\Recruit
 Route::get('recruitment/job_published', 'App\Http\Controllers\organization\RecruitmentController@jobPublished')->name('recruitment.job-published');
 Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@jobApplied')->name('recruitment.job-applied');
 Route::get('recruitment/short_listing', 'App\Http\Controllers\organization\RecruitmentController@shortListing')->name('recruitment.short-listing');
-Route::get('recruitment/interview', 'App\Http\Controllers\organization\RecruitmentController@interview')->name('recruitment.interview');
-Route::get('recruitment/hired', 'App\Http\Controllers\organization\RecruitmentController@hired')->name('recruitment.hired');
+Route::get('recruitment/interview_result', 'App\Http\Controllers\organization\RecruitmentController@interview')->name('recruitment.interview_result');
+Route::get('recruitment/hired_list', 'App\Http\Controllers\organization\RecruitmentController@hired')->name('recruitment.hired-list');
 Route::get('recruitment/offer_letter', 'App\Http\Controllers\organization\RecruitmentController@offerLetter')->name('recruitment.offer-letter');
 Route::get('recruitment/rejected', 'App\Http\Controllers\organization\RecruitmentController@rejected')->name('recruitment.rejected');
+
+Route::get('recruitment/edit_candidate/{candidate_id}', 'App\Http\Controllers\organization\RecruitmentController@candidateDetailsView')->name('edit-candidates');
+Route::post('recruitment/edit_candidate', 'App\Http\Controllers\RecruitmentController@savecandidatedetails');
+
+
 //-----------------------------End Recruitment Section -------------------------------------------------------------
 
 

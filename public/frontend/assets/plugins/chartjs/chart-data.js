@@ -4,10 +4,10 @@ $(function() {
 	new Chart(ctx1, {
 		type: 'bar',
 		data: {
-			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+			labels: ['Job Applied', 'Shortlisted', 'Interview', 'Hired', 'Offer Letter', 'Rejected'],
 			datasets: [{
-				label: 'Sales',
-				data: [24, 10, 32, 24, 26, 20],
+				label: 'Overall Statistics',
+				data: [80, 10, 50, 24, 26, 20],
 				backgroundColor: '#ff9b44'
 			}]
 		},
