@@ -9,6 +9,8 @@ use Route;
 use Session;
 use App\InterviewCandidate;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\AjaxController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,9 @@ Route::get('organization/add_employee', 'App\Http\Controllers\organization\Landi
 //Route::post('organization/save-employee', 'App\Http\Controllers\EmployeeController@saveEmployee');
 Route::get('organization/example', 'App\Http\Controllers\organization\EmployeeController@example');
 
+
+
+
 //----------------------------- Holiday List ------------------------------------
 Route::get('organization/holiday-list', 'App\Http\Controllers\organization\HolidayController@holidayList')->name('organization/holiday-list');
 Route::get('organization/add-holiday-list', 'App\Http\Controllers\organization\HolidayController@addHolidayList')->name('organization/add-holiday-list');
@@ -55,17 +60,120 @@ Route::post('organization/add-holiday-type', 'App\Http\Controllers\organization\
 Route::get('organization/add-holiday-type/{holiday_id}', 'App\Http\Controllers\organization\HolidayController@getHolidayTypeDtl');
 Route::get('organization/delete-holiday-type/{holiday_id}', 'App\Http\Controllers\organization\HolidayController@deleteHolidayType');
 //----------------------------- End Holiday List ---------------------------------
+
+
+
 //------------------------------Leave Management --------------------------------------------
 Route::get('leave/leave-type-listing', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveType')->name('leave/leave-type-listing');
 Route::get('leave/leave-type-listing/{holiday_id}', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveTypeDtl');
 Route::get('leave/new-leave-type', 'App\Http\Controllers\organization\LeaveManagementController@viewAddLeaveType')->name('leave/new-leave-type');
 Route::post('leave/new-leave-type', 'App\Http\Controllers\organization\LeaveManagementController@saveLeaveType');
 
+Route::get('leave/leave-rule-listing', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveRules');
+Route::get('leave/save-leave-rule', 'App\Http\Controllers\organization\LeaveManagementController@leaveRules');
+Route::post('leave/save-leave-rule', 'App\Http\Controllers\organization\LeaveManagementController@saveAddLeaveRule');
+Route::get('leave/view-leave-rule/{leave_rule_id}', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveRulesById');
+
+Route::get('leave/leave-allocation-listing', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveAllocation');
+Route::get('leave/save-leave-allocation', 'App\Http\Controllers\organization\LeaveManagementController@viewAddLeaveAllocation');
+Route::post('leave/save-leave-allocation', 'App\Http\Controllers\organization\LeaveManagementController@saveAddLeaveAllocation');
+Route::post('leave/get-leave-allocation', 'App\Http\Controllers\organization\LeaveManagementController@getAddLeaveAllocation');
+
+Route::get('leave/leave-balance', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveBalance');
+Route::post('leave/leave-balance', 'App\Http\Controllers\organization\LeaveManagementController@spoLeaveBalance');
+Route::post('leave/leave-balance-excel', 'App\Http\Controllers\organization\LeaveManagementController@spoLeaveBalanceexcel');
+
+Route::get('leave/leave-report', 'App\Http\Controllers\organization\LeaveManagementController@leaveBalanceView');
+Route::post('leave/leave-report', 'App\Http\Controllers\organization\LeaveManagementController@leaveBalanceReport');
+
+Route::get('leave/leave-report-employee', 'App\Http\Controllers\organization\LeaveManagementController@viewleaveemplyee');
+Route::post('leave/leave-report-employee', 'App\Http\Controllers\organization\LeaveManagementController@getleaveemplyee');
+Route::post('leave/leave-report-employee-wise', 'App\Http\Controllers\organization\LeaveManagementController@postleaveemplyee');
+Route::post('leave/leave-report-employee-wise-excel', 'App\Http\Controllers\organization\LeaveManagementController@postleaveemplyeeexcel');
 
 //------------------------------End Leave Management -----------------------------------------
 
+
+//----------------------------------- Attendance Mangement ---------------------------------------------
+Route::get('attendance-management/upload-data', 'App\Http\Controllers\organization\AttendanceController@viewUploadAttendence');
+Route::post('attendance-management/upload-data', 'App\Http\Controllers\organization\AttendanceController@importExcel');
+
+Route::get('attendance-management/generate-data', 'App\Http\Controllers\organization\AttendanceController@viewGenerateAttendence');
+Route::post('attendance-management/generate-data', 'App\Http\Controllers\organization\AttendanceController@importGenerate');
+Route::post('attendance-management/save-generate-attandance', 'App\Http\Controllers\organization\AttendanceController@saveGenerate');
+
+Route::get('attendance-management/daily-attendance', 'App\Http\Controllers\organization\AttendanceController@viewattendancedaily');
+Route::post('attendance-management/daily-attendance', 'App\Http\Controllers\organization\AttendanceController@getDailyAttandance');
+Route::get('attendance-management/edit-daily/{daily_id}', 'App\Http\Controllers\organization\AttendanceController@getDailyAttandancedetails');
+Route::post('attendance-management/edit-daily', 'App\Http\Controllers\organization\AttendanceController@saveDailyAttandancedetails');
+
+Route::get('attendance-management/attendance-report', 'App\Http\Controllers\organization\AttendanceController@viewattendancereport');
+Route::post('attendance-management/attendance-report', 'App\Http\Controllers\organization\AttendanceController@getReportAttandance');
+Route::post('attendance-management/attendance-month-report', 'App\Http\Controllers\organization\AttendanceController@importdtaa');
+// pdf pending
+
+Route::get('attendance-management/process-attendance', 'App\Http\Controllers\organization\AttendanceController@viewattendanceprocess');
+Route::post(' attendance-management/process-attendance', 'App\Http\Controllers\organization\AttendanceController@getprocessAttandance');
+Route::post('attendance-management/save-Process-Attandance', 'App\Http\Controllers\organization\AttendanceController@saveProcessAttandance');
+
+Route::get('attendance-management/absent-report', 'App\Http\Controllers\organization\AttendanceController@viewattendanabsent');
+Route::post('attendance-management/absent-report', 'App\Http\Controllers\organization\AttendanceController@getattendanabsent');
+//------------------------------------ End Attendance Management -------------------------------------
+
+//------------------------------------- Rota ---------------------------------------------------
+Route::get('rota-org/shift-management', 'App\Http\Controllers\organization\RotaController@viewshift');
+Route::get('rota-org/add-shift-management', 'App\Http\Controllers\organization\RotaController@viewAddNewShift');
+Route::post('rota-org/add-shift-management', 'App\Http\Controllers\organization\RotaController@saveShiftData');
+Route::get('rota-org/delete-shift-management/{id}', 'App\Http\Controllers\organization\RotaController@shiftDeleted');
+
+Route::get('rota-org/late-policy', 'App\Http\Controllers\organization\RotaController@viewlate');
+Route::get('rota-org/add-late-policy', 'App\Http\Controllers\organization\RotaController@viewAddNewlate');
+Route::post('rota-org/add-late-policy', 'App\Http\Controllers\organization\RotaController@savelateData');
+
+Route::get('rota-org/offday', 'App\Http\Controllers\organization\RotaController@viewoffday');
+Route::get('rota-org/add-offday', 'App\Http\Controllers\organization\RotaController@viewAddNewoffday');
+Route::post('rota-org/add-offday', 'App\Http\Controllers\organization\RotaController@saveoffdayData');
+
+Route::get('rota-org/grace-period', 'App\Http\Controllers\organization\RotaController@viewgrace');
+Route::get('rota-org/add-grace-period', 'App\Http\Controllers\organization\RotaController@viewAddNewgrace');
+Route::post('rota-org/add-grace-period', 'App\Http\Controllers\organization\RotaController@savegraceData');
+
+Route::get('rota-org/duty-roster','App\Http\Controllers\organization\RotaController@viewroster');
+Route::post('rota-org/add-duty-roster', 'App\Http\Controllers\organization\RotaController@saverosterData');
+Route::get('rota-org/add-employee-duty', 'App\Http\Controllers\organization\RotaController@viewAddNewemployeeduty');
+Route::post('rota-org/add-employee-duty', 'App\Http\Controllers\organization\RotaController@saveemployeedutyData');
+Route::get('rota-org/add-department-duty', 'App\Http\Controllers\organization\RotaController@viewAddNewdepartmentduty');
+Route::post('rota-org/add-department-duty', 'App\Http\Controllers\organization\RotaController@savedepartmentdutyData');
+
+
+Route::get('rota-org/visitor-link', 'App\Http\Controllers\organization\RotaController@viewvisitorlink');
+
+Route::get('rota-org/visitor-regis', 'App\Http\Controllers\organization\RotaController@viewvisitorregis');
+Route::get('rota-org/visitor-regis-edit/{id}', 'App\Http\Controllers\organization\RotaController@eitvisitorregisterlist');
+Route::post('rota-org/visitor-edit', 'App\Http\Controllers\organization\RotaController@eitvisitorregistersave');
+Route::get('rota-org/visitor-regis-deleted/{id}', 'App\Http\Controllers\organization\RotaController@visitorDeleted');
+
+
+
+//-------------------------------------End Rota--------------------------------------------------
+
+//-------------------------------------- File Manager -----------------------------------------------
+Route::get('file-management/file-devision-list', 'App\Http\Controllers\organization\FilemanagmentControler@filedivisionlist');
+Route::get('file-management/fileManagment-division-add', 'App\Http\Controllers\organization\FilemanagmentControler@filedivisionView');
+Route::post('file-management/fileManagment-division-adds', 'App\Http\Controllers\organization\FilemanagmentControler@filedivisionadd');
+Route::get('file-management/edit-file-devision/{id}', 'App\Http\Controllers\organization\FilemanagmentControler@filedivisionViewedit');
+Route::post('file-management/fileManagment-division-update', 'App\Http\Controllers\organization\FilemanagmentControler@filedivisionViewupdate');
+
+Route::get('file-management/fileManagmentList', 'App\Http\Controllers\organization\FilemanagmentControler@fileManagmentList');
+
+//-------------------------------------- End File Management --------------------------------------------
+
+
+
+
+
+
 // --------------------------------Start Recruitment Section ---------------------------------------------------------------
-//---------------------------------Job List--------------------------
 Route::get('recruitment/job_list', 'App\Http\Controllers\organization\RecruitmentController@jobList')->name('recruitment.job-list');
 Route::get('recruitment/dashboard', 'App\Http\Controllers\organization\RecruitmentController@dashboard')->name('recruitment.dashboard');
 // Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@appliedjob')->name('recruitment.job-applied');
@@ -4239,37 +4347,38 @@ Route::get('attendance/absent-record-card/{absent_id}/{year_value}', 'App\Http\C
 Route::get('attendance/absent-record-card-old/{absent_id}/{year_value}', 'App\Http\Controllers\AttendanceController@viewattendanabsentreport');
 Route::get('attendance/absent-record-card-pdf/{absent_id}/{year_value}', 'App\Http\Controllers\AttendanceController@viewattendanabsentreportpdfN');
 
-Route::get('pis/getEmployeedailyattandeaneshightByIdnewr/{empid}', function ($empid) {
-    $email = Session::get('emp_email');
-    $Roledata = DB::table('registration')
+// Route::get('pis/getEmployeedailyattandeaneshightByIdnewr/{empid}', function ($empid) {
+//     //dd($empid);
+//     $email = Session::get('emp_email');
+//     $Roledata = DB::table('registration')
 
-        ->where('email', '=', $email)
-        ->first();
+//         ->where('email', '=', $email)
+//         ->first();
 
-    $employee_desigrs = DB::table('designation')
-        ->where('id', '=', $empid)
-        ->where('emid', '=', $Roledata->reg)
-        ->first();
-    $employee_depers = DB::table('department')
-        ->where('id', '=', $employee_desigrs->department_code)
-        ->where('emid', '=', $Roledata->reg)
-        ->first();
-    $employee_rs = DB::table('employee')
+//     $employee_desigrs = DB::table('designation')
+//         ->where('id', '=', $empid)
+//         ->where('emid', '=', $Roledata->reg)
+//         ->first();
+//     $employee_depers = DB::table('department')
+//         ->where('id', '=', $employee_desigrs->department_code)
+//         ->where('emid', '=', $Roledata->reg)
+//         ->first();
+//     $employee_rs = DB::table('employee')
 
-        ->where('emp_designation', '=', $employee_desigrs->designation_name)
-        ->where('emp_department', '=', $employee_depers->department_name)
-        ->where('emid', '=', $Roledata->reg)
-        ->get();
-    $result = '';
-    $result_status1 = "  <option value=''>Select</option>
-";
-    foreach ($employee_rs as $bank) {
-        $result_status1 .= '<option value="' . $bank->emp_code . '"';if (isset($employee_code) && $employee_code == $bank->emp_code) {$result_status1 .= 'selected';}$result_status1 .= '> ' . $bank->emp_fname . ' ' . $bank->emp_mname . ' ' . $bank->emp_lname . ' (' . $bank->emp_code . ')</option>';
-    }
+//         ->where('emp_designation', '=', $employee_desigrs->designation_name)
+//         ->where('emp_department', '=', $employee_depers->department_name)
+//         ->where('emid', '=', $Roledata->reg)
+//         ->get();
+//     $result = '';
+//     $result_status1 = "  <option value=''>Select</option>
+// ";
+//     foreach ($employee_rs as $bank) {
+//         $result_status1 .= '<option value="' . $bank->emp_code . '"';if (isset($employee_code) && $employee_code == $bank->emp_code) {$result_status1 .= 'selected';}$result_status1 .= '> ' . $bank->emp_fname . ' ' . $bank->emp_mname . ' ' . $bank->emp_lname . ' (' . $bank->emp_code . ')</option>';
+//     }
 
-    echo $result_status1;
+//     echo $result_status1;
 
-});
+// });
 
 Route::get('pis/getEmployeedailyattandeaneshightById/absent/{empid}', function ($empid) {
     $email = Session::get('emp_email');
@@ -4759,7 +4868,7 @@ Route::get('pis/getEmployeedesigBylateId/{empid}', function ($empid) {
 });
 
 Route::get('pis/getEmployeedesigByshiftIdcode/{department}/{designation}/{employee_code}/{start_date}/{end_date}/{emid}', function ($department, $designation, $employee_code, $start_date, $end_date, $emid) {
-
+    //dd($emid);
     $Roledata = DB::table('registration')
 
         ->where('reg', '=', $emid)
@@ -4787,7 +4896,7 @@ Route::get('pis/getEmployeedesigByshiftIdcode/{department}/{designation}/{employ
         ->get();
 
 
-    // dd($duty_rs);
+    //dd($duty_rs);
 
     $result = '';
     $result_status1 = "<option value='' selected disabled> &nbsp;</option>";
@@ -5315,3 +5424,7 @@ Route::get('subadmin/verify', 'App\Http\Controllers\AdminController@VerfySubadmi
 Route::get('subadmin/edit-sub-company/{comp_id}', 'App\Http\Controllers\AdminController@viewSubAddCompany');
 Route::post('subadmin/editsubcompany', 'App\Http\Controllers\AdminController@saveSubCompany');
 Route::get('subadmin/view-sub-organization/{comp_id}', 'App\Http\Controllers\AdminController@viewSubOrganization');
+
+
+// Ajax Route ------------------------------------------------------------
+Route::get('pis/getEmployeedailyattandeaneshightByIdnewr/{empid}','App\Http\Controllers\AjaxController@getEmpCode');

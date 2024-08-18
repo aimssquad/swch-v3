@@ -235,6 +235,7 @@ public function dashboard(Request $request){
    //      return redirect("/");
    //  }
  }
+ 
  public function filedivisionView(){
    $email = Session::get('emp_email');
    if(!empty($email)){

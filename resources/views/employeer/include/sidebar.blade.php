@@ -417,26 +417,11 @@ $user_type = Session::get("user_type");
                 </nav>
                 <ul class="sidebar-vertical">
                     @if($user_type=="employer")
-                    <li class="menu-title">
-                        <span>Main</span>
-                    </li>
-                    <li class="submenu ">
-                        <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-cube"></i> <span> Organization</span> <span class="menu-arrow"></span></a>
-                        <ul>                         
-                            <li><a  href="{{ route('organization.home') }}">Dashboard</a></li>  
-                            <li><a href="#">Employees According to RTI</a></li>
-                            <li><a href="contacts.html">Authorizing Officer</a></li>
-                            <li><a href="inbox.html">Key Contact</a></li>
-                            <li><a href="file-manager.html">level 1 user</a></li>
-                            <li><a href="file-manager.html">level 2 user</a></li>
-                            <li><a href="file-manager.html">Sponsor Compliance</a></li>
-                            <li><a href="file-manager.html">Governance</a></li>
-                        </ul>
-                    </li>
-                    @endif 
-                    @if($user_type=="employer")
                         @foreach($sidebarItems  as $array_role)
                             @if($array_role['module_name'] == 8) 
+                                <li class="menu-title">
+                                    <span>Main</span>
+                                </li>
                                 <li class="submenu">
                                     <a href="#"><i class="la la-cube {{Request::is('organization/employerdashboard')?'noti-dot':'';}}"></i> <span> Organisation</span> <span class="menu-arrow"></span></a>
                                     <ul>
@@ -601,16 +586,16 @@ $user_type = Session::get("user_type");
                     @endIf
                     @if($user_type=="employer")
                         @foreach($sidebarItems  as $array_role)
-                            @if($array_role==4) 
+                            @if($array_role['module_name'] ==4) 
                                 <li class="menu-title">
                                     <span>Holiday Management</span>
                                 </li>          
                                 <li class="submenu">
                                     <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Holiday Management</span> <span class="menu-arrow"></span></a>
                                     <ul>
-                                        <li><a href="employees.html">Holiday Type</a></li>
-                                        <li><a href="holidays.html">Holiday List</a></li>
-                                        <li><a href="leaves.html">Pro Rata Holiday Calculator</li> 
+                                        <li><a href="{{url('organization/holiday-type')}}">Holiday Type</a></li>
+                                        <li><a href="{{url('organization/holiday-list')}}">Holiday List</a></li>
+                                        {{-- <li><a href="leaves.html">Pro Rata Holiday Calculator</li>  --}}
                                     </ul>
                                 </li>
                             @endif
@@ -625,12 +610,12 @@ $user_type = Session::get("user_type");
                                 <li class="submenu">
                                     <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Leave Management</span> <span class="menu-arrow"></span></a>
                                     <ul>
-                                        <li><a href="employees.html">Manage Leave Type</a></li>
-                                        <li><a href="holidays.html">Leave Rule</a></li>
-                                        <li><a href="leaves.html">Leave Allocation</li>
-                                        <li><a href="leaves-employee.html">Leave Balance</a></li>
-                                        <li><a href="leave-settings.html">Leave Report</a></li>
-                                        <li><a href="attendance.html">Leave Report Employee Wise</a></li> 
+                                        <li><a href="{{url('leave/leave-type-listing')}}">Manage Leave Type</a></li>
+                                        <li><a href="{{url('leave/leave-rule-listing')}}">Leave Rule</a></li>
+                                        <li><a href="{{url('leave/leave-allocation-listing')}}">Leave Allocation</a></li>
+                                        <li><a href="{{url('leave/leave-balance')}}">Leave Balance</a></li>
+                                        <li><a href="{{url('leave/leave-report')}}">Leave Report</a></li>
+                                        <li><a href="{{url('leave/leave-report-employee')}}">Leave Report Employee Wise</a></li> 
                                     </ul>
                                 </li>
                             @endif
@@ -648,18 +633,18 @@ $user_type = Session::get("user_type");
                                         <li class="submenu">
                                             <a href="#"><span> Time Shift Management </span> <span class="menu-arrow"></span></a>
                                             <ul>
-                                                <li><a href="voice-call.html">Shift Management</a></li>
-                                                <li><a href="video-call.html">Late Policy</a></li>
-                                                <li><a href="video-call.html">Day Off</a></li>
-                                                <li><a href="video-call.html">Grace Period</a></li>
-                                                <li><a href="video-call.html">Duty Roster</a></li>
+                                                <li><a href="{{url('rota-org/shift-management')}}">Shift Management</a></li>
+                                                <li><a href="{{url('rota-org/late-policy')}}">Late Policy</a></li>
+                                                <li><a href="{{url('rota-org/offday')}}">Day Off</a></li>
+                                                <li><a href="{{url('rota-org/grace-period')}}">Grace Period</a></li>
+                                                <li><a href="{{url('rota-org/duty-roster')}}">Duty Roster</a></li>
                                             </ul>
                                         </li>
                                         <li class="submenu">
                                             <a href="#"><span> Visitor </span> <span class="menu-arrow"></span></a>
                                             <ul>
-                                                <li><a href="voice-call.html">Visitor Register Link </a></li>
-                                                <li><a href="video-call.html">Visitor Register </a></li>
+                                                <li><a href="{{url('rota-org/visitor-link')}}">Visitor Register Link </a></li>
+                                                <li><a href="{{url('rota-org/visitor-regis')}}">Visitor Register </a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -668,21 +653,37 @@ $user_type = Session::get("user_type");
                         @endforeach
                     @endIf
                     @if($user_type=="employer")
+                    @foreach($sidebarItems  as $array_role)
+                        @if($array_role['module_name'] == 6) 
+                            <li class="menu-title">
+                                <span>Module</span>
+                            </li>          
+                            <li class="submenu">
+                                <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Visitor</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a href="{{url('rota-org/visitor-link')}}">Visitor Register Link </a></li>
+                                    <li><a href="{{url('rota-org/visitor-regis')}}">Visitor Register </a></li>
+                                </ul>
+                            </li>
+                        @endif
+                    @endforeach
+                @endIf
+                    @if($user_type=="employer")
                         @foreach($sidebarItems  as $array_role)
                             @if($array_role['module_name'] == 6) 
-                                {{-- <li class="menu-title">
+                                <li class="menu-title">
                                     <span>Attendance</span>
-                                </li>           --}}
+                                </li>          
                                 <li class="submenu">
                                     <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Attendance</span> <span class="menu-arrow"></span></a>
                                     <ul>   
-                                        <li><a href="voice-call.html">Attendance Statistics</a></li>
-                                        <li><a href="video-call.html">Upload Attendance</a></li>
-                                        <li><a href="video-call.html">Generate Attendance</a></li>
-                                        <li><a href="video-call.html">Daily Attendance</a></li>
-                                        <li><a href="video-call.html">Attendance History</a></li>
-                                        <li><a href="video-call.html">Process Attendance</a></li>            
-                                        <li><a href="voice-call.html">Absent Report </a></li>                                
+                                        <li><a href="#">Attendance Statistics</a></li>
+                                        <li><a href="{{url('attendance-management/upload-data')}}">Upload Attendance</a></li>
+                                        <li><a href="{{url('attendance-management/generate-data')}}">Generate Attendance</a></li>
+                                        <li><a href="{{url('attendance-management/daily-attendance')}}">Daily Attendance</a></li>
+                                        <li><a href="{{url('attendance-management/attendance-report')}}">Attendance History</a></li>
+                                        <li><a href="{{url('attendance-management/process-attendance')}}">Process Attendance</a></li>            
+                                        <li><a href="{{url('attendance-management/absent-report')}}">Absent Report </a></li>                                
                                     </ul>
                                 </li>
                             @endif
@@ -737,8 +738,8 @@ $user_type = Session::get("user_type");
                                 <li class="submenu">
                                     <a href="#" class="noti-dot"><i class="la la-user"></i> <span> File Management </span> <span class="menu-arrow"></span></a>
                                     <ul>   
-                                        <li><a href="voice-call.html">File Division</a></li>
-                                        <li><a href="video-call.html">File Manager</a></li>                               
+                                        <li><a href="{{url('file-management/file-devision-list')}}">File Division</a></li>
+                                        <li><a href="{{url('file-management/fileManagmentList')}}">File Manager</a></li>                               
                                     </ul>
                                 </li>
                             @endif

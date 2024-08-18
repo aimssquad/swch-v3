@@ -10,7 +10,7 @@ use DB;
 class UploadAttendenceController extends Controller
 {
     public function viewdashboard(Request $request){
-
+        dd('okk');
         $email = Session::get('emp_email');
         if (!empty($email)) {
 
