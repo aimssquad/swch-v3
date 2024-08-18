@@ -1,7 +1,7 @@
 
 @extends('employeer.include.app')
 
-@section('title', 'Leave Type List')
+@section('title', 'File Manager')
 @php 
 $user_type = Session::get("user_type");
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
@@ -36,53 +36,65 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 	<div class="page-header">
 		<div class="row align-items-center">
 			<div class="col">
-				<h3 class="page-title">Leave Type List</h3>
+				<h3 class="page-title">File Manager</h3>
 				<ul class="breadcrumb">
 					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
-					<li class="breadcrumb-item active">Leave Type List</li>
+					<li class="breadcrumb-item active">File Manager List</li>
 				</ul>
 			</div>
 			<div class="col-auto float-end ms-auto">
 				@if($user_type == 'employee')
 				@foreach($sidebarItems as $value)
-				@if($value['rights'] == 'Add' && $value['module_name'] == 3 && $value['menu'] == 43)
-				<a href="{{url('leave/new-leave-type')}}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Leave Type</a>
+				@if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 48)
+				<a href="{{ url('fileManagment/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Division</a>
+                <span><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('fileManagment/report-excel')}}"><img  style="width: 30px; height:25px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
 				@endif
 				@endforeach
 				@elseif($user_type == 'employer')
-				<a href="{{url('leave/new-leave-type')}}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Leave Type</a>
+				<a href="{{ url('fileManagment/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Division</a>
+                <span style="margin-right:10px; margin-top:5px;"><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('fileManagment/report-excel')}}"><img  style="width: 35px; height:37px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
 				@endif
 				{{-- <div class="view-icons">
 					<a href="{{url('organization/employeeee')}}" class="grid-view btn btn-link "><i class="fa fa-th"></i></a>
 					<a href="{{url('organization/emplist')}}" class="list-view btn btn-link active"><i class="fa-solid fa-bars"></i></a>
 				</div> --}}
 			</div>
-            @if(Session::has('message'))										
-            <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-            @endif
 		</div>
 	</div>
+    @if(Session::has('message'))										
+    <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
+    @endif
 	<!-- /Page Header -->
 	<div class="row">
-		<div class="col-md-12">
-			<div class="table-responsive">
-				<table class="table table-striped custom-table " id="employeeTable">
-					<thead>
-						<tr>
-							<th class="no-sort">Sl. No.</th>
-							<th class="no-sort">Leave Type</th>
-							<th class="no-sort">Leave Type Short Code</th>
-							<th class="text-nowrap no-sort">Remarks</th>
-							<th class="text-end no-sort">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-                            @foreach($leave_type_rs as $l)
-                            <tr>
-                                <td>{{$loop->iteration}}</td>
-                                <td>{{$l->leave_type_name}}</td>
-                                <td>{{$l->alies}}</td>
-                                <td>{{$l->remarks}}</td>
+        <div class="col-md-12">
+            <div class="card custom-card">
+                <div class="card-header">
+                    <h4 class="card-title"><i class="far fa-clock" aria-hidden="true"
+                            style="color:#10277f;"></i>&nbsp;File Division<span>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="basic-datatables" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Sl.No.</th>
+                                    <th>File Name</th>
+                                    <th>Organization Id</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php $i=1; ?>
+                                @foreach($file_details as $item)
+
+                              <tr>
+                                <td><?php echo $i; ?></td>
+                                <td>{{$item->file_name}}</td>
+                                <td>{{$item->organization_id}}</td>
+                                <td>{{$item->status}}</td>
                                 <td class="text-end">
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -92,36 +104,39 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
                                             @if($user_type == 'employee')
                                                 @foreach($sidebarItems as $value)
                                                     @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
-                                                        <a class="dropdown-item" href="{{url('leave/leave-type-listing/'.$l->id)}}">
-                                                            <i class="fa-solid fa-pencil m-r-5"></i> Edit
+                                                        @if($item->status!=="pending")
+                                                        <a class="dropdown-item" href="{{url("fileManagment/edit-fileManager/$item->id")}}">
+                                                            <i class="fa fa-file m-r-5"></i> Create Folder</a>
                                                         </a>
+                                                        @endif
                                                     @endif
                                                 @endforeach
                                             @elseif($user_type == 'employer')
-                                                <a class="dropdown-item" href="{{url('leave/leave-type-listing/'.$l->id)}}">
+                                                @if($item->status ==="pending")        
+                                                <a class="dropdown-item" href="{{url("fileManagment/edit-fileManager/$item->id")}}">
                                                     <i class="fa-solid fa-pencil m-r-5"></i> Edit
                                                 </a>
+                                                @endif
                                             @endif
-                    
-                                            {{-- @if($user_type == 'employee')
-                                                @foreach($sidebarItems as $value)
-                                                    @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
-													<a class="dropdown-item" href="#" onclick="confirmDelete('{{ url('organization/delete-holiday-list/' . $holiday->id) }}')"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
-                                                    @endif
-                                                @endforeach
-                                            @elseif($user_type == 'employer')
-											<a class="dropdown-item" href="#" onclick="confirmDelete('{{ url('organization/delete-holiday-list/' . $holiday->id) }}')"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
-                                            @endif --}}
+            
+                                            @if($user_type == 'employer')
+                                                @if($item->status !=="pending") 
+                                                <a class="dropdown-item" href="{{url("fileManagment/folder-create/$item->id")}}"><i class="fa fa-file m-r-5"></i> Create Folder</a>
+                                                @endif
+                                            @endif
                                         </div>
                                     </div>
                                 </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+                                </tr>
+                                <?php  $i++ ?>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- /Page Content -->
 
@@ -130,17 +145,10 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 
 @section('script')
 <script>
-    function confirmDelete(url) {
-        if (confirm("Are you sure you want to delete this record?")) {
-            window.location.href = url;
-        }
-    }
-</script>
-<script>
-	 $(document).ready(function() {
+   $(document).ready(function() {
             $('#basic-datatables').DataTable({
             });
-
+        
             $('#multi-filter-select').DataTable( {
                 "pageLength": 5,
                 initComplete: function () {
@@ -152,26 +160,26 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
                             var val = $.fn.dataTable.util.escapeRegex(
                                 $(this).val()
                                 );
-
+        
                             column
                             .search( val ? '^'+val+'$' : '', true, false )
                             .draw();
                         } );
-
+        
                         column.data().unique().sort().each( function ( d, j ) {
                             select.append( '<option value="'+d+'">'+d+'</option>' )
                         } );
                     } );
                 }
             });
-
+        
             // Add Row
             $('#add-row').DataTable({
                 "pageLength": 5,
             });
-
+        
             var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
+        
             $('#addRowButton').click(function() {
                 $('#add-row').dataTable().fnAddData([
                     $("#addName").val(),
@@ -180,24 +188,15 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
                     action
                     ]);
                 $('#addRowModal').modal('hide');
-
+        
             });
         });
-        
-        $('#allval').click(function(event) {  
-        
-            if(this.checked) {
-                //alert("test");
-                // Iterate each checkbox
-                $(':checkbox').each(function() {
-                    this.checked = true;                        
-                });
-            } else {
-                $(':checkbox').each(function() {
-                    this.checked = false;                       
-                });
-            }
-        });
-</script>
+
+    function confirmDelete(url) {
+        if (confirm("Are you sure you want to delete this holiday type?")) {
+            window.location.href = url;
+        }
+    }
+    </script>
 
 @endsection

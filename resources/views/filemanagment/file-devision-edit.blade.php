@@ -26,7 +26,7 @@
                   <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
                   @endif
                   <div class="card-body">
-                    <form  method="post" action="{{url('fileManagment/fileManagment-division-update')}}" enctype="multipart/form-data" >
+                    <form  method="post" action="{{url('file-management/fileManagment-division-update')}}" enctype="multipart/form-data" >
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="row">
                             <div class="col-md-4">

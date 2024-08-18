@@ -502,7 +502,7 @@ $email = Session::get('emp_email');
                 ->where("leave_rule.emid", "=", $Roledata->reg)
                 ->orderBy("leave_rule.id", "desc")
                 ->get();
-// dd($data['leave_rule_rs']);
+                // dd($data['leave_rule_rs']);
 
                 return view("leave/leave-rule", $data);
             } else {
@@ -883,7 +883,7 @@ $email = Session::get('emp_email');
 		$data['result']	='';
         $data['employees']=Employee::where('emid','=',$Roledata->reg)->get();
 		$data['employee_type_rs']=EmployeeType::where('emid',$Roledata->reg)->get();
-// 		dd($data['employee_type_rs']);
+        //dd($data['employee_type_rs']);
 		
 		return view('leave/add-new-allocation', $data);
       }
@@ -897,110 +897,107 @@ $email = Session::get('emp_email');
 	}
 
 
-public function getAddLeaveAllocation(Request $request)
-	{   try{
-	  
-       
-	      if(!empty(Session::get('emp_email')))
-      {
-		$email = Session::get('emp_email'); 
-		   $data['Roledata'] = Registration::where('status','=','active')      
-                  ->where('email','=',$email) 
-                  ->first();
-				   $email = Session::get('emp_email'); 
-		   $Roledata = Registration::where('status','=','active')       
-                 
-                  ->where('email','=',$email) 
-                  ->first();
+    public function getAddLeaveAllocation(Request $request)
+	{   try{ 
+        if(!empty(Session::get('emp_email')))
+        {
+            $email = Session::get('emp_email'); 
+            $data['Roledata'] = Registration::where('status','=','active')      
+                    ->where('email','=',$email) 
+                    ->first();
+                    $email = Session::get('emp_email'); 
+            $Roledata = Registration::where('status','=','active')       
+                    
+                    ->where('email','=',$email) 
+                    ->first();
 
-	    $current_year=date('Y');
-	    $previous_year=$current_year-1;
-	  
-    $desig_rs=EmployeeType::where('employ_type_name', '=',$request->employee_type)
-      ->where('emid',$Roledata->reg)
-      ->first();
-//     $desig_rs=DB::table('employ_type_master')
-// 	  ->where('emid',$Roledata->reg)
-// 	  ->where('employ_type_name',$request->employee_type)
-// 	  ->first();
-    // dd($desig_rs);
-      if($request->employee_code!=''){
-    	 $employeesy=Employee::where('emp_code','=',$request->employee_code) ->where('emid', '=',  $Roledata->reg)->get();
-      }else{
-    	  $employeesy=Employee::where('emid', '=',  $Roledata->reg)->get();
-      }
-  
-     	$leave_allocations=LeaveRule::leftJoin('leave_type','leave_rule.leave_type_id','=','leave_type.id')
-		->where('leave_type.emid','=',$Roledata->reg) 
-		->whereYear('effective_from','<=',$request->year_value.'-01-01')
-		->whereYear('effective_to','>=',$request->year_value.'-12-31')
-		->where('leave_rule.employee_type', '=',  $desig_rs->employ_type_id)
-		->select('leave_rule.*','leave_type.leave_type_name')->get();
-// 		dd($leave_allocations);
-// dd($employeesy);
-      
-		$result='';
-	$i=1;	
-foreach ($employeesy as $employeesyg){
-	
-		foreach($leave_allocations as $leave_allocationkey=>$leave_allocation){
-		
-	//->where('month_yr','=',date('m').'/'.date('Y')) 
+            $current_year=date('Y');
+            $previous_year=$current_year-1;
+        
+            $desig_rs=EmployeeType::where('employ_type_name', '=',$request->employee_type)
+            ->where('emid',$Roledata->reg)
+            ->first();
+                //     $desig_rs=DB::table('employ_type_master')
+                // 	  ->where('emid',$Roledata->reg)
+                // 	  ->where('employ_type_name',$request->employee_type)
+                // 	  ->first();
+                    // dd($desig_rs);
+            if($request->employee_code!=''){
+                $employeesy=Employee::where('emp_code','=',$request->employee_code) ->where('emid', '=',  $Roledata->reg)->get();
+            }else{
+                $employeesy=Employee::where('emid', '=',  $Roledata->reg)->get();
+            }
+    
+            $leave_allocations=LeaveRule::leftJoin('leave_type','leave_rule.leave_type_id','=','leave_type.id')
+            ->where('leave_type.emid','=',$Roledata->reg) 
+            ->whereYear('effective_from','<=',$request->year_value.'-01-01')
+            ->whereYear('effective_to','>=',$request->year_value.'-12-31')
+            ->where('leave_rule.employee_type', '=',  $desig_rs->employ_type_id)
+            ->select('leave_rule.*','leave_type.leave_type_name')->get();
+            // 		dd($leave_allocations);
+            // dd($employeesy);
+        
+            $result='';
+            $i=1;	
+            foreach ($employeesy as $employeesyg){
+                
+                    foreach($leave_allocations as $leave_allocationkey=>$leave_allocation){
+                    
+                    //->where('month_yr','=',date('m').'/'.date('Y')) 
 
-$leave_allocationew=DB::Table('leave_allocation')
-		->where('emid','=',$Roledata->reg) 
-		 ->where('month_yr','like','%'.$request->year_value.'%')
-		->where('leave_rule_id','=',$leave_allocation->id) 
-		->where('employee_code', '=', $employeesyg->emp_code)
-		->first();
-// dd($leave_allocationew);
-		if(empty($leave_allocationew)){
- 
-			$leave_in_hand=$leave_allocation->max_no;
+                    $leave_allocationew=DB::Table('leave_allocation')
+                    ->where('emid','=',$Roledata->reg) 
+                    ->where('month_yr','like','%'.$request->year_value.'%')
+                    ->where('leave_rule_id','=',$leave_allocation->id) 
+                    ->where('employee_code', '=', $employeesyg->emp_code)
+                    ->first();
+                    // dd($leave_allocationew);
+                    if(empty($leave_allocationew)){
+            
+                        $leave_in_hand=$leave_allocation->max_no;
 
-			$result .='<tr>
-			    <input type="hidden" value="'.$leave_allocation->leave_type_id.'" class="form-control" name="leave_type_id'.$i.'"  id="leave_type_id'.$i.'" readonly>
+                        $result .='<tr>
+                            <input type="hidden" value="'.$leave_allocation->leave_type_id.'" class="form-control" name="leave_type_id'.$i.'"  id="leave_type_id'.$i.'" readonly>
 
 
-                <input type="hidden" value="'.$desig_rs->id.'" class="form-check-input" name="employee_type'.$i.'" id="employee_type'.$i.'"  readonly>
-				  <input type="hidden" value="'.$employeesyg->emp_code.'" class="form-check-input" name="employee_code'.$i.'" id="employee_code'.$i.'"  readonly>
-				<td><div class="form-check"><label class="form-check-label"><input type="checkbox" name="leave_rule_id[]" value="'.$leave_allocation->id.'"  id="leave_rule_id'.$i.'" ><span class="form-check-sign"> </span></label></div></td>
-				<td>'.$desig_rs->employ_type_name.'</td>
-				
-				<td>'.$employeesyg->emp_code.'</td>
-				<td>'.$employeesyg->emp_fname.' '.$employeesyg->emp_mname.' '.$employeesyg->emp_lname.'</td>
-				<td>'.$leave_allocation->leave_type_name.'</td>
-				<td><input type="text" value="'.$leave_allocation->max_no.'" name="max_no'.$i.'" class="form-control" id="max_no'.$i.'"  readonly style="height: 35px !important"></td>
-				
-				
-				<td><input type="text" id="leave_in_hand'.$i.'" value="'.$leave_in_hand.'" name="leave_in_hand'.$i.'" class="form-control" style="height: 35px !important" required></td>
-				<td><input type="month" id="month_yr'.$i.'"  name="month_yr'.$i.'" class="form-control"  style="height: 35px !important"  required>
-				</td>
+                            <input type="hidden" value="'.$desig_rs->id.'" class="form-check-input" name="employee_type'.$i.'" id="employee_type'.$i.'"  readonly>
+                            <input type="hidden" value="'.$employeesyg->emp_code.'" class="form-check-input" name="employee_code'.$i.'" id="employee_code'.$i.'"  readonly>
+                            <td><div class="form-check"><label class="form-check-label"><input type="checkbox" name="leave_rule_id[]" value="'.$leave_allocation->id.'"  id="leave_rule_id'.$i.'" ><span class="form-check-sign"> </span></label></div></td>
+                            <td>'.$desig_rs->employ_type_name.'</td>
+                            
+                            <td>'.$employeesyg->emp_code.'</td>
+                            <td>'.$employeesyg->emp_fname.' '.$employeesyg->emp_mname.' '.$employeesyg->emp_lname.'</td>
+                            <td>'.$leave_allocation->leave_type_name.'</td>
+                            <td><input type="text" value="'.$leave_allocation->max_no.'" name="max_no'.$i.'" class="form-control" id="max_no'.$i.'"  readonly style="height: 35px !important"></td>
+                            
+                            
+                            <td><input type="text" id="leave_in_hand'.$i.'" value="'.$leave_in_hand.'" name="leave_in_hand'.$i.'" class="form-control" style="height: 35px !important" required></td>
+                            <td><input type="month" id="month_yr'.$i.'"  name="month_yr'.$i.'" class="form-control"  style="height: 35px !important"  required>
+                            </td>
 
-			  </tr>';
-			$i++;}
-	}
-		
-}
-        $employees=Employee::where('emid','=',$Roledata->reg)
-        	// ->where('status','=','active')
-            // ->where('emp_status','!=','TEMPORARY')
-            // ->where('emp_status','!=','EX-EMPLOYEE')
-            ->orderBy('emp_fname', 'asc')
-			// ->where('emp_status', '=',  $desig_rs->employee_type_name)
-            ->get();
-            // dd($employees);
-		
-			$employee_type_rs=EmployeeType::where('emid','=',$Roledata->reg)->get();
-		$remp=$request->employee_code;
-		$rempty=$request->employee_type;
-		
-		return view('leave/add-new-allocation',compact('result','Roledata','employees','employee_type_rs','remp','rempty'));
-      }
-       else
-       {
-              return redirect('/');
-       }
+                        </tr>';
+                        $i++;
+                    }
+                }
+                    
+            }
+            $employees=Employee::where('emid','=',$Roledata->reg)
+                // ->where('status','=','active')
+                // ->where('emp_status','!=','TEMPORARY')
+                // ->where('emp_status','!=','EX-EMPLOYEE')
+                ->orderBy('emp_fname', 'asc')
+                // ->where('emp_status', '=',  $desig_rs->employee_type_name)
+                ->get();
+                // dd($employees);
+            
+                $employee_type_rs=EmployeeType::where('emid','=',$Roledata->reg)->get();
+            $remp=$request->employee_code;
+            $rempty=$request->employee_type;
+            
+            return view('leave/add-new-allocation',compact('result','Roledata','employees','employee_type_rs','remp','rempty'));
+        } else {
+                return redirect('/');
+        }
 	    }catch(Exception $e){
 	         return redirect('leave-management/save-leave-allocation');
             throw new \App\Exceptions\FrontException($e->getMessage());

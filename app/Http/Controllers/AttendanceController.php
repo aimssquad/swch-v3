@@ -5608,7 +5608,7 @@ $total_wk_days = date('d', strtotime($start_date));
 
     public function viewUploadAttendence()
     {
-
+        //dd('okkk');
         if (!empty(Session::get('emp_email'))) {
             $email = Session::get('emp_email');
 

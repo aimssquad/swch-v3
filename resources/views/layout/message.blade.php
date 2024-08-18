@@ -10,6 +10,15 @@
 <br><br>
 @endif
 
+{{-- @if(Session::has('message'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button class="close" data-dismiss="alert" type="button">×</button>
+    {{ Session::get('message') }}
+    
+</div>
+<br><br>
+@endif --}}
+
 @if(Session::has('error'))		
 <div class="alert alert-danger alert-dismissable">
         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>

@@ -244,67 +244,43 @@
 			});
 		});
 		   
-   function chngdepartment(empid){
-	  
+	function chngdepartment(empid){  
+			$.ajax({
+				type:'GET',
+				url:'{{url('pis/getEmployeedesigByshiftId')}}/'+empid,
+				cache: false,
+				success: function(response){
+					document.getElementById("designation").innerHTML = response;
+				}
+			});
+	}
+
+    function chngdepartmentshift(empid){ 
 	   	$.ajax({
-		type:'GET',
-		url:'{{url('pis/getEmployeedesigByshiftId')}}/'+empid,
-        cache: false,
-		success: function(response){
-			
-			
-			document.getElementById("designation").innerHTML = response;
-		}
-		});
-   }
-      function chngdepartmentshift(empid){
-	  
-	   	$.ajax({
-		type:'GET',
-		url:'{{url('pis/getEmployeedesigBylateId')}}/'+empid,
-        cache: false,
-		success: function(response){
-			
-			
-			document.getElementById("shift_code").innerHTML = response;
-		}
+			type:'GET',
+			url:'{{url('pis/getEmployeedesigBylateId')}}/'+empid,
+			cache: false,
+			success: function(response){	
+				document.getElementById("shift_code").innerHTML = response;
+			}
 		});
    }
    
    	
-			function chngdepartmentshiftcode(val)
-	{	
-		//$('#emplyeename').show();		
-		
-		
-$.ajax({
+	function chngdepartmentshiftcode(val){	
+		//$('#emplyeename').show();
+		$.ajax({
 				type:'GET',
 				url:'{{url('role/get-employee-all-details-shift')}}/'+val,
-				success: function(response){
-
-
- 
-
-				  
-				   var obj = jQuery.parseJSON(response);
-				  console.log(obj);
-				  
-					  var bank_sort=obj[0].time_in; 
-
-					  $("#time_in").val(bank_sort);
-				   $("#time_in").attr("readonly", true);
-				   
-				  
-				   
-				
-				  
-			  
+				success: function(response){			  
+				    var obj = jQuery.parseJSON(response);
+				    console.log(obj);				  
+					var bank_sort=obj[0].time_in; 
+					$("#time_in").val(bank_sort);
+				    $("#time_in").attr("readonly", true);
 				}
 			});
 		$("#inputFloatingLabel").val(name[0]); 
-			
-
-
 		//$("#emp_name").attr("readonly", true);  
 	}
    
