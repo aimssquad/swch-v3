@@ -712,14 +712,14 @@ class SettingController extends Controller
     return view('settings/edit-ifsc', $data);
    }
    public function updatesaveIfscData(Request $request){
-    $arrayValue=array(
-        "ifsc_code"=>$request->ifsc_code,
-        "bank_name"=>$request->bank_name,
-        "bank_address"=>$request->bank_address,
-    );
- DB::table('ifsc_master')->where('ifsc_no',$request->ifsc_id)->update($arrayValue);
- Session::flash('message', 'Ifsc Details Update Successfully saved.');
- return redirect('settings/vw-ifsc');
+        $arrayValue=array(
+            "ifsc_code"=>$request->ifsc_code,
+            "bank_name"=>$request->bank_name,
+            "bank_address"=>$request->bank_address,
+        );
+        DB::table('ifsc_master')->where('ifsc_no',$request->ifsc_id)->update($arrayValue);
+        Session::flash('message', 'Ifsc Details Update Successfully saved.');
+        return redirect('settings/vw-ifsc');
    }
     public function viewAddNewIfsc(Request $request)
     {

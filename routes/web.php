@@ -165,14 +165,163 @@ Route::get('file-management/edit-file-devision/{id}', 'App\Http\Controllers\orga
 Route::post('file-management/fileManagment-division-update', 'App\Http\Controllers\organization\FilemanagmentControler@filedivisionViewupdate');
 
 Route::get('file-management/fileManagmentList', 'App\Http\Controllers\organization\FilemanagmentControler@fileManagmentList');
+Route::get('file-management/folder-create/{id}', 'App\Http\Controllers\organization\FilemanagmentControler@folderCreate');
+Route::get('file-management/fileManagment-add', 'App\Http\Controllers\organization\FilemanagmentControler@fileManagmentView');
+Route::post('file-management/fileManagment-save', 'App\Http\Controllers\organization\FilemanagmentControler@savefilemanagment');
 
 //-------------------------------------- End File Management --------------------------------------------
 
+// -----------------------------------------Leave Approver --------------------------------------------------
+Route::get('leaveapprover/leave-request', 'App\Http\Controllers\organization\LeaveApproverController@viewLeaveApproved');
+
+//----------------------------------------- End Leave Approver -----------------------------------------------
+
+// -----------------------------------------Employee Corner --------------------------------------------------
+Route::get('employer-check-employee', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@indexserorganisationemployee');
+
+// ----------------------------------------- End Employee Corner ---------------------------------------------
+
+//-------------------------------------------- Hr Support ---------------------------------------------------
+Route::get('hr-support/dashboard', 'App\Http\Controllers\organization\HrSupportController@viewdashboard')->name('hr-support.dashboard');
+Route::get('hr-support/support-file/{id}', 'App\Http\Controllers\organization\HrSupportController@supportFile')->name('support-file.show');
+Route::get('hr-support/support-file-details/{id}', 'App\Http\Controllers\organization\HrSupportController@supportFileDetails')->name('support-file.details');
+
+//-------------------------------------------- End Hr Support -----------------------------------------------
+
+//--------------------------------------------- User Access -----------------------------------------------
+Route::get('user-access-role/vw-users', 'App\Http\Controllers\organization\UseraceesController@viewUserConfig');
+Route::get('user-access-role/vw-user-config', 'App\Http\Controllers\organization\UseraceesController@viewUserConfigForm');
+Route::get('user-access-role/vw-user-config/{user_id}', 'App\Http\Controllers\organization\UseraceesController@GetUserConfigForm');
+Route::post('user-access-role/vw-user-config', 'App\Http\Controllers\organization\UseraceesController@SaveUserConfigForm');
+
+Route::get('user-access-role/view-users-role', 'App\Http\Controllers\organization\UseraceesController@viewUserAccessRights');
+Route::get('user-access-role/user-role', 'App\Http\Controllers\organization\UseraceesController@viewUserAccessRightsForm');
+Route::post('user-access-role/user-role', 'App\Http\Controllers\organization\UseraceesController@UserAccessRightsFormAuth');
+Route::get('user-accessrole/view-users-role/{role_authorization_id}', 'App\Http\Controllers\organization\UseraceesController@deleteUserAccess');
+//---------------------------------------------- End User Access ---------------------------------------
+
+//----------------------------------------------- Settings ---------------------------------------------
+//Company Bank
+Route::get('org-settings/vw-cmp-bank', 'App\Http\Controllers\organization\SettingController@getCompanyBank');
+Route::get('org-settings/add-company-bank', 'App\Http\Controllers\organization\SettingController@addComapnyBankAdd');
+Route::post('org-settings/add-new-bank-details', 'App\Http\Controllers\organization\SettingController@addcmpbankDetails');
+Route::get('org-settings/comapny-bank-edit/{id}', 'App\Http\Controllers\organization\SettingController@cmpbankedit');
+Route::post('org-settings/update-cmp-bank-details', 'App\Http\Controllers\organization\SettingController@cmpBankDetailsupdate');
+// Employee Bank 
+Route::get('org-settings/vw-emp-bank', 'App\Http\Controllers\organization\SettingController@getempBank');
+Route::get('org-settings/add-emp-bank', 'App\Http\Controllers\organization\SettingController@addempBankAdd');
+Route::post('org-settings/add-new-emp-bank-details', 'App\Http\Controllers\organization\SettingController@addempbankDetails');
+Route::get('org-settings/emp-bank-edit/{id}', 'App\Http\Controllers\organization\SettingController@empbankedit');
+Route::post('org-settings/update-emp-bank-details', 'App\Http\Controllers\organization\SettingController@empBankDetailsupdate');
+//-----------------------------------------------Ifsc Master-------------------------------------------------------
+Route::get('org-settings/vw-ifsc', 'App\Http\Controllers\organization\SettingController@getIfsc');
+Route::get('org-settings/add-new-ifsc', 'App\Http\Controllers\organization\SettingController@viewAddNewIfsc');
+Route::post('org-settings/add-new-ifsc', 'App\Http\Controllers\organization\SettingController@saveIfscData');
+Route::get('org-settings/edit-ifsc/{id}','App\Http\Controllers\organization\SettingController@editviewAddNewIfsc');
+Route::post('org-settings/update-ifsc','App\Http\Controllers\organization\SettingController@updatesaveIfscData');
+
+//----------------------------------------------- Caste Master---------------------------------------------------------
+Route::get('org-settings/vw-caste', 'App\Http\Controllers\organization\SettingController@getCaste');
+Route::get('org-settings/add-new-caste', 'App\Http\Controllers\organization\SettingController@viewAddNewCaste');
+Route::post('org-settings/add-new-caste', 'App\Http\Controllers\organization\SettingController@saveCasteData');
+Route::get('org-settings/edit-cast/{id}', 'App\Http\Controllers\organization\SettingController@castUpdate');
+Route::post('org-settings/updateCast', 'App\Http\Controllers\organization\SettingController@updateCast');
+//----------------------------------------------- Sub Caste ----------------------------------------------
+Route::get('org-settings/vw-subcast', 'App\Http\Controllers\organization\SettingController@subcastGet');
+Route::get('org-settings/add-sub-caste', 'App\Http\Controllers\organization\SettingController@addsubcast');
+Route::post('org-settings/add-sub-caste', 'App\Http\Controllers\organization\SettingController@saveSubCasteData');
+Route::get('org-settings/edit-sub-cast/{id}', 'App\Http\Controllers\organization\SettingController@editSubCast');
+Route::post('org-settings/update-sub-cast', 'App\Http\Controllers\organization\SettingController@updateSubCast');
+//--------------------------------------------------- Employee Class ----------------------------------------------
+Route::get('org-settings/vw-class', 'App\Http\Controllers\organization\SettingController@getClasses');
+Route::get('org-settings/edit-classes/{id}', 'App\Http\Controllers\organization\SettingController@getClassesById');
+Route::post('org-settings/update-classes', 'App\Http\Controllers\organization\SettingController@updateClassById');
+Route::get('org-settings/add-new-class', 'App\Http\Controllers\organization\SettingController@viewAddNewClass');
+Route::post('org-settings/add-new-class', 'App\Http\Controllers\organization\SettingController@saveClassData');
+//--------------------------------------------------- Pincode Master -------------------------------------------------
+Route::get('org-settings/vw-pincode', 'App\Http\Controllers\organization\SettingController@getPincode');
+Route::get('org-settings/add-new-pincode', 'App\Http\Controllers\organization\SettingController@viewAddNewPincode');
+Route::post('org-settings/add-new-pincode', 'App\Http\Controllers\organization\SettingController@savePincodeData');
+Route::get('org-settings/edit-pincode/{id}', 'App\Http\Controllers\organization\SettingController@pincodeGetbyId');
+Route::post('org-settings/updatepincode', 'App\Http\Controllers\organization\SettingController@pincodeUpdate');
+//-------------------------------------------------- Employee Type Master ----------------------------------------------
+Route::get('org-settings/vw-type', 'App\Http\Controllers\organization\SettingController@getType');
+Route::get('org-settings/add-new-type', 'App\Http\Controllers\organization\SettingController@viewAddNewType');
+Route::post('org-settings/add-new-type', 'App\Http\Controllers\organization\SettingController@saveTypeData');
+Route::get('org-settings/edit-type/{id}', 'App\Http\Controllers\organization\SettingController@typeofedit');
+Route::post('org-settings/vw-emp-update', 'App\Http\Controllers\organization\SettingController@typeofupdate');
+//-------------------------------------------------- Mode Of Employee ----------------------------------------------------
+Route::get('org-settings/vw-mode-type', 'App\Http\Controllers\organization\SettingController@getmodeOfEmpType');
+Route::get('org-settings/add-mode-emp', 'App\Http\Controllers\organization\SettingController@modeemployeeadd');
+Route::post('org-settings/add-mode-emp-new', 'App\Http\Controllers\organization\SettingController@addmodeemployeesucc');
+Route::get('org-settings/mode-of-emp-edit/{id}', 'App\Http\Controllers\organization\SettingController@editEmpMode');
+Route::post('org-settings/mode-emp-new-update', 'App\Http\Controllers\organization\SettingController@modeEmpUpdate');
+//--------------------------------------------- Religion Master -----------------------------------------------------
+Route::get('org-settings/vw-religion', 'App\Http\Controllers\organization\SettingController@getReligion');
+Route::get('org-settings/add-new-religion', 'App\Http\Controllers\organization\SettingController@viewAddNewReligion');
+Route::post('org-settings/add-new-religion', 'App\Http\Controllers\organization\SettingController@saveReligionData');
+Route::get('org-settings/edit-new-religion/{id}', 'App\Http\Controllers\organization\SettingController@editViewsaveReligionData');
+Route::post('org-settings/update-new-religion', 'App\Http\Controllers\organization\SettingController@updateViewsaveReligionData');
+//--------------------------------------------- Education Master ---------------------------------------------------------
+Route::get('org-settings/vw-education', 'App\Http\Controllers\organization\SettingController@getEducation');
+Route::get('org-settings/add-new-education', 'App\Http\Controllers\organization\SettingController@viewAddNewEducation');
+Route::post('org-settings/add-new-education', 'App\Http\Controllers\organization\SettingController@saveEducationData');
+Route::get('org-settings/edit-new-education/{id}','App\Http\Controllers\organization\SettingController@editViewEducationData');
+Route::post('org-settings/update-new-education', 'App\Http\Controllers\organization\SettingController@editEducationData');
+//---------------------------------------------- Department --------------------------------------------------------------
+Route::get('org-settings/vw-department', 'App\Http\Controllers\organization\SettingController@getDepartment');
+Route::get('org-settings/add-new-department', 'App\Http\Controllers\organization\SettingController@viewAddNewDepartment');
+Route::post('org-settings/add-new-department', 'App\Http\Controllers\organization\SettingController@saveDepartmentData');
+//---------------------------------------------- Designation -----------------------------------------------
+Route::get('org-settings/vw-designation', 'App\Http\Controllers\organization\SettingController@getDesignations');
+Route::post('org-settings/designation', 'App\Http\Controllers\organization\SettingController@saveDesignation');
+Route::get('org-settings/designation', 'App\Http\Controllers\organization\SettingController@viewAddDesignation');
+//---------------------------------------------- Employment Type ---------------------------------------------------
+Route::get('org-settings/vw-employee-type', 'App\Http\Controllers\organization\SettingController@getEmployeeTypes');
+Route::get('org-settings/employee-type', 'App\Http\Controllers\organization\SettingController@viewAddEmployeeType');
+Route::post('org-settings/employee-type', 'App\Http\Controllers\organization\SettingController@saveEmployeeType');
+Route::get('org-settings/employee-type/{id}', 'App\Http\Controllers\organization\SettingController@getTypeById');
+//------------------------------------------- Pay Group ----------------------------------------------------------
+Route::get('org-settings/vw-paygroup', 'App\Http\Controllers\organization\SettingController@getGrades');
+Route::get('org-settings/paygroup', 'App\Http\Controllers\organization\SettingController@viewAddGrade');
+Route::post('org-settings/paygroup', 'App\Http\Controllers\organization\SettingController@saveGrade');
+//--------------------------------------------Annual Pay ------------------------------------------------------------
+Route::get('org-settings/vw-annualpay', 'App\Http\Controllers\organization\SettingController@getPayscale');
+Route::get('org-settings/annualpay', 'App\Http\Controllers\organization\SettingController@viewAddPayscale');
+Route::post('org-settings/annualpay', 'App\Http\Controllers\organization\SettingController@savePayscale');
+//-------------------------------------------- Bank Short Code ----------------------------------------------------
+Route::get('org-settings/vw-bank-sortcode', 'App\Http\Controllers\organization\SettingController@getBanks');
+Route::get('org-settings/bank-sortcode', 'App\Http\Controllers\organization\SettingController@viewAddBank');
+Route::post('org-settings/bank-sortcode', 'App\Http\Controllers\organization\SettingController@saveBank');
+//------------------------------------------ Payment Type --------------------------------------------
+Route::get('org-settings/vw-pay-type', 'App\Http\Controllers\organization\SettingController@getPaytypemaster');
+Route::get('org-settings/pay-type', 'App\Http\Controllers\organization\SettingController@viewAddPaytypemaster');
+Route::post('org-settings/pay-type', 'App\Http\Controllers\organization\SettingController@savePaytypemaster');
+//-------------------------------------------Pay Mode ------------------------------------------------------------
+Route::get('org-settings/vw-wedgespay-type', 'App\Http\Controllers\organization\SettingController@getwedgesPaytypemaster');
+Route::get('org-settings/wedgespay-type', 'App\Http\Controllers\organization\SettingController@viewAddwedgesPaytypemaster');
+Route::post('org-settings/wedgespay-type', 'App\Http\Controllers\organization\SettingController@savewedgesPaytypemaster');
+//------------------------------------------------------Tax Master --------------------------------------------------
+Route::get('org-settings/vw-tax', 'App\Http\Controllers\organization\SettingController@getTaxmaster');
+Route::get('org-settings/tax', 'App\Http\Controllers\organization\SettingController@viewAddTaxmaster');
+Route::post('org-settings/tax', 'App\Http\Controllers\organization\SettingController@saveTaxmaster');
+//------------------------------------------------End Settings -------------------------------------------
+//------------------------------------------------Task Management -----------------------------------------------
+Route::get('task-management/create-project', 'App\Http\Controllers\TaskManagement\TaskManagement@createProject');
 
 
 
 
 
+//=======================================================End Task Managemant==============================================
+//-----------------------------------------------------Performance Management --------------------------------------------
+Route::get('org-performances', 'App\Http\Controllers\organization\PerformanceController@index');
+Route::get('org-performances/request', 'App\Http\Controllers\organization\PerformanceController@performanceRequest');
+Route::get('org-performances/request/{id}', 'App\Http\Controllers\organization\PerformanceController@requestEdit');
+Route::post('org-performances/request', 'App\Http\Controllers\organization\PerformanceController@submitRequest');
+Route::get("org-performances/del/{id}", 'App\Http\Controllers\organization\PerformanceController@destroy');
+
+//----------------------------------------------- End Performance Managemant -----------------------------------------------
 // --------------------------------Start Recruitment Section ---------------------------------------------------------------
 Route::get('recruitment/job_list', 'App\Http\Controllers\organization\RecruitmentController@jobList')->name('recruitment.job-list');
 Route::get('recruitment/dashboard', 'App\Http\Controllers\organization\RecruitmentController@dashboard')->name('recruitment.dashboard');

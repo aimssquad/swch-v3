@@ -46,12 +46,12 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 				@if($user_type == 'employee')
 				@foreach($sidebarItems as $value)
 				@if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 48)
-				<a href="{{ url('fileManagment/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Division</a>
+				<a href="{{ url('file-management/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Manager</a>
                 <span><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('fileManagment/report-excel')}}"><img  style="width: 30px; height:25px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
 				@endif
 				@endforeach
 				@elseif($user_type == 'employer')
-				<a href="{{ url('fileManagment/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Division</a>
+				<a href="{{ url('file-management/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Manager</a>
                 <span style="margin-right:10px; margin-top:5px;"><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('fileManagment/report-excel')}}"><img  style="width: 35px; height:37px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
 				@endif
 				{{-- <div class="view-icons">
@@ -121,7 +121,7 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
             
                                             @if($user_type == 'employer')
                                                 @if($item->status !=="pending") 
-                                                <a class="dropdown-item" href="{{url("fileManagment/folder-create/$item->id")}}"><i class="fa fa-file m-r-5"></i> Create Folder</a>
+                                                <a class="dropdown-item" href="{{url("file-management/folder-create/$item->id")}}"><i class="fa fa-file m-r-5"></i> Create Folder</a>
                                                 @endif
                                             @endif
                                         </div>

@@ -2,7 +2,7 @@
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 //dd($sidebarItems);
 $user_type = Session::get("user_type");
-// //dd($Roledata->reg);
+//dd($user_type);
 // $roles_auth = DB::table("othorized_organization_module")
 //             ->where("employee_id", "=", $Roledata->reg)
 //             ->get()
@@ -486,31 +486,31 @@ $user_type = Session::get("user_type");
                                         <li class="submenu">
                                             <a href="#"><span> Bank Master</span> <span class="menu-arrow"></span></a>
                                             <ul>
-                                                <li><a href="voice-call.html">Company Bank</a></li>
-                                                <li><a href="video-call.html">Employee Bank</a></li>
-                                                <li><a href="video-call.html">IFSC Master</a></li>
+                                                <li><a href="{{url('org-settings/vw-cmp-bank')}}">Company Bank</a></li>
+                                                <li><a href="{{url('org-settings/vw-emp-bank')}}">Employee Bank</a></li>
+                                                <li><a href="{{url('org-settings/vw-ifsc')}}">IFSC Master</a></li>
                                             </ul>
                                         </li>
                                         <li class="submenu">
                                             <a href="#"><span> HCM Master</span> <span class="menu-arrow"></span></a>
                                             <ul>
-                                                <li><a href="voice-call.html">Caste Master</a></li>
-                                                <li><a href="video-call.html">Sub Cast</a></li>
-                                                <li><a href="outgoing-call.html">Class Master</a></li>
-                                                <li><a href="incoming-call.html">Pincode Master</a></li>
-                                                <li><a href="outgoing-call.html">Employee Type Master</a></li>
-                                                <li><a href="incoming-call.html">Mode Of Employee</a></li>
-                                                <li><a href="outgoing-call.html">Religion Master</a></li>
-                                                <li><a href="incoming-call.html">Education Master</a></li>
-                                                <li><a href="outgoing-call.html">Department</a></li>
-                                                <li><a href="incoming-call.html">Designation</a></li>
-                                                <li><a href="outgoing-call.html">Employment Type</a></li>
-                                                <li><a href="incoming-call.html">Pay Group</a></li>
-                                                <li><a href="outgoing-call.html">Annual Pay</a></li>
-                                                <li><a href="incoming-call.html">Bank Shortcode</a></li>
-                                                <li><a href="outgoing-call.html">Payment Type</a></li>
-                                                <li><a href="incoming-call.html">Wedges pay mode</a></li>
-                                                <li><a href="incoming-call.html">Tax Master</a></li>
+                                                <li><a href="{{url('org-settings/vw-caste')}}">Caste Master</a></li>
+                                                <li><a href="{{url('org-settings/vw-subcast')}}">Sub Cast</a></li>
+                                                <li><a href="{{url('org-settings/vw-class')}}">Class Master</a></li>
+                                                <li><a href="{{url('org-settings/vw-pincode')}}">Pincode Master</a></li>
+                                                <li><a href="{{url('org-settings/vw-type')}}">Employee Type Master</a></li>
+                                                <li><a href="{{url('org-settings/vw-mode-type')}}">Mode Of Employee</a></li>
+                                                <li><a href="{{url('org-settings/vw-religion')}}">Religion Master</a></li>
+                                                <li><a href="{{url('org-settings/vw-education')}}">Education Master</a></li>
+                                                <li><a href="{{url('org-settings/vw-department')}}">Department</a></li>
+                                                <li><a href="{{url('org-settings/vw-designation')}}">Designation</a></li>
+                                                <li><a href="{{url('org-settings/vw-employee-type')}}">Employment Type</a></li>
+                                                <li><a href="{{url('org-settings/vw-paygroup')}}">Pay Group</a></li>
+                                                <li><a href="{{url('org-settings/vw-annualpay')}}">Annual Pay</a></li>
+                                                <li><a href="{{url('org-settings/vw-bank-sortcode')}}">Bank Shortcode</a></li>
+                                                <li><a href="{{url('org-settings/vw-pay-type')}}">Payment Type</a></li>
+                                                <li><a href="{{url('org-settings/vw-wedgespay-type')}}">Wedges pay mode</a></li>
+                                                <li><a href="{{url('org-settings/vw-tax')}}">Tax Master</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -577,8 +577,8 @@ $user_type = Session::get("user_type");
                                 <li class="submenu">
                                     <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Role Management</span> <span class="menu-arrow"></span></a>
                                     <ul>
-                                        <li><a href="employees.html">User Configuration</a></li>
-                                        <li><a href="holidays.html">Role Management</a></li> 
+                                        <li><a href="{{url('user-access-role/vw-users')}}">User Configuration</a></li>
+                                        <li><a href="{{url('user-access-role/view-users-role')}}">Role Management</a></li> 
                                     </ul>
                                 </li>
                             @endif
@@ -630,44 +630,34 @@ $user_type = Session::get("user_type");
                                 <li class="submenu">
                                     <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Rota</span> <span class="menu-arrow"></span></a>
                                     <ul>
-                                        <li class="submenu">
-                                            <a href="#"><span> Time Shift Management </span> <span class="menu-arrow"></span></a>
-                                            <ul>
+                                       
                                                 <li><a href="{{url('rota-org/shift-management')}}">Shift Management</a></li>
                                                 <li><a href="{{url('rota-org/late-policy')}}">Late Policy</a></li>
                                                 <li><a href="{{url('rota-org/offday')}}">Day Off</a></li>
                                                 <li><a href="{{url('rota-org/grace-period')}}">Grace Period</a></li>
                                                 <li><a href="{{url('rota-org/duty-roster')}}">Duty Roster</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="submenu">
-                                            <a href="#"><span> Visitor </span> <span class="menu-arrow"></span></a>
-                                            <ul>
-                                                <li><a href="{{url('rota-org/visitor-link')}}">Visitor Register Link </a></li>
-                                                <li><a href="{{url('rota-org/visitor-regis')}}">Visitor Register </a></li>
-                                            </ul>
-                                        </li>
+                            
                                     </ul>
                                 </li>
                             @endif
                         @endforeach
                     @endIf
                     @if($user_type=="employer")
-                    @foreach($sidebarItems  as $array_role)
-                        @if($array_role['module_name'] == 6) 
-                            <li class="menu-title">
-                                <span>Module</span>
-                            </li>          
-                            <li class="submenu">
-                                <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Visitor</span> <span class="menu-arrow"></span></a>
-                                <ul>
-                                    <li><a href="{{url('rota-org/visitor-link')}}">Visitor Register Link </a></li>
-                                    <li><a href="{{url('rota-org/visitor-regis')}}">Visitor Register </a></li>
-                                </ul>
-                            </li>
-                        @endif
-                    @endforeach
-                @endIf
+                        @foreach($sidebarItems  as $array_role)
+                            @if($array_role['module_name'] == 6) 
+                                <li class="menu-title">
+                                    <span>Module</span>
+                                </li>          
+                                <li class="submenu">
+                                    <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Visitor</span> <span class="menu-arrow"></span></a>
+                                    <ul>
+                                        <li><a href="{{url('rota-org/visitor-link')}}">Visitor Register Link </a></li>
+                                        <li><a href="{{url('rota-org/visitor-regis')}}">Visitor Register </a></li>
+                                    </ul>
+                                </li>
+                            @endif
+                        @endforeach
+                    @endIf
                     @if($user_type=="employer")
                         @foreach($sidebarItems  as $array_role)
                             @if($array_role['module_name'] == 6) 
@@ -691,11 +681,26 @@ $user_type = Session::get("user_type");
                     @endIf
                     @if($user_type=="employer")
                         @foreach($sidebarItems  as $array_role)
+                            @if($array_role['module_name'] == 6) 
+                                <li class="menu-title">
+                                    <span>Leave Approver</span>
+                                </li>          
+                                <li class="submenu">
+                                    <a href="#" class="{{Request::is('organization/employerdashboard')?'noti-dot':'';}}"><i class="la la-user"></i> <span> Approver Conner</span> <span class="menu-arrow"></span></a>
+                                    <ul>   
+                                        <li><a href="{{url('leaveapprover/leave-request')}}">Leave Request List</a></li>                               
+                                    </ul>
+                                </li>
+                            @endif
+                        @endforeach
+                    @endIf
+                    @if($user_type=="employer")
+                        @foreach($sidebarItems  as $array_role)
                             @if($array_role['module_name'] == 5) 
                                 <li class="menu-title">
                                     <span>Leave</span>
                                 </li>          
-                                <li class="submenu">Leave</span> <span class="menu-arrow"></span></a>
+                                <li class="submenu"><a href="">Leave<span class="menu-arrow"></span></a>
                                     <ul>   
                                         <li><a href="voice-call.html">Leave Statistics</a></li>
                                         <li><a href="voice-call.html">Manage Leave Type</a></li>
@@ -711,21 +716,19 @@ $user_type = Session::get("user_type");
                     @endIf
                     @if($user_type=="employer")
                         @foreach($sidebarItems  as $array_role)
-                            @if($array_role['module_name'] == 23) 
+                            @if($array_role['module_name'] == 5) 
                                 <li class="menu-title">
                                     <span>Employee Corner</span>
-                                </li>          
-                                <li class="submenu">
-                                    <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Employee Corner</span> <span class="menu-arrow"></span></a>
-                                    <ul>   
-                                        {{-- <li><a href="voice-call.html">Upload Attendance</a></li>
-                                        <li><a href="video-call.html">Generate Attendance</a></li>
-                                        <li><a href="video-call.html">Daily Attendance</a></li>
-                                        <li><a href="video-call.html">Attendance History</a></li>
-                                        <li><a href="video-call.html">Process Attendance</a></li>            
-                                        <li><a href="voice-call.html">Absent Report </a></li>                                 --}}
-                                    </ul>
                                 </li>
+                                <li>
+                                    <a href="{{url('employer-check-employee')}}"><i class="la la-bell"></i> <span> Employee Corner</span></a>
+                                </li>          
+                                {{-- <li class="submenu">
+                                    <a href="{{url('employer-check-employee')}}" class="noti-dot"><i class="la la-user"></i> <span> Employee Corner</span> <span class="menu-arrow"></span></a>
+                                    <ul>   
+                                                                  
+                                    </ul>
+                                </li> --}}
                             @endif
                         @endforeach
                     @endIf
@@ -752,7 +755,7 @@ $user_type = Session::get("user_type");
                                     <span>Hr Support</span>
                                 </li>          
                                 <li>
-                                    <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Hr Support</span></a>
+                                    <a href="{{url('hr-support/dashboard')}}" class="noti-dot"><i class="la la-user"></i> <span> Hr Support</span></a>
                                 </li>
                             @endif
                         @endforeach
@@ -791,7 +794,7 @@ $user_type = Session::get("user_type");
                     @endIf
                     @if($user_type=="employer")
                         @foreach($sidebarItems  as $array_role)
-                            @if($array_role['module_name'] == 20) 
+                            @if($array_role['module_name'] == 16) 
                                 <li class="menu-title">
                                     <span>Task Management </span>
                                 </li>          
@@ -814,7 +817,7 @@ $user_type = Session::get("user_type");
                                 <li class="submenu">
                                     <a href="#" class="noti-dot"><i class="la la-user"></i> <span> Performance Management </span> <span class="menu-arrow"></span></a>
                                     <ul>   
-                                        <li><a href="voice-call.html">Performance Request List</a></li>
+                                        <li><a href="{{url('org-performances')}}">Performance Request List</a></li>
                                         <li><a href="video-call.html">Create Request</a></li>                              
                                     </ul>
                                 </li>

@@ -61,6 +61,7 @@ class EmployeeCornerOrganisationController extends Controller
         }
        
     }
+    
     public function DoLoginorganisationemployee(Request $request)
     {
         $email = Session::get("emp_email");

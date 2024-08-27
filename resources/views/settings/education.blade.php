@@ -80,7 +80,7 @@
 												<tr>
 													<th>Sl. No.</th>
                 								
-                									<th>education Name</th>
+                									<th>Education Name</th>
                 								    <th>Action</th>
                 									
 												</tr>
