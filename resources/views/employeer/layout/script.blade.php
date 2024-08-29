@@ -20,6 +20,9 @@
 <script src="{{ asset('frontend/assets/js/moment.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 
+<!-- Owl Carousel JS -->
+<script src="{{ asset('frontend/assets/js/owl.carousel.min.js') }}"></script>
+
  <!-- Theme Settings JS -->
 <script src="{{ asset('frontend/assets/js/layout.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/theme-settings.js') }}"></script>

@@ -12,9 +12,11 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 class="page-title">Welcome Admin!</h3>
+                    <h3 class="page-title">Welcome {{ $Roledata->com_name }}!</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item active">
+                            Dashboard
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -22,39 +24,6 @@
         <!-- /Page Header -->
 
         <div class="row">
-            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                <div class="card dash-widget">
-                    <div class="card-body">
-                        <span class="dash-widget-icon"><i class="fa-solid fa-cubes"></i></span>
-                        <div class="dash-widget-info">
-                            <h3>112</h3>
-                            <span>Projects</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                <div class="card dash-widget">
-                    <div class="card-body">
-                        <span class="dash-widget-icon"><i class="fa-solid fa-dollar-sign"></i></span>
-                        <div class="dash-widget-info">
-                            <h3>44</h3>
-                            <span>Clients</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-                <div class="card dash-widget">
-                    <div class="card-body">
-                        <span class="dash-widget-icon"><i class="fa-regular fa-gem"></i></span>
-                        <div class="dash-widget-info">
-                            <h3>37</h3>
-                            <span>Tasks</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                 <div class="card dash-widget">
                     <div class="card-body">
@@ -66,29 +35,40 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6 text-center">
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title">Total Revenue</h3>
-                                <div id="bar-charts"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 text-center">
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title">Sales Overview</h3>
-                                <div id="line-charts"></div>
-                            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa-solid fa-cubes"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>112</h3>
+                            <span>Total Departments</span>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa-solid fa-dollar-sign"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>44</h3>
+                            <span>Migrants Employees</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body">
+                        <span class="dash-widget-icon"><i class="fa-regular fa-gem"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>37</h3>
+                            <span>Toatl Job Types</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
         </div>
 
         <div class="row">
@@ -296,124 +276,97 @@
         </div>
         <!-- /Statistics Widget -->
 
-        <div class="row">
-            <div class="col-md-6 d-flex">
-                <div class="card card-table flex-fill">
-                    <div class="card-header">
-                        <h3 class="card-title mb-0">Invoices</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-nowrap custom-table mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Invoice ID</th>
-                                        <th>Client</th>
-                                        <th>Due Date</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="invoice-view.html">#INV-0001</a></td>
-                                        <td>
-                                            <h2><a href="#">Global Technologies</a></h2>
-                                        </td>
-                                        <td>11 Mar 2019</td>
-                                        <td>$380</td>
-                                        <td>
-                                            <span class="badge bg-inverse-warning">Partially Paid</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="invoice-view.html">#INV-0002</a></td>
-                                        <td>
-                                            <h2><a href="#">Delta Infotech</a></h2>
-                                        </td>
-                                        <td>8 Feb 2019</td>
-                                        <td>$500</td>
-                                        <td>
-                                            <span class="badge bg-inverse-success">Paid</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="invoice-view.html">#INV-0003</a></td>
-                                        <td>
-                                            <h2><a href="#">Cream Inc</a></h2>
-                                        </td>
-                                        <td>23 Jan 2019</td>
-                                        <td>$60</td>
-                                        <td>
-                                            <span class="badge bg-inverse-danger">Unpaid</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="invoices.html">View all invoices</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 d-flex">
-                <div class="card card-table flex-fill">
-                    <div class="card-header">
-                        <h3 class="card-title mb-0">Payments</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table custom-table table-nowrap mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Invoice ID</th>
-                                        <th>Client</th>
-                                        <th>Payment Type</th>
-                                        <th>Paid Date</th>
-                                        <th>Paid Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="invoice-view.html">#INV-0001</a></td>
-                                        <td>
-                                            <h2><a href="#">Global Technologies</a></h2>
-                                        </td>
-                                        <td>Paypal</td>
-                                        <td>11 Mar 2019</td>
-                                        <td>$380</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="invoice-view.html">#INV-0002</a></td>
-                                        <td>
-                                            <h2><a href="#">Delta Infotech</a></h2>
-                                        </td>
-                                        <td>Paypal</td>
-                                        <td>8 Feb 2019</td>
-                                        <td>$500</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="invoice-view.html">#INV-0003</a></td>
-                                        <td>
-                                            <h2><a href="#">Cream Inc</a></h2>
-                                        </td>
-                                        <td>Paypal</td>
-                                        <td>23 Jan 2019</td>
-                                        <td>$60</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="payments.html">View all payments</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         
+        <div class="row">
+
+            <!-- Employee Month -->
+            <div class="col-xl-6 col-md-12 d-flex">
+                <div class="card employee-month-card flex-fill">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-lg-9 col-md-12">
+                                <div class="employee-month-details">
+                                    <h4>Employee of the month</h4>
+                                    <p>We are really proud of the difference you have made which gives everybody the reason to applaud & appreciate</p>
+                                </div>
+                                <div class="employee-month-content">
+                                    <h6>Congrats, Hanna</h6>
+                                    <p>UI/UX Team Lead</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-12">
+                                <div class="employee-month-img">
+                                    <img src="{{asset('frontend/assets/img/employee-img.png')}}" class="img-fluid" alt="User">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Employee Month -->
+
+            <!-- Other Model -->
+            <div class="col-xl-6 col-md-12 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-sm-8">
+                                <div class="statistic-header">
+                                    <h4>Quick Links</h4>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-sm-end">
+                                <div class="owl-nav company-nav nav-control"></div>
+                            </div>
+                        </div>
+                        <div class="company-slider owl-carousel">
+
+                            <!-- Company Grid -->
+                            <div class="company-grid company-soft-tertiary">
+                                <div class="company-top">
+                                    <div class="company-icon">
+                                        <span class="company-icon-tertiary rounded-circle">HR</span>
+                                    </div>
+                                    <div class="company-link">
+                                        <a href="companies.html">HR Policy</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Company Grid -->
+
+                            <!-- Company Grid -->
+                            <div class="company-grid company-soft-success">
+                                <div class="company-top">
+                                    <div class="company-icon">
+                                        <span class="company-icon-success rounded-circle">EP</span>
+                                    </div>
+                                    <div class="company-link">
+                                        <a href="companies.html">Employer Policy</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Company Grid -->
+
+                            <!-- Company Grid -->
+                            <div class="company-grid company-soft-info">
+                                <div class="company-top">
+                                    <div class="company-icon">
+                                        <span class="company-icon-info rounded-circle">LP</span>
+                                    </div>
+                                    <div class="company-link">
+                                        <a href="companies.html">Leave Policy</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Company Grid -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Company Policy -->
+
+        </div>
 
     </div>
     <!-- /Page Content -->

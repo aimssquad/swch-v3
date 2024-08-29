@@ -27,5 +27,8 @@
 <!-- Tagsinput CSS -->
 <link rel="stylesheet" href="{{ asset('frontend/assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}">
 
+ <!-- Owl carousel CSS -->
+ <link rel="stylesheet" href="{{ asset('frontend/assets/css/owl.carousel.min.css') }}">
+
 <!-- Main CSS -->
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
