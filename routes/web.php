@@ -64,6 +64,9 @@ Route::get('organization/delete-holiday-type/{holiday_id}', 'App\Http\Controller
 
 
 //------------------------------Leave Management --------------------------------------------
+Route::get('leave/dashboard', 'App\Http\Controllers\organization\LeaveManagementController@viewdash');
+
+
 Route::get('leave/leave-type-listing', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveType')->name('leave/leave-type-listing');
 Route::get('leave/leave-type-listing/{holiday_id}', 'App\Http\Controllers\organization\LeaveManagementController@getLeaveTypeDtl');
 Route::get('leave/new-leave-type', 'App\Http\Controllers\organization\LeaveManagementController@viewAddLeaveType')->name('leave/new-leave-type');
@@ -306,14 +309,6 @@ Route::get('org-settings/vw-tax', 'App\Http\Controllers\organization\SettingCont
 Route::get('org-settings/tax', 'App\Http\Controllers\organization\SettingController@viewAddTaxmaster');
 Route::post('org-settings/tax', 'App\Http\Controllers\organization\SettingController@saveTaxmaster');
 //------------------------------------------------End Settings -------------------------------------------
-//------------------------------------------------Task Management -----------------------------------------------
-Route::get('task-management/create-project', 'App\Http\Controllers\TaskManagement\TaskManagement@createProject');
-
-
-
-
-
-//=======================================================End Task Managemant==============================================
 //-----------------------------------------------------Performance Management --------------------------------------------
 Route::get('org-performances', 'App\Http\Controllers\organization\PerformanceController@index');
 Route::get('org-performances/request', 'App\Http\Controllers\organization\PerformanceController@performanceRequest');
@@ -322,6 +317,41 @@ Route::post('org-performances/request', 'App\Http\Controllers\organization\Perfo
 Route::get("org-performances/del/{id}", 'App\Http\Controllers\organization\PerformanceController@destroy');
 
 //----------------------------------------------- End Performance Managemant -----------------------------------------------
+//############################################### Task Management #########################################################
+
+Route::get('org-task-management/projects', 'App\Http\Controllers\organization\TaskManagement@projects');
+Route::get('org-task-management/create-project', 'App\Http\Controllers\organization\TaskManagement@createProject');
+Route::post("org-projects/add", 'App\Http\Controllers\organization\TaskManagement@create');
+Route::get('org-task-management/update-project/{id}', 'App\Http\Controllers\organization\TaskManagement@updateProject');
+Route::post("org-projects/update", 'App\Http\Controllers\organization\TaskManagement@update');
+Route::get("org-projects/del/{id}", 'App\Http\Controllers\organization\TaskManagement@destroy');
+
+
+
+
+//############################################### End Task Managemant ####################################################
+
+//---------------------------------------------Sponsor Compliance------------------------------------------------------------
+Route::get('org-dashboarddetails', 'App\Http\Controllers\organization\DashboardController@getamployeedas');
+Route::get('org-dashboard-employees', 'App\Http\Controllers\organization\DashboardController@getEmployees');
+Route::get('org-dashboard-migrant-employees', 'App\Http\Controllers\organization\DashboardController@getEmployeesmigrant');
+Route::get('org-dashboard-right-works', 'App\Http\Controllers\organization\DashboardController@getEmployeesright');
+Route::get('org-add-right-works-by-datecheck', 'App\Http\Controllers\organization\DashboardController@addEmployeesrightByDate');
+Route::get('org-dashboard/key-contact', 'App\Http\Controllers\organization\DashboardController@getCompaniesofficerkey');
+Route::get('org-dashboard/sponsor-management-dossier', 'App\Http\Controllers\organization\DashboardController@getEmployeesdossier');
+Route::get('org-dashboard/message-center', 'App\Http\Controllers\organization\DashboardController@viewmsgcen');
+Route::post('org-document/staff-report-excel', 'App\Http\Controllers\organization\DashboardController@reportEmployeesexcelstaff');
+Route::get('org-dashboard/absent-report', 'App\Http\Controllers\organization\DashboardController@viewattendanabsent');
+Route::post('org-dashboard/absent-report', 'App\Http\Controllers\organization\DashboardController@getattendanabsent');
+Route::get('org-dashboard/absent-record-card/{absent_id}/{year_value}', 'App\Http\Controllers\organization\DashboardController@viewattendanabsentreport');
+Route::get('org-dashboard/absent-record-card-pdf/{absent_id}/{year_value}', 'App\Http\Controllers\organization\DashboardController@viewattendanabsentreportpdf');
+Route::get('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@viewchangecircumstancesedit');
+Route::post('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@savechangecircumstancesedit');
+Route::get('org-dashboard/contract-agreement', 'App\Http\Controllers\organization\DashboardController@viewemployeeagreement');
+Route::post('org-dashboard/contract-agreement', 'App\Http\Controllers\organization\DashboardController@saveemployeeagreement');
+
+//-----------------------------------------End Sponsor Compliance --------------------------------------------------------
+
 // --------------------------------Start Recruitment Section ---------------------------------------------------------------
 Route::get('recruitment/job_list', 'App\Http\Controllers\organization\RecruitmentController@jobList')->name('recruitment.job-list');
 Route::get('recruitment/dashboard', 'App\Http\Controllers\organization\RecruitmentController@dashboard')->name('recruitment.dashboard');

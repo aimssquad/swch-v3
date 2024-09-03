@@ -38,6 +38,7 @@ function filterAdd() {
 
 function departmentChangeEvent() {
   $("#department").on("change", () => {
+    //alert('okk');
     getEmployeesByDepertment($("#department").val());
     setEmployeeDetailsInForm(null);
   });

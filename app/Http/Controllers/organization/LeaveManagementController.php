@@ -31,6 +31,60 @@ class LeaveManagementController extends Controller
         //$this->_model       = new CompanyJobs();
     }
 
+    public function viewdash()
+    {
+        try {
+            $email = Session::get("emp_email");
+            if (!empty($email)) {
+                $data["Roledata"] = DB::table("registration")
+                    ->where("status", "=", "active")
+
+                    ->where("email", "=", $email)
+                    ->first();
+                $data["leave_type_tot"] = DB::Table("leave_rule")
+
+                    ->join(
+                        "leave_type",
+                        "leave_rule.leave_type_id",
+                        "=",
+                        "leave_type.id"
+                    )
+
+                    ->select(
+                        "leave_rule.*",
+                        "leave_type.leave_type_name",
+                        "leave_type.alies"
+                    )
+
+                    ->where("leave_rule.emid", "=", $data["Roledata"]->reg)
+                    ->get();
+                $data["leave_rule_tot"] = DB::Table("leave_rule")
+
+                    ->join(
+                        "leave_type",
+                        "leave_rule.leave_type_id",
+                        "=",
+                        "leave_type.id"
+                    )
+
+                    ->select(
+                        "leave_rule.*",
+                        "leave_type.leave_type_name",
+                        "leave_type.alies"
+                    )
+                    ->where("leave_rule_status", "=", "active")
+                    ->where("leave_rule.emid", "=", $data["Roledata"]->reg)
+                    ->get();
+                return view($this->_routePrefix . '.dashboard',$data);
+                //return View("leave/dashboard", $data);
+            } else {
+                return redirect("/");
+            }
+        } catch (Exception $e) {
+            throw new \App\Exceptions\FrontException($e->getMessage());
+        }
+    }
+
 
     public function getLeaveType()
     {   
