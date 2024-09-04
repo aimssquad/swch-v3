@@ -108,6 +108,7 @@ class EmployeeCornerOrganisationController extends Controller
             return redirect("/");
         }
     }
+
     public function viewdash()
     {
         $email = Session::get("emp_email");
@@ -176,11 +177,13 @@ class EmployeeCornerOrganisationController extends Controller
             return redirect("/");
         }
     }
+
     public function viewdetadash()
     {
          if (!empty(Session::get("emp_email"))) {
             // $user_id = Session::get("users_id_new");
            $users_ids=Session::get("users_id");
+           //dd($users_ids);
            $arryValue=array();
            if(Session::get("users_id_new")){
               $arryValue[]=Session::get("users_id_new");

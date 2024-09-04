@@ -180,7 +180,11 @@ Route::get('leaveapprover/leave-request', 'App\Http\Controllers\organization\Lea
 //----------------------------------------- End Leave Approver -----------------------------------------------
 
 // -----------------------------------------Employee Corner --------------------------------------------------
-Route::get('employer-check-employee', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@indexserorganisationemployee');
+Route::get('org-user-check-employee', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@indexserorganisationemployee');
+Route::post('org-user-check-employee', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@DoLoginorganisationemployee');
+// Route::get('employer-check-employee', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@indexserorganisationemployee');
+Route::get('org-employeecornerorganisationdashboard', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewdash');
+Route::get('org-employee-corner-organisation/user-profile', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewdetadash');
 
 // ----------------------------------------- End Employee Corner ---------------------------------------------
 

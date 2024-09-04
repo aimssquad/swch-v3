@@ -49,7 +49,7 @@
 							<p class="account-subtitle">Sign-in to Employee account</p>
 							
 							<!-- Account Form -->
-							<form action="{{url('user-check-employee')}}"  method="post" id="my_captcha_form">
+							<form action="{{url('org-user-check-employee')}}"  method="post" id="my_captcha_form">
                                 @csrf
                                 @include('layout.message')
 								<div class="input-block mb-4">

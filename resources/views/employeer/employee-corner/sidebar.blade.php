@@ -1,17 +1,6 @@
 @php
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
-//dd($sidebarItems);
-$user_type = Session::get("user_type");
-//dd($user_type);
-// $roles_auth = DB::table("othorized_organization_module")
-//             ->where("employee_id", "=", $Roledata->reg)
-//             ->get()
-//             ->toArray();;
-// //dd($roles_auth);            
-// $module_names = [];
-// foreach($roles_auth as $role){
-//     $module_names[] = $role->module_name;    
-// }  
+$user_type = Session::get("user_type"); 
 @endphp  
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
@@ -25,17 +14,12 @@ $user_type = Session::get("user_type");
                                     <span>Main</span>
                                 </li>
                                 <li class="submenu">
-                                    <a href="#"><i class="la la-cube {{Request::is('organization/employerdashboard')?'noti-dot':'';}}"></i> <span> Organisation</span> <span class="menu-arrow"></span></a>
+                                    <a href="#"><i class="la la-cube {{Request::is('org-employeecornerorganisationdashboard')?'noti-dot':'';}}"></i> <span> Employee Access Value</span> <span class="menu-arrow"></span></a>
                                     <ul>
-                                        <li><a href="chat.html">Organization Statistics</a></li>
-                                        <li><a href="chat.html">Edit Profile</a></li>
-                                        <li><a href="#">Employees According to RTI</a></li>
-                                        <li><a href="contacts.html">Authorizing Officer</a></li>
-                                        <li><a href="inbox.html">Key Contact</a></li>
-                                        <li><a href="file-manager.html">level 1 user</a></li>
-                                        <li><a href="file-manager.html">level 2 user</a></li>
-                                        <li><a href="file-manager.html">Sponsor Compliance</a></li>
-                                        <li><a href="file-manager.html">Governance</a></li>
+                                        <li><a href="{{url('org-employee-corner-organisation/user-profile')}}">View Profile</a></li>
+                                        <li><a href="chat.html">Holiday Calender</a></li>
+                                        <li><a href="#">Daily Work Update</a></li>
+                                        <li><a href="contacts.html">Attendance Status</a></li>
                                     </ul>
                                 </li>
                             @endif

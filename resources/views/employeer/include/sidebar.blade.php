@@ -713,7 +713,7 @@ $user_type = Session::get("user_type");
                                     <span>Employee Corner</span>
                                 </li>
                                 <li>
-                                    <a href="{{url('employer-check-employee')}}"><i class="la la-bell"></i> <span> Employee Corner</span></a>
+                                    <a href="{{url('org-user-check-employee')}}"><i class="la la-bell"></i> <span> Employee Corner</span></a>
                                 </li>          
                                 {{-- <li class="submenu">
                                     <a href="{{url('employer-check-employee')}}" class="noti-dot"><i class="la la-user"></i> <span> Employee Corner</span> <span class="menu-arrow"></span></a>
