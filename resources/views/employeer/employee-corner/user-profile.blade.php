@@ -33,11 +33,6 @@
                                     <div class="col-md-5">
                                         <div class="profile-info-left">
                                             <h3 class="user-name m-t-0 mb-0">{{$employee->emp_fname." ".$employee->emp_mname." ".$employee->emp_lname}}</h3>
-                                            {{-- <h6 class="text-muted">{{$employee->emp_department}}</h6>
-                                            <small class="text-muted">{{$employee->emp_designation}}</small>
-                                            <div class="staff-id">{{$employee->emp_ps_phone}}</div>
-                                            <div class="small doj text-muted">{{$employee->emp_code}}</div>
-                                            <div class="small doj text-muted">{{$employee->emp_father_name}}</div> --}}
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -81,24 +76,14 @@
                 <div class="card profile-box flex-fill">
                     <div class="card-body">
                         <h3 class="card-title"><i class="fa fa-bank"></i> Service Details</h3>
-                        <ul class="personal-info">
-                            {{-- <li>
-                                <div class="title">Bank name</div>
-                                <div class="text">ICICI Bank</div>
-                            </li>
-                            <li>
-                                <div class="title">Bank account No.</div>
-                                <div class="text">159843014641</div>
-                            </li>
-                            <li>
-                                <div class="title">IFSC Code</div>
-                                <div class="text">ICI24504</div>
-                            </li>
-                            <li>
-                                <div class="title">PAN No</div>
-                                <div class="text">TC000Y56</div>
-                            </li> --}}
-                        </ul>
+                        <?php  if($employee->emp_doj!='' && $employee->emp_doj!='1970-01-01'){ 
+                            ?>
+                        <p>Date Of Joining : </p>
+                        <?php  }?>
+                        <?php  if($employee->emp_status!='' ){ 
+                                ?>
+                        <p>Employment Type : </p>
+                         <?php  }?>
                     </div>
                 </div>
             </div>
@@ -107,22 +92,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><i class="fa fa-bank"></i> Bank Details</h3>
                         <ul class="personal-info">
-                            {{-- <li>
-                                <div class="title">Bank name</div>
-                                <div class="text">ICICI Bank</div>
-                            </li>
-                            <li>
-                                <div class="title">Bank account No.</div>
-                                <div class="text">159843014641</div>
-                            </li>
-                            <li>
-                                <div class="title">IFSC Code</div>
-                                <div class="text">ICI24504</div>
-                            </li>
-                            <li>
-                                <div class="title">PAN No</div>
-                                <div class="text">TC000Y56</div>
-                            </li> --}}
+                           
                         </ul>
                     </div>
                 </div>
@@ -131,24 +101,30 @@
                 <div class="card profile-box flex-fill">
                     <div class="card-body">
                         <h3 class="card-title"><i class="fa fa-location"></i> Present Address</h3>
-                        <ul class="personal-info">
-                            {{-- <li>
-                                <div class="title">Bank name</div>
-                                <div class="text">ICICI Bank</div>
-                            </li>
-                            <li>
-                                <div class="title">Bank account No.</div>
-                                <div class="text">159843014641</div>
-                            </li>
-                            <li>
-                                <div class="title">IFSC Code</div>
-                                <div class="text">ICI24504</div>
-                            </li>
-                            <li>
-                                <div class="title">PAN No</div>
-                                <div class="text">TC000Y56</div>
-                            </li> --}}
-                        </ul>
+                        <?php  if($employee->emp_pr_street_no!='' ){ 
+                            ?>
+                      <p>Address Line 1 : </p>
+                        <?php  }?>
+                        <?php  if($employee->emp_per_village!='' ){ 
+                            ?>
+                      <p>Address Line 2 : </p>
+                        <?php  }?>
+                        <?php  if($employee->emp_pr_state!='' ){ 
+                            ?>
+                      <p>Address Line 3 : </p>
+                        <?php  }?>
+                        <?php  if($employee->emp_pr_city!='' ){ 
+                            ?>
+                      <p>City / County : </p>
+                        <?php  }?>
+                        <?php  if($employee->emp_pr_pincode!='' ){ 
+                            ?>
+                      <p>Post Code : </p>
+                        <?php  }?>
+                        <?php  if($employee->emp_pr_country!='' ){ 
+                            ?>
+                      <p>Country : {{$employee->emp_pr_country}} </p>
+                        <?php  }?>
                     </div>
                 </div>
             </div>
@@ -157,14 +133,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><i class="fa fa-users"></i> Authority</h3>
                         <ul class="personal-info">
-                            {{-- <li>
-                                <div class="title">Bank name</div>
-                                <div class="text">ICICI Bank</div>
-                            </li>
-                            <li>
-                                <div class="title">Bank account No.</div>
-                                <div class="text">159843014641</div>
-                            </li>  --}}
+                           
                         </ul>
                     </div>
                 </div>
@@ -174,14 +143,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><i class="fa fa-location"></i> Immigration Details</h3>
                         <ul class="personal-info">
-                            {{-- <li>
-                                <div class="title">Bank name</div>
-                                <div class="text">ICICI Bank</div>
-                            </li>
-                            <li>
-                                <div class="title">Bank account No.</div>
-                                <div class="text">159843014641</div>
-                            </li> --}}
+                           
                             
                         </ul>
                     </div>
@@ -192,14 +154,7 @@
                     <div class="card-body">
                         <h3 class="card-title"><i class="fa fa-role"></i> Role</h3>
                         <ul class="personal-info">
-                            {{-- <li>
-                                <div class="title">Bank name</div>
-                                <div class="text">ICICI Bank</div>
-                            </li>
-                            <li>
-                                <div class="title">Bank account No.</div>
-                                <div class="text">159843014641</div>
-                            </li> --}}
+                            
                             
                         </ul>
                     </div>
