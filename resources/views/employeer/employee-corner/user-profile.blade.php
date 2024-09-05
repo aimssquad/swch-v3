@@ -101,30 +101,44 @@
                 <div class="card profile-box flex-fill">
                     <div class="card-body">
                         <h3 class="card-title"><i class="fa fa-location"></i> Present Address</h3>
-                        <?php  if($employee->emp_pr_street_no!='' ){ 
-                            ?>
-                      <p>Address Line 1 : </p>
-                        <?php  }?>
-                        <?php  if($employee->emp_per_village!='' ){ 
-                            ?>
-                      <p>Address Line 2 : </p>
-                        <?php  }?>
-                        <?php  if($employee->emp_pr_state!='' ){ 
-                            ?>
-                      <p>Address Line 3 : </p>
-                        <?php  }?>
-                        <?php  if($employee->emp_pr_city!='' ){ 
-                            ?>
-                      <p>City / County : </p>
-                        <?php  }?>
-                        <?php  if($employee->emp_pr_pincode!='' ){ 
-                            ?>
-                      <p>Post Code : </p>
-                        <?php  }?>
-                        <?php  if($employee->emp_pr_country!='' ){ 
-                            ?>
-                      <p>Country : {{$employee->emp_pr_country}} </p>
-                        <?php  }?>
+                        <ul class="personal-info">
+                            @if($employee->emp_pr_street_no!='')
+                                <li>
+                                    <div class="title">Address Line 1 :</div>
+                                    <div class="text">{{$employee->emp_pr_street_no}}</div>
+                                </li>
+                            @endif
+                            @if($employee->emp_per_village!='')
+                                <li>
+                                    <div class="title">Address Line 2:</div>
+                                    <div class="text">{{$employee->emp_per_village}}</div>
+                                </li>
+                            @endif
+                            @if($employee->emp_pr_state!='')
+                                <li>
+                                    <div class="title">Address Line 3:</div>
+                                    <div class="text">{{$employee->emp_pr_state}}</div>
+                                </li>
+                            @endif
+                            @if($employee->emp_pr_city!='')
+                                <li>
+                                    <div class="title">City / County:</div>
+                                    <div class="text">{{$employee->emp_pr_city}}</div>
+                                </li>
+                            @endif
+                            @if($employee->emp_pr_pincode!='')
+                                <li>
+                                    <div class="title">Post Code:</div>
+                                    <div class="text">{{$employee->emp_pr_pincode}}</div>
+                                </li>
+                            @endif
+                            @if($employee->emp_pr_country!='')
+                                <li>
+                                    <div class="title">Country:</div>
+                                    <div class="text">{{$employee->emp_pr_country}}</div>
+                                </li>
+                            @endif
+                        </ul>
                     </div>
                 </div>
             </div>
