@@ -27,54 +27,24 @@ class LandingController extends Controller
 
     public function Dashboard(Request $request)
     {
-
-        if ($request->input("emp_email")) {
-            $Employee1 = DB::table("users")
-                ->where(
-                    "email",
-                    "=",
-                    base64_decode($request->input("emp_email"))
-                )
-                ->where("user_type", "!=", "admin")
-                ->where("status", "=", "active")
-                ->first();
-
-            Session::put("emp_email", $Employee1->email);
-            Session::put("emp_pass", $Employee1->password);
-            Session::put("user_type", $Employee1->user_type);
-            Session::put("users_id", $Employee1->id);
-        }
-
         $email = Session::get("emp_email");
 
         if (!empty($email)) {
             $user_type = Session::get("user_type");
-            //dd($user_type);
             if ($user_type == "employer") {
                 $data["Roledata"] = DB::table("registration")
                     ->where("status", "=", "active")
                     ->where("email", "=", $email)
-                    ->first(); //dd($data);
+                    ->first(); 
+                    //dd($data);
             } else {
-
                 $usemail = Session::get("user_email");
                 $users_id = Session::get("users_id");
-                //dd($usemail);
                 $dtaem = DB::table("users")
-
                     ->where("id", "=", $users_id)
-                    ->first();//dd($dtaem);
-                $data["Roledata"] = DB::table("employee")
-                    ->where("emid", "=", $dtaem->emid)
-                    ->where("emp_code", "=", $dtaem->employee_id)
                     ->first();
-
-                $data["Roles_auth"] = DB::table("role_authorization")
-                    ->where("emid", "=", $dtaem->emid)
-                    ->where("member_id", "=", $dtaem->email)
-                    ->get()
-                    ->toArray();
-                    //dd($data);
+                    dd($dtaem);
+                
             }
             //dd($data["Roledata"]);
             //dd($data);
