@@ -653,7 +653,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{route('organization.update')}}" method="post" enctype="multipart/form-data">
+                <form action="#" method="post" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="profile-img-wrap edit-img">
