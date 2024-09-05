@@ -15,6 +15,7 @@ class Project extends Model
         'description',
         'keywords',
         'createdBy',
+        'identifier',
         'status',
         'created_at',
         'updated_at'

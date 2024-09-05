@@ -75,27 +75,27 @@
 									<form action="" method="post" enctype="multipart/form-data">
 			 {{csrf_field()}}
 									<div class="row">
-										<div class="col-md-4">
-
-										<div class="form-group">
-											<label for="inputFloatingLabel" class="placeholder">ifsc</label>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="inputFloatingLabel" class="placeholder">ifsc</label>
 												<input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"  name="ifsc_code" />
+											</div>
 										</div>
-										<div class="form-group">
-											<label for="inputFloatingLabel" class="placeholder">Bank Name</label>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="inputFloatingLabel" class="placeholder">Bank Name</label>
 												<input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"  name="bank_name" />
-										</div>
-										<div class="form-group">
-											<label for="inputFloatingLabel" class="placeholder">Bank Address</label>
-												<input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"  name="bank_address" />
-										</div>
-										
-
-
 											</div>
+										</div>
+										<div class="col-md-12">	
+											<div class="form-group">
+												<label for="inputFloatingLabel" class="placeholder">Bank Address</label>
+													<input id="inputFloatingLabel" type="text" class="form-control input-border-bottom"  name="bank_address" />
 											</div>
-											<div class="row form-group">
-										<div class="col-md-2"><button type="submit" class="btn btn-default">Submit</button></div>
+										</div>
+									</div>
+										<div class="row form-group">
+											<div class="col-md-2"><button type="submit" class="btn btn-default">Submit</button></div>
 										</div>
 										</div>
 									</form>

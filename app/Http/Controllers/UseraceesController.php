@@ -91,7 +91,7 @@ class UseraceesController extends Controller
                     "=",
                     $Roledata->reg
                 )->get();
-        //   dd($data["employeeslist"]);
+                //   dd($data["employeeslist"]);
                 $data["users"] = UserModel::join(
                     "employee",
                     "users.employee_id",
@@ -123,7 +123,7 @@ class UseraceesController extends Controller
                     ];
                 }
               
-// dd($data["employees"]);
+                // dd($data["employees"]);
                 //echo "<pre>"; print_r($data['employees']); exit;
                 return view("role/view-user-config", $data);
             } else {

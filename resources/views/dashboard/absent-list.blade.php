@@ -153,8 +153,8 @@
 
 if(isset($result) && $result!=''  ){
 										?>
-										<span>		<a data-toggle="tooltip" data-placement="bottom" title="View" href="{{ url('dashboard/absent-record-card/'.base64_encode($employee_code).'/'.base64_encode($year_value)) }}" target="_blank"><img  style="width: 35px;" src="{{ asset('img/view.png')}}"></a></span>
-											<span>		<a data-toggle="tooltip" data-placement="bottom" title="Download PDF" href="{{ url('dashboard/absent-record-card-pdf/'.base64_encode($employee_code).'/'.base64_encode($year_value)) }}"  ><img  style="width: 35px;" src="{{ asset('img/dnld-pdf.png')}}"></a></span>
+										<span>		<a data-toggle="tooltip" data-placement="bottom" title="View" href="{{ url('org-dashboard/absent-record-card/'.base64_encode($employee_code).'/'.base64_encode($year_value)) }}" target="_blank"><img  style="width: 35px;" src="{{ asset('img/view.png')}}"></a></span>
+											<span>		<a data-toggle="tooltip" data-placement="bottom" title="Download PDF" href="{{ url('org-dashboard/absent-record-card-pdf/'.base64_encode($employee_code).'/'.base64_encode($year_value)) }}"  ><img  style="width: 35px;" src="{{ asset('img/dnld-pdf.png')}}"></a></span>
 										<?php
 }?>
 		</h4>	

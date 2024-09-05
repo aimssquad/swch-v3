@@ -215,6 +215,125 @@ class FilemanagmentControler extends Controller
         }
     }
 
+    public function folderCreate(Request $request, $id){
+        $email = Session::get('emp_email');
+        // dd($email);
+        if(!empty($email)){
+           $data['data']= fileManager::find($id);
+           $filename=$data['data']->file_name;
+           $data['file_image']=DB::table('folder_managers')->where("file_name",$filename)->get();
+           return view($this->_routePrefix . '.folder-view',$data);
+           //return view('filemanagment/folder-view',$data);
+        }else{
+         return redirect("/");
+        }
+      }
+
+      public function fileManagmentView(){
+        $email= Session::get('emp_email');
+        $user_email=Session::get('user_email');
+        $user_type=Session::get('user_type');
+        $arrayEmail=[];
+        if($user_type==="employer"){
+           $email = Session::get('emp_email');
+           array_push($arrayEmail, $email);
+        }else{
+           $user_email=Session::get('user_email');
+           array_push($arrayEmail, $user_email);
+        }
+        $emp_email = implode(", ", $arrayEmail);
+     
+        if($user_type==="employer"){
+           if(!empty($email)){
+              $data["emp_record"]=UserModel::where("email",$email)->first();
+              $empid= $data["emp_record"]->employee_id;
+              $data["emp_details"]=Employee::where("emid",$empid)->first();
+              // dd($data["emp_details"]);
+              $data["emp_detail"]=Employee::where("emid",$empid)->get();
+              $data['dataReg'] = Registration::where("email",$email)->first();
+              $organization_id = $data['dataReg']->id;
+              $data['file_division']=fileDivision::where("organization_id",$organization_id)->get();
+              return view($this->_routePrefix . '.add-fileManagment',$data);
+              //return View("filemanagment/add-fileManagment",$data);
+         }else{
+              return redirect("/");
+         }
+        }else{
+           if(!empty($user_email)){
+              $data["emp_record"]=UserModel::where("email",$user_email)->first();
+              $empid= $data["emp_record"]->employee_id;
+              $data["emp_details"]=Employee::where("emp_code",$empid)->first();
+              $data["emp_detail"]=Employee::where("emp_code",$empid)->get();
+              $data['dataReg'] = Registration::where("reg",$data["emp_details"]->emid)->first();
+              $organization_id = $data['dataReg']->id;
+              $data['file_division']=fileDivision::where("organization_id",$organization_id)->get();
+              return view($this->_routePrefix . '.add-fileManagment',$data);
+              //return View("filemanagment/add-fileManagment",$data);
+         }else{
+              return redirect("/");
+         }
+        }
+      }
+
+      public function savefilemanagment(Request $request){
+        $email= Session::get('emp_email');
+        $user_email=Session::get('user_email');
+        $user_type=Session::get('user_type');
+     
+        if($user_type==="employer"){
+     
+        if(!empty($email)){
+           $arryValue=array(
+              "division"=>$request->division,
+              "file_name"=>$request->file_name,
+              "emp_id"=>$request->emp_id,
+              "organization_id"=>$request->organization_id,
+              "status"=>"Approved",
+              "remarks"=>$request->remarks,
+           );
+     
+           fileManager::insert($arryValue);
+           $folderName = $request->file_name;
+           $path = public_path().'filemanagment/' . $folderName;
+           if (!is_dir($path)) {
+              File::makeDirectory($path, $mode = 0777, true, true);
+           }
+     
+           return redirect("file-management/fileManagmentList");
+           Session::flash('message', 'File Manager Successfully Save.');
+        }else{
+           return redirect("/");
+        }
+        }else{
+     
+        if(!empty($user_email)){
+           $arryValue=array(
+              "division"=>$request->division,
+              "file_name"=>$request->file_name,
+              "emp_id"=>$request->emp_id,
+              "organization_id"=>$request->organization_id,
+              "status"=>"pending",
+              "remarks"=>$request->remarks,
+           );
+     
+           fileManager::insert($arryValue);
+           $folderName = $request->file_name;
+           $path = public_path().'filemanagment/' . $folderName;
+           if (!is_dir($path)) {
+              File::makeDirectory($path, $mode = 0777, true, true);
+           }
+     
+           return redirect("file-management/fileManagmentList");
+           Session::flash('message', 'File Manager Successfully Save.');
+        }else{
+           return redirect("/");
+        }
+        }
+     
+      }
+
+
+
 
 
 

@@ -101,17 +101,17 @@
                <div class="row form-group">
                   <div class="col-md-12">
                      <button class="btn btn-default" style="width: 100%;color:#fff ;   background-image: linear-gradient(
-  180deg,
-  hsl(180deg 100% 65%) 0%,
-  hsl(184deg 94% 55%) 11%,
-  hsl(187deg 100% 47%) 22%,
-  hsl(190deg 100% 45%) 33%,
-  hsl(193deg 100% 43%) 44%,
-  hsl(196deg 100% 40%) 56%,
-  hsl(199deg 100% 37%) 67%,
-  hsl(201deg 100% 34%) 78%,
-  hsl(206deg 86% 33%) 89%,
-  hsl(216deg 61% 33%) 100%
+                        180deg,
+                        hsl(180deg 100% 65%) 0%,
+                        hsl(184deg 94% 55%) 11%,
+                        hsl(187deg 100% 47%) 22%,
+                        hsl(190deg 100% 45%) 33%,
+                        hsl(193deg 100% 43%) 44%,
+                        hsl(196deg 100% 40%) 56%,
+                        hsl(199deg 100% 37%) 67%,
+                        hsl(201deg 100% 34%) 78%,
+                        hsl(206deg 86% 33%) 89%,
+                        hsl(216deg 61% 33%) 100%
 ); padding: 12px 0; border-radius: 30px; border: none;" type="submit">LOGIN</button>
                   </div>
                </div>
