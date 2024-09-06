@@ -315,7 +315,7 @@
                 <div class="col-md-5 d-flex">
                     <div class="card profile-box flex-fill">
                         <div class="card-body">
-                            <h3 class="card-title"><i style="color:#ff902f" class="fa fa-user-secret"></i> Role</h3>
+                            <h3 class="card-title"><i style="color:#6aff2f" class="fa fa-user-secret"></i> Role</h3>
                             {{$module_name}}
                         </div>
                     </div>
