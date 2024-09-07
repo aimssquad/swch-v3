@@ -30,6 +30,13 @@ class RotaController extends Controller
         //$this->_model       = new CompanyJobs();
     }
 
+    public function dashboard(Request $request){
+        return view($this->_routePrefix.'.dashboard');
+    }
+    public function linkDashboard(Request $request){
+        return view($this->_routePrefix.'.link-dashboard');
+    }
+
     // return view($this->_routePrefix . '.leave-type',$data);
     public function viewshift()
     {

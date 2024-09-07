@@ -37,14 +37,14 @@
                   <div class="lv-due" style="border:none;">
                       <div class="row form-group lv-due-body">
                           <div class="col-md-6">
-                              <label>Department <span>(*)</span></label>
+                              <label class="col-form-label">Department <span>(*)</span></label>
 
                               <?php if ($mode === 'edit') {
 
                               ?>
                                   <input class="form-control" readonly value="<?php echo $performance->emp_department; ?>" />
                               <?php } else { ?>
-                                  <select class="form-control" id="department">
+                                  <select class="select" id="department">
                                       @foreach($departments as $d)
                                       <option value="{{$d->department_name}}">{{$d->department_name}}</option>
                                       @endforeach
@@ -55,7 +55,7 @@
 
                           </div>
                           <div class="col-md-6">
-                              <label>Employee Name <span>(*)</span></label>
+                              <label class="col-form-label">Employee Name <span>(*)</span></label>
                               <!-- <input type="text" class="form-control" id="employee" /> -->
                               <?php if ($mode === 'edit') {
 
@@ -63,7 +63,7 @@
                                   <input class="form-control" readonly value="<?php echo $performance->emp_fname . '' . ($performance->emp_mname ? ' ' . $performance->emp_mname : '') . ($performance->emp_lname ? ' ' . $performance->emp_lname : ''); ?>" />
                                   <input type="hidden" name="emp_code" value="<?php echo $performance->emp_code; ?>" />
                               <?php } else { ?>
-                                  <select id="employee" class="form-control" name="emp_code">
+                                  <select id="employee" class="select" name="emp_code">
 
 
                                   </select>
@@ -75,19 +75,19 @@
                       </div>
                       <div class="row">
                           <div class="col-md-6">
-                              <label>Job title <span>(*)</span></label>
+                              <label class="col-form-label">Job title <span>(*)</span></label>
                               <input class="form-control" id="job_title" readonly value="<?php if ($mode == 'edit') echo $performance->emp_designation; ?>" />
 
                           </div>
                           <div class="col-md-6">
-                              <label>Date of Joining <span>(*)</span></label>
+                              <label class="col-form-label">Date of Joining <span>(*)</span></label>
                               <input class="form-control" id="doj" readonly value="<?php if ($mode == 'edit') echo date('d-m-Y', strtotime($performance->emp_doj)); ?>" />
 
                           </div>
                       </div>
                       <div class="row">
                           <div class="col-md-6">
-                              <label>Apprisal Period Start date<span>(*)</span></label>
+                              <label class="col-form-label">Apprisal Period Start date<span>(*)</span></label>
                               <input class="form-control" id="app_period_start_date" name="apprisal_period_start" value="<?php if ($mode == 'edit') echo date('d-m-Y', strtotime($performance->apprisal_period_start)); ?>" <?php if ($userType !== 'employer') {
                                                                                                                                                                                                                                   echo 'readonly';
                                                                                                                                                                                                                                   echo ' disabled="disabled"';
@@ -95,7 +95,7 @@
 
                           </div>
                           <div class="col-md-6">
-                              <label>Apprisal Period End Date<span>(*)</span></label>
+                              <label class="col-form-label">Apprisal Period End Date<span>(*)</span></label>
                               <input class="form-control" id="app_period_end_date" name="apprisal_period_end" value="<?php if ($mode == 'edit') echo date('d-m-Y', strtotime($performance->apprisal_period_end)); ?>" <?php if ($userType !== 'employer') {
                                                                                                                                                                                                                           echo 'readonly';
                                                                                                                                                                                                                           echo ' disabled="disabled"';
@@ -105,7 +105,7 @@
                       </div>
                       <div class="row">
                           <div class="col-md-6">
-                              <label>Reporting Manager<span>(*)</span></label>
+                              <label class="col-form-label">Reporting Manager<span>(*)</span></label>
                               <input class="form-control" id="rep_auth" readonly name="rep_auth" value="<?php if ($mode == 'edit') {
                                                                                                               echo ($performance->rep_fname ? $performance->rep_fname : "") . '' . ($performance->rep_mname ? ' ' . $performance->rep_mname : '') . ($performance->rep_lname ? ' ' . $performance->rep_lname : '');
                                                                                                           } ?>" />
@@ -123,11 +123,11 @@
 
                               @if($userType=='employer')
                               @if($performance->status!=='pending')
-                              <label>Rating<span>(*)</span></label>
+                              <label class="col-form-label">Rating<span>(*)</span></label>
                               <input type='text' readonly name="rating" class="form-control" value="<?php echo $performance->rating; ?>" />
                               @endif
                               @else
-                              <label>Rating<span>(*)</span></label>
+                              <label class="col-form-label">Rating<span>(*)</span></label>
                               <select class="form-control" id="per_rating" name="rating" <?php ?>>
                                   <option value="">Select Rating</option>
                                   @for($i=1;$i<=5;$i++) <option value="{{$i}}" <?php if ($performance->rating == $i) echo "selected"; ?>>{{$i}}</option>
@@ -139,14 +139,14 @@
                           @if($userType=='employer')
                           @if($performance->status!=='pending')
                           <div class="col-md-12">
-                              <label>Comments<span>(*)</span></label>
+                              <label class="col-form-label">Comments<span>(*)</span></label>
                               <textarea class="form-control" id="performance_comments" name="performance_comments" <?php if ($userType == 'employer') echo "readonly"; ?>>{{$performance->performance_comments}}</textarea>
 
                           </div>
                           @endif
                           @else
                           <div class="col-md-12">
-                              <label>Comments<span>(*)</span></label>
+                              <label class="col-form-label">Comments<span>(*)</span></label>
                               <textarea class="form-control" id="performance_comments" name="performance_comments" <?php if ($userType == 'employer') echo "readonly"; ?>>{{$performance->performance_comments}}</textarea>
 
                           </div>
@@ -158,11 +158,12 @@
 
 
                       ?>
+                      <br>
                       <div class="row">
                           <div class="col-md-4 btn-up">
                               @if($userType=='employer')
                               <!-- <button type="submit" class="btn btn-danger btn-sm" id="btn_project_create">Submit</button> -->
-                              <button class="btn btn-default" type="submit" id="btn_performance_request_create">Submit</button>
+                              <button class="btn btn-primary" type="submit" id="btn_performance_request_create">Submit</button>
                               @else
                               @if($mode=='edit' && (strtotime($performance->apprisal_period_start)<=time() && strtotime($performance->apprisal_period_end)>=time()))
                                   <button class="btn btn-default" type="submit" id="btn_performance_request_update">Submit</button>

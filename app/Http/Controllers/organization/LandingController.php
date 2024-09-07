@@ -40,10 +40,11 @@ class LandingController extends Controller
             } else {
                 $usemail = Session::get("user_email");
                 $users_id = Session::get("users_id");
-                $dtaem = DB::table("users")
+                $data["Roledata"] = DB::table("users")
                     ->where("id", "=", $users_id)
                     ->first();
-                    dd($dtaem);
+                    //dd($dtaem);
+                return view('employeer.employee-corner.dashboard', $data);
                 
             }
             //dd($data["Roledata"]);
