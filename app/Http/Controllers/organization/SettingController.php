@@ -24,6 +24,10 @@ class SettingController extends Controller
         $this->_routePrefix = 'employeer.settings';
         //$this->_model       = new CompanyJobs();
     }
+    
+    public function dashboard(Request $request){
+        return view($this->_routePrefix. '.dashboard');
+    }
 
     public function getCompanyBank(){
         $data['grades']=DB::table('company-bank-master')->get();

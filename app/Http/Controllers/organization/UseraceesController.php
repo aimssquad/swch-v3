@@ -28,6 +28,10 @@ class UseraceesController extends Controller
         //$this->_model       = new CompanyJobs();
     }
 
+    public function dashboard(Request $request){
+        return view($this->_routePrefix . '.dashboard');
+    }
+
     public function viewUserConfig()
     {  
         try {

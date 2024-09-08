@@ -48,6 +48,7 @@ Route::get('organization/example', 'App\Http\Controllers\organization\EmployeeCo
 
 
 //----------------------------- Holiday List ------------------------------------
+Route::get('orgaization/holiday-dashboard','App\Http\Controllers\organization\HolidayController@dashboard')->name('organization/holiday-dashboard');
 Route::get('organization/holiday-list', 'App\Http\Controllers\organization\HolidayController@holidayList')->name('organization/holiday-list');
 Route::get('organization/add-holiday-list', 'App\Http\Controllers\organization\HolidayController@addHolidayList')->name('organization/add-holiday-list');
 Route::post('organization/save-holiday-list', 'App\Http\Controllers\organization\HolidayController@saveHolidayList')->name('organization/save-holiday-list');
@@ -95,9 +96,12 @@ Route::post('leave/leave-report-employee-wise', 'App\Http\Controllers\organizati
 Route::post('leave/leave-report-employee-wise-excel', 'App\Http\Controllers\organization\LeaveManagementController@postleaveemplyeeexcel');
 
 //------------------------------End Leave Management -----------------------------------------
+//-------------------------------Change of Circumstances----------------------------------------
+Route::get('organization/circumstances','App\Http\Controllers\organization\CircumstanceController@dashboard')->name('organization/circumstances');
 
-
+//-------------------------------End Cirrcumstances -------------------------------------------------
 //----------------------------------- Attendance Mangement ---------------------------------------------
+Route::get('attendance-management/dashboard', 'App\Http\Controllers\organization\AttendanceController@dashboard');
 Route::get('attendance-management/upload-data', 'App\Http\Controllers\organization\AttendanceController@viewUploadAttendence');
 Route::post('attendance-management/upload-data', 'App\Http\Controllers\organization\AttendanceController@importExcel');
 
@@ -124,6 +128,7 @@ Route::post('attendance-management/absent-report', 'App\Http\Controllers\organiz
 //------------------------------------ End Attendance Management -------------------------------------
 
 //------------------------------------- Rota ---------------------------------------------------
+Route::get('rota-org/dashboard','App\Http\Controllers\organization\RotaController@dashboard')->name('rota-dashboard');
 Route::get('rota-org/shift-management', 'App\Http\Controllers\organization\RotaController@viewshift');
 Route::get('rota-org/add-shift-management', 'App\Http\Controllers\organization\RotaController@viewAddNewShift');
 Route::post('rota-org/add-shift-management', 'App\Http\Controllers\organization\RotaController@saveShiftData');
@@ -148,7 +153,7 @@ Route::post('rota-org/add-employee-duty', 'App\Http\Controllers\organization\Rot
 Route::get('rota-org/add-department-duty', 'App\Http\Controllers\organization\RotaController@viewAddNewdepartmentduty');
 Route::post('rota-org/add-department-duty', 'App\Http\Controllers\organization\RotaController@savedepartmentdutyData');
 
-
+Route::get('rota-org/module-dashboard', 'App\Http\Controllers\organization\RotaController@linkDashboard');
 Route::get('rota-org/visitor-link', 'App\Http\Controllers\organization\RotaController@viewvisitorlink');
 
 Route::get('rota-org/visitor-regis', 'App\Http\Controllers\organization\RotaController@viewvisitorregis');
@@ -161,6 +166,7 @@ Route::get('rota-org/visitor-regis-deleted/{id}', 'App\Http\Controllers\organiza
 //-------------------------------------End Rota--------------------------------------------------
 
 //-------------------------------------- File Manager -----------------------------------------------
+Route::get('file-management/dashboard', 'App\Http\Controllers\organization\FilemanagmentControler@dashboard')->name('file-management/dashboard');
 Route::get('file-management/file-devision-list', 'App\Http\Controllers\organization\FilemanagmentControler@filedivisionlist');
 Route::get('file-management/fileManagment-division-add', 'App\Http\Controllers\organization\FilemanagmentControler@filedivisionView');
 Route::post('file-management/fileManagment-division-adds', 'App\Http\Controllers\organization\FilemanagmentControler@filedivisionadd');
@@ -175,6 +181,7 @@ Route::post('file-management/fileManagment-save', 'App\Http\Controllers\organiza
 //-------------------------------------- End File Management --------------------------------------------
 
 // -----------------------------------------Leave Approver --------------------------------------------------
+Route::get('leaveapprover/leave-dashboard', 'App\Http\Controllers\organization\LeaveApproverController@dashboard')->name('leave-approver/dashboard');
 Route::get('leaveapprover/leave-request', 'App\Http\Controllers\organization\LeaveApproverController@viewLeaveApproved');
 
 //----------------------------------------- End Leave Approver -----------------------------------------------
@@ -182,9 +189,20 @@ Route::get('leaveapprover/leave-request', 'App\Http\Controllers\organization\Lea
 // -----------------------------------------Employee Corner --------------------------------------------------
 Route::get('org-user-check-employee', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@indexserorganisationemployee');
 Route::post('org-user-check-employee', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@DoLoginorganisationemployee');
-// Route::get('employer-check-employee', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@indexserorganisationemployee');
 Route::get('org-employeecornerorganisationdashboard', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewdash');
 Route::get('org-employee-corner-organisation/user-profile', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewdetadash');
+
+Route::get('org-employee-corner/holiday', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewdetaholiday');
+
+Route::get('org-employee-corner/work-update', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewworkupdate');
+Route::get('org-employee-corner/add-work-update', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewaddworkupdate');
+Route::get('pis/gettimemintuesnew/{in_time}/{out_time}','App\Http\Controllers\organization\EmployeeCornerOrganisationController@gettimemintuesnew');
+Route::post('org-employee-corner/task-save', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewtasksave');
+Route::get('org-employee-corner/work-edit/{id}', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewaddworkupdateget');
+Route::post('org-employee-corner/task-update', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewtaskupdate');
+
+Route::get('org-employee-corner/attendance-status', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@viewAttandancestatus');
+Route::post('org-employee-corner/attendance-status', 'App\Http\Controllers\organization\EmployeeCornerOrganisationController@saveAttandancestatus');
 
 // ----------------------------------------- End Employee Corner ---------------------------------------------
 
@@ -196,6 +214,7 @@ Route::get('hr-support/support-file-details/{id}', 'App\Http\Controllers\organiz
 //-------------------------------------------- End Hr Support -----------------------------------------------
 
 //--------------------------------------------- User Access -----------------------------------------------
+Route::get('user-access-role/dashboard', 'App\Http\Controllers\organization\UseraceesController@dashboard')->name('user-access/dashboard');
 Route::get('user-access-role/vw-users', 'App\Http\Controllers\organization\UseraceesController@viewUserConfig');
 Route::get('user-access-role/vw-user-config', 'App\Http\Controllers\organization\UseraceesController@viewUserConfigForm');
 Route::get('user-access-role/vw-user-config/{user_id}', 'App\Http\Controllers\organization\UseraceesController@GetUserConfigForm');
@@ -209,6 +228,7 @@ Route::get('user-accessrole/view-users-role/{role_authorization_id}', 'App\Http\
 
 //----------------------------------------------- Settings ---------------------------------------------
 //Company Bank
+Route::get('organization/settings-dashboard','App\Http\Controllers\organization\SettingController@dashboard')->name('settings-dashboard');
 Route::get('org-settings/vw-cmp-bank', 'App\Http\Controllers\organization\SettingController@getCompanyBank');
 Route::get('org-settings/add-company-bank', 'App\Http\Controllers\organization\SettingController@addComapnyBankAdd');
 Route::post('org-settings/add-new-bank-details', 'App\Http\Controllers\organization\SettingController@addcmpbankDetails');
@@ -314,6 +334,7 @@ Route::get('org-settings/tax', 'App\Http\Controllers\organization\SettingControl
 Route::post('org-settings/tax', 'App\Http\Controllers\organization\SettingController@saveTaxmaster');
 //------------------------------------------------End Settings -------------------------------------------
 //-----------------------------------------------------Performance Management --------------------------------------------
+Route::get('org-performances/dashboard', 'App\Http\Controllers\organization\PerformanceController@dashboard');
 Route::get('org-performances', 'App\Http\Controllers\organization\PerformanceController@index');
 Route::get('org-performances/request', 'App\Http\Controllers\organization\PerformanceController@performanceRequest');
 Route::get('org-performances/request/{id}', 'App\Http\Controllers\organization\PerformanceController@requestEdit');
@@ -322,7 +343,7 @@ Route::get("org-performances/del/{id}", 'App\Http\Controllers\organization\Perfo
 
 //----------------------------------------------- End Performance Managemant -----------------------------------------------
 //############################################### Task Management #########################################################
-
+Route::get('org-task-management/dashboard','App\Http\Controllers\organization\TaskManagement@index');
 Route::get('org-task-management/projects', 'App\Http\Controllers\organization\TaskManagement@projects');
 Route::get('org-task-management/create-project', 'App\Http\Controllers\organization\TaskManagement@createProject');
 Route::post("org-projects/add", 'App\Http\Controllers\organization\TaskManagement@create');
@@ -4012,22 +4033,23 @@ Route::get('pis/getEmployeeannulappById/{empid}/{emid}', function ($empid, $emid
 
 });
 
-Route::get('pis/gettimemintuesnew/{in_time}/{out_time}', function ($in_time, $out_time) {
-    $in_time = base64_decode($in_time);
-    $out_time = base64_decode($out_time);
-    $st_time = date('Y-m-d') . ' ' . $in_time . ':10';
+// Route::get('pis/gettimemintuesnew/{in_time}/{out_time}', function ($in_time, $out_time) {
+//     //dd('okk');
+//     $in_time = base64_decode($in_time);
+//     $out_time = base64_decode($out_time);
+//     $st_time = date('Y-m-d') . ' ' . $in_time . ':10';
 
-    $end_time = date('Y-m-d') . ' ' . $out_time . ':10';
-    $t1 = Carbon::parse($st_time);
-    $t2 = Carbon::parse($end_time);
-    $diff = $t1->diff($t2);
-    // print_r($diff);
-    //print_r(str_pad($diff->i,2,"0",STR_PAD_LEFT));
+//     $end_time = date('Y-m-d') . ' ' . $out_time . ':10';
+//     $t1 = Carbon::parse($st_time);
+//     $t2 = Carbon::parse($end_time);
+//     $diff = $t1->diff($t2);
+//     // print_r($diff);
+//     //print_r(str_pad($diff->i,2,"0",STR_PAD_LEFT));
 
 
-    $arr = array('hour' => $diff->h, 'min' => str_pad($diff->i,2,"0",STR_PAD_LEFT));
-    echo json_encode($arr);
-});
+//     $arr = array('hour' => $diff->h, 'min' => str_pad($diff->i,2,"0",STR_PAD_LEFT));
+//     echo json_encode($arr);
+// });
 
 Route::get('pis/getEmployeererivewById/{emid}', function ($emid) {
 

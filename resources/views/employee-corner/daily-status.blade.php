@@ -63,7 +63,7 @@
 							<div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
 					@endif
 						
-									<div class="row">
+					<div class="row">
 						<div class="col-md-12">
 							<div class="card">
 								

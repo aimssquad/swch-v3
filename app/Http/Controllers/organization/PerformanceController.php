@@ -21,6 +21,10 @@ class PerformanceController extends Controller
     }
     //return view($this->_routePrefix . '.company_bank',$data);
 
+    public function dashboard(Request $request){
+        return view($this->_routePrefix . '.dashboard');
+    }
+
     public function index(Request $request)
     {   
         if (!empty(Session::get('user_type'))) {

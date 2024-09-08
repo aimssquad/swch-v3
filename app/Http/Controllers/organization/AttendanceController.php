@@ -20,7 +20,11 @@ class AttendanceController extends Controller
         $this->_routePrefix = 'employeer.attendance';
         //$this->_model       = new CompanyJobs();
     }
-//return view($this->_routePrefix . '.holiday-list',$data);
+    //return view($this->_routePrefix . '.holiday-list',$data);
+    public function dashboard(Request $request){
+        return view($this->_routePrefix . '.dashboard');
+    }
+
     public function viewUploadAttendence()
     {
         //dd('okkk');

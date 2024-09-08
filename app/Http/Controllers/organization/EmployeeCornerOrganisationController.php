@@ -8,6 +8,7 @@ use view;
 use Validator;
 use Session;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 use Auth;
 use PDF;
@@ -15,6 +16,20 @@ use App\Models\Registration;
 use App\Models\UserModel;
 use App\Models\Employee;
 use App\Models\EmployeePayStructure;
+
+use App\Models\Masters\Cast;
+use App\Models\Masters\Sub_cast;
+use App\Models\Masters\Department;
+use App\Models\RotaEmployee;
+use App\Models\EmployeeType;
+use App\Models\LeaveType;
+use App\Models\LeaveRule;
+use App\Models\Holiday;
+use App\Models\EmployeePersonalRecord;
+use App\Models\ExperienceRecords;
+use App\Models\ProfessionalRecords;
+use App\Models\MiscDocuments;
+
 
 class EmployeeCornerOrganisationController extends Controller
 {
@@ -256,6 +271,344 @@ class EmployeeCornerOrganisationController extends Controller
             return redirect("/");
         }
     }
+
+    public function viewdetaholiday()
+    {
+        if (!empty(Session::get("emp_email"))) {
+            $user_id = Session::get("users_id");
+            $users = DB::table("users")
+                ->where("id", "=", $user_id)
+                ->first();
+            $holidays = DB::table("holiday")
+
+                ->where("emid", "=", $users->emid)
+                ->get();
+            return view($this->_routePrefix . '.holiday-calendar',compact("holidays"));
+            // return view(
+            //     "employee-corner/holiday-calendar",
+            //     compact("holidays")
+            // );
+        } else {
+            return redirect("/");
+        }
+    }
+
+    public function viewworkupdate()
+    {
+        
+        if (!empty(Session::get("emp_email"))) {
+             
+             $user_type = Session::get("user_type");   
+           if($user_type=="employer"){
+             $emp_email=Session::get("user_email_new");
+            //  dd($emp_email);
+            $users = UserModel::where("email", "=",  $emp_email)->first();
+        //    dd($users);
+            $data["user_type"]="employer";
+            //     $data["Roledata"] = Registration::where(
+            //     "reg",
+            //     "=",
+            //     $users->emid
+            // )->first();
+
+            $data["employee"] = Employee::where(
+                "emp_code",
+                "=",
+                $users->employee_id
+            )
+                ->where("emid", "=", $users->emid)
+                ->first();
+                // dd($users->employee_id);
+                 $data["employee_workupdate"] = RotaEmployee::where(
+                "employee_id",
+                "=",
+                $users->employee_id
+            )
+                ->orderBy("date", "DESC")
+                ->get();
+                return view($this->_routePrefix . '.work-update',$data);
+                //return view("employee-corner/work-update", $data);
+
+           }else{
+              $user_email = Session::get("user_email");
+              $users = UserModel::where("email", "=",  $user_email)->first();
+                 $data["employee"] = Employee::where(
+                "emp_code",
+                "=",
+                $users->employee_id
+            )
+                ->where("emid", "=", $users->emid)
+                ->first();
+                // dd($users->employee_id);
+                 $data["employee_workupdate"] = RotaEmployee::where(
+                "employee_id",
+                "=",
+                $users->employee_id
+            )
+                ->orderBy("date", "DESC")
+                ->get();
+                 $data["user_type"]="employee";
+                return view($this->_routePrefix . '.work-update',$data);
+                //return view("employee-corner/work-update", $data);
+               
+           }
+            
+        } else {
+            return redirect("/");
+        }
+    }
+
+    public function viewaddworkupdate()
+    {
+        if (!empty(Session::get("emp_email"))) {
+            $user_id = Session::get("users_id");
+            $users = DB::table("users")
+                ->where("id", "=", $user_id)
+                ->first();
+        // dd($users);
+            $data["Roledata"] = DB::table("registration")
+                ->where("reg", "=", $users->employee_id)
+                ->orwhere("reg", "=", $users->emid)
+                ->first();
+                // dd($data["Roledata"]);
+
+            $data["employee"] = DB::table("employee")
+                ->where("emp_code", "=", $users->employee_id)
+                ->orwhere("emid", "=", $users->employee_id)
+                ->first();
+                // dd($data["employee"]);
+
+            $data["employee_workupdate"] = DB::table("rota_employee")
+                ->where("employee_id", "=", $users->employee_id)
+                ->orderBy("date", "DESC")
+                ->get();
+                // dd($data["employee_workupdate"]);
+            //dd($data);
+            return view($this->_routePrefix . '.work-add',$data);
+            //return view("employee-corner/work-add", $data);
+        } else {
+            return redirect("/");
+        }
+    }
+
+    public function gettimemintuesnew($in_time, $out_time){
+        $in_time = base64_decode($in_time);
+        $out_time = base64_decode($out_time);
+        $st_time = date('Y-m-d') . ' ' . $in_time . ':10';
+    
+        $end_time = date('Y-m-d') . ' ' . $out_time . ':10';
+        $t1 = Carbon::parse($st_time);
+        $t2 = Carbon::parse($end_time);
+        $diff = $t1->diff($t2);
+        // print_r($diff);
+        //print_r(str_pad($diff->i,2,"0",STR_PAD_LEFT));
+        $arr = array('hour' => $diff->h, 'min' => str_pad($diff->i,2,"0",STR_PAD_LEFT));
+        echo json_encode($arr);
+    }
+
+
+    public function viewtasksave(Request $request)
+    {
+        try {
+            //dd($request->all());
+            $Employee1 = UserModel::where(
+                "employee_id",
+                "=",
+                $request->reg
+            )
+                // ->where("employee_id", "=", $request->reg)
+                ->where("status", "=", "active")
+                ->first();
+            //   dd($Employee1); 
+
+            $data["Roledata"] = Registration::where(
+                "reg",
+                "=",
+                $Employee1->employee_id
+            )->first();
+      
+            $data["employee"] = Employee::where(
+                "emp_code",
+                "=",
+                $request->employee_code
+            )
+                ->where("emid", "=", $request->reg)
+                ->first();
+
+            $tot = $request->w_min + $request->w_hours * 60;
+            if ($request->has("file")) {
+                $file_ps_doc = $request->file("file");
+                $extension_ps_doc = $request->file->extension();
+                $path_ps_doc = $request->file->store("tasks", "public");
+            } else {
+                $path_ps_doc = "";
+            }
+
+            $datagg = [
+                "employee_id" => $request->employee_code,
+                "emid" => $request->reg,
+                "file" => $path_ps_doc,
+
+                "w_hours" => $request->w_hours,
+                "w_min" => $request->w_min,
+                "in_time" => date("h:i A", strtotime($request->in_time)),
+                "out_time" => date("h:i A", strtotime($request->out_time)),
+                "min_tol" => $tot,
+                "date" => date("Y-m-d", strtotime($request->date)),
+
+                "remarks" => $request->remarks,
+                "cr_date" => date("Y-m-d"),
+            ];
+            // dd($datagg);
+
+            RotaEmployee::insert($datagg);
+
+            Session::flash("message", " Tasks Added Successfully .");
+
+            return redirect("org-employee-corner/work-update");
+            // return response()->json(['msg' => 'Task Information Successfully saved.', 'status' => 'true']);
+        } catch (Exception $e) {
+            throw new \App\Exceptions\FrontException($e->getMessage());
+        }
+    }
+
+    public function viewaddworkupdateget($id){
+        if (!empty(Session::get("emp_email"))) {
+            $user_id = Session::get("users_id");
+            $users = DB::table("users")
+                ->where("id", "=", $user_id)
+                ->first();
+                $data["employee_type"]=$users->user_type;
+                $data['employee_type'];
+            $data["Roledata"] = DB::table("registration")
+                ->where("reg", "=", $users->employee_id)
+                ->orwhere("reg", "=", $users->emid)
+                ->first();
+            $data['work_data']=RotaEmployee::where('id',$id)->first();
+            //dd($data['work_data']);
+            return view($this->_routePrefix . '.work-edit',$data);
+            //return view("employee-corner/work-edit", $data);
+        }else{
+          return redirect("/"); 
+        }
+    }
+
+    public function viewtaskupdate(Request $request){
+        //   dd($request->all());
+             if (!empty(Session::get("emp_email"))) {
+                 $arrayData=array(
+                     "in_time"=>$request->in_time,
+                     "out_time"=>$request->out_time,
+                     "w_hours"=>$request->w_hours,
+                     "w_min"=>$request->w_min,
+                     "remarks"=>$request->remarks,
+                     "cmd"=>$request->cmd
+                     );
+                    //  dd($arrayData);
+                $data=RotaEmployee::where("id",$request->workId)->update($arrayData);
+                Session::flash("message", " Work Update Successfully .");
+               return redirect("org-employee-corner/work-update");
+            }else{
+              return redirect("/");  
+        }
+    }
+
+    public function viewAttandancestatus()
+    {
+        if (!empty(Session::get("emp_email"))) {
+            $email = Session::get("emp_email");
+            $Roledata = Registration::where("email", "=", $email)->first();
+            $data["Roledata"] = Registration::where("email","=",$email)->first();
+            return view($this->_routePrefix . '.daily-status',$data);
+            //return view("employee-corner/daily-status", $data); 
+        } else {
+            return redirect("/");
+        }
+    }
+
+
+    public function saveAttandancestatus(Request $request)
+    {
+        
+        if (!empty(Session::get("emp_email"))) {
+            $user_id = Session::get("users_id");
+            $users = UserModel::where("id", "=", $user_id)->first();
+
+            $email = Session::get("emp_email");
+            $Roledata = Registration::where("email", "=", $email)->first();
+            $data["Roledata"] = Registration::where(
+                "email",
+                "=",
+                $email
+            )->first();
+
+            $employee_code = $users->employee_id;
+
+            $start_date = date("Y-m-d", strtotime($request->start_date));
+            $end_date = date("Y-m-d", strtotime($request->end_date));
+            $data["result"] = "";
+            if ($employee_code != "") {
+                $leave_allocation_rs = DB::table("attandence")
+                    ->join(
+                        "employee",
+                        "attandence.employee_code",
+                        "=",
+                        "employee.emp_code"
+                    )
+                    ->where(
+                        "attandence.employee_code",
+                        "=",
+                        $users->employee_id
+                    )
+                    ->where("attandence.emid", "=", $users->emid)
+
+                    ->whereBetween("date", [$start_date, $end_date])
+                    ->select("attandence.*")
+                    ->get();
+            }
+
+            //dd($leave_allocation_rs);
+            if ($leave_allocation_rs) {
+                $f = 1;
+                foreach ($leave_allocation_rs as $leave_allocation) {
+                    $data["result"] .=
+                        '<tr>
+				<td>' .
+                        $f .
+                        '</td>
+
+													<td>' .
+                        date("d/m/Y", strtotime($leave_allocation->date)) .
+                        '</td>
+													<td>' .
+                        date("h:i a", strtotime($leave_allocation->time_in)) .
+                        '</td>
+													<td>' .
+                        $leave_allocation->time_in_location .
+                        '</td>
+														<td>' .
+                        date("h:i a", strtotime($leave_allocation->time_out)) .
+                        '</td>
+													<td>' .
+                        $leave_allocation->time_out_location .
+                        '</td>
+													<td>' .
+                        $leave_allocation->duty_hours .
+                        '</td>
+
+
+						</tr>';
+                    $f++;
+                }
+            }
+            //dd($data);
+            return view($this->_routePrefix . '.daily-status',$data);
+            //return view("employee-corner/daily-status", $data);
+        } else {
+            return redirect("/");
+        }
+    }
+
 
 
 

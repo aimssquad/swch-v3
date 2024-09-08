@@ -326,13 +326,14 @@
                  
                 </div>
                   <div class="profile-list-2-pay">
-                    <p><?php 
-					
-					$job_details=DB::table('grade')->where('id', '=', $employee->emp_group_name )->orderBy('id', 'DESC')->first();
-  			if(!empty($job_details)){
-  			    echo $job_details->grade_name;
-  			}
-					 ?></p>
+                    <p>
+                      <?php 
+                        $job_details=DB::table('grade')->where('id', '=', $employee->emp_group_name )->orderBy('id', 'DESC')->first();
+                        if(!empty($job_details)){
+                            echo $job_details->grade_name;
+                        }
+                      ?>
+                    </p>
                     <p><?php echo $employee->emp_pay_scale; ?></p>
                   
                    </div> 

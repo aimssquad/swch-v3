@@ -31,6 +31,10 @@ class FilemanagmentControler extends Controller
         //$this->_model       = new CompanyJobs();
     }
 
+    public function dashboard(Request $request){
+      return view($this->_routePrefix . '.dashboard');
+    }
+
     public function filedivisionlist(Request $request){
         $email = Session::get('emp_email');
         $user_email=Session::get('user_email');

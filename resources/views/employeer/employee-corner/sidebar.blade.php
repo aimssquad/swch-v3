@@ -16,14 +16,45 @@ $user_type = Session::get("user_type");
                                 <li class="submenu">
                                     <a href="#"><i class="la la-cube {{Request::is('org-employeecornerorganisationdashboard')?'noti-dot':'';}}"></i> <span> Employee Access Value</span> <span class="menu-arrow"></span></a>
                                     <ul>
-                                        <li><a href="{{url('org-employee-corner-organisation/user-profile')}}">View Profile</a></li>
-                                        <li><a href="chat.html">Holiday Calender</a></li>
-                                        <li><a href="#">Daily Work Update</a></li>
-                                        <li><a href="contacts.html">Attendance Status</a></li>
+                                        <li>
+                                            <a href="{{url('org-employee-corner-organisation/user-profile')}}">View Profile
+                                                <i class="la la-cube {{Request::is('org-employee-corner-organisation/user-profile')?'noti-dot':'';}}"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{url('org-employee-corner/holiday')}}">Holiday Calender
+                                                <i class="la la-cube {{Request::is('org-employee-corner/holiday')?'noti-dot':'';}}"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{url('org-employee-corner/work-update')}}">Daily Work Update
+                                                <i class="la la-cube {{Request::is('org-employee-corner/work-update')?'noti-dot':'';}}"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{url('org-employee-corner/attendance-status')}}">Attendance Status
+                                                <i class="la la-cube {{Request::is('org-employee-corner/attendance-status')?'noti-dot':'';}}"></i>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                             @endif
                         @endforeach
+                    @endif
+
+                    @if($user_type=="employee")
+                        <li class="menu-title">
+                            <span>Main</span>
+                        </li>
+                        <li class="submenu">
+                            <a href="#"><i class="la la-cube {{Request::is('org-employeecornerorganisationdashboard')?'noti-dot':'';}}"></i> <span> Employee Access Value</span> <span class="menu-arrow"></span></a>
+                            <ul>
+                                <li><a href="{{url('org-employee-corner-organisation/user-profile')}}">View Profile</a></li>
+                                <li><a href="{{url('org-employee-corner/holiday')}}">Holiday Calender</a></li>
+                                <li><a href="{{url('org-employee-corner/work-update')}}">Daily Work Update</a></li>
+                                <li><a href="{{url('org-employee-corner/attendance-status')}}">Attendance Status</a></li>
+                            </ul>
+                        </li>
                     @endif
                 </ul>
 

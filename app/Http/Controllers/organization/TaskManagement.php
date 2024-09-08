@@ -24,6 +24,10 @@ class TaskManagement extends Controller
         //$this->_model       = new CompanyJobs();
     }
 
+    public function index(Request $request){
+        return view($this->_routePrefix . '.dashboard');
+    }
+
     // return view($this->_routePrefix . '.contract-list',$data);
     public function projects()
     {
