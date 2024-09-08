@@ -57,9 +57,7 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 					<a href="{{url('organization/emplist')}}" class="list-view btn btn-link active"><i class="fa-solid fa-bars"></i></a>
 				</div> --}}
 			</div>
-            @if(Session::has('message'))										
-            <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-            @endif
+             @include('employeer.layout.message')
 		</div>
 	</div>
 	<!-- /Page Header -->

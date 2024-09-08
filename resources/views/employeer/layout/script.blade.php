@@ -7,15 +7,21 @@
 <!-- Slimscroll JS -->
 <script src="{{ asset('frontend/assets/js/jquery.slimscroll.min.js') }}"></script>
 
+<!-- Feather Icon JS -->
+<script src="{{ asset('frontend/assets/js/feather.min.js')}}"></script>
+
 <!-- Chart JS -->
 <script src="{{ asset('frontend/assets/plugins/morris/morris.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/plugins/raphael/raphael.min.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/chart.js') }}"></script>
 <script src="{{ asset('frontend/assets/js/greedynav.js') }}"></script>
-
-<!-- Chart JS -->
 <script src="{{ asset('frontend/assets/plugins/chartjs/chart.min.js')}}"></script>
+<script src="{{ asset('frontend/assets/plugins/peity/jquery.peity.min.js')}}"></script>
 <script src="{{ asset('frontend/assets/plugins/chartjs/chart-data.js')}}"></script>
+<script src="{{ asset('frontend/assets/plugins/peity/chart-data.js')}}"></script>
+
+
+
 
 <!-- Select2 JS -->
 <script src="{{ asset('frontend/assets/js/select2.min.js') }}"></script>
