@@ -18,6 +18,7 @@ use App\Models\Rate_master;
 
 class SettingController extends Controller
 {
+    protected $_routePrefix;
     public function __construct()
     {
         $this->_module      = 'Organization';
