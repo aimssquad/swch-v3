@@ -1020,7 +1020,7 @@ class LeaveManagementController extends Controller
             //     ->groupBy("employee.emp_code", "leave_type.leave_type_name")
             //     ->get();
 
-              dd($employeelist);
+              //dd($employeelist);
                $leave_rs = leaveAllocation::leftJoin(
                         "leave_type",
                         "leave_allocation.leave_type_id",
@@ -1053,7 +1053,7 @@ class LeaveManagementController extends Controller
                     )
                     ->orderBy("leave_allocation.leave_type_id", "ASC")
                     ->get();
-                 dd($leave_rs);
+                 //dd($leave_rs);
                 $leave_type = LeaveType::orderBy("id", "ASC")
                     ->where("emid", "=", $Roledata->reg)
                     ->get();
