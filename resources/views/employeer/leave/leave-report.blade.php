@@ -9,9 +9,7 @@
          <div class="card custom-card">
             <div class="card-header">
                <h4 class="card-title"><i class="far fa-user"></i> Leave Report</h4>
-               @if(Session::has('message'))										
-               <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-               @endif
+               @include('employeer.layout.message')
             </div>
             <div class="card-body">
                <div class="multisteps-form">

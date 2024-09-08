@@ -1,75 +1,94 @@
 @extends('employeer.include.app')
-@section('title', 'Add New IFSC')
+@section('title', 'Leave Dashboard')
 @section('content')
-<div class="main-panel">
-   <div class="content">
-    <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                <div>
-                    <h2 class="text-white pb-2 fw-bold">Dashboard</h2>
-                    
-                </div>
-                <div class="ml-md-auto py-2 py-md-0">
-                    
-                </div>
-            </div>
-        </div>
+<div class="content container-fluid pb-0">
+				
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="content-page-header">
+            <h5>Dashboard</h5>
+        </div>	
     </div>
-    
-    <div class="page-inner mt--5">
-        <div class="row mt--2">
-              @if(count($leave_type_tot)!=0)
-            <div class="col-md-12">
-                <div class="card full-height">
-                    <div class="card-body">
-                      
-                        <div class="card-title">Leave Type</div>
-                    
-                        <!--<div class="card-category">Daily information about statistics in system</div>-->
-                        <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-                                <?php
-                        $k=1;
-                        ?>
-                             @foreach($leave_type_tot as $LeaveAlloca)
-                            <div class="px-2 pb-2 pb-md-0 text-center">
-                                <div id="circles-{{$k}}"></div>
-                                <h6 class="fw-bold mt-3 mb-0">{{$LeaveAlloca->leave_type_name}}</h6>
-                            </div>
-                                <?php
-                        $k++;
-                        ?>
-                            @endforeach
-                            
-                        
-                        </div>
-                    </div>
+    <!-- /Page Header -->
+    <div class="row">
+					
+        <!-- Chart -->
+        <div class="col-md-12">	
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Leave Type</h5>
                 </div>
-            </div>
-                @endif
-              @if(count($leave_rule_tot)!=0)
-            <div class="col-md-12">
-                <div class="card full-height">
-                    <div class="card-body">
-                       
-                        <div class="card-title">Annual Total Leave</div>
-                    
-                    
-                        <div class="row py-3">
-                        
-                            <div class="col-md-12">
-                                <div id="chart-container">
-                                    <canvas id="multipleLineChart"></canvas>
-                                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4">
+                            <div class="card-body ">
+                                <span class="donut" data-peity='{ "fill": ["#7638ff", "rgba(67, 87, 133, .09)"]}'>1/5</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4">
+                            <div class="card-body ">
+                                <span class="donut" data-peity='{ "fill": ["#7638ff", "rgba(67, 87, 133, .09)"]}'>226/360</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4">
+                            <div class="card-body ">
+                                <span class="donut" data-peity='{ "fill": ["#7638ff", "rgba(67, 87, 133, .09)"]}'>0.52/1.561</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4">
+                            <div class="card-body ">
+                                <span class="donut" data-peity='{ "fill": ["#7638ff", "rgba(67, 87, 133, .09)"]}'>1,4</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4">
+                            <div class="card-body ">
+                                <span class="donut" data-peity='{ "fill": ["#7638ff", "rgba(67, 87, 133, .09)"]}'>226,134</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4">
+                            <div class="card-body ">
+                                <span class="donut" data-peity='{ "fill": ["#7638ff", "rgba(67, 87, 133, .09)"]}'>0.52,1.041</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-                @endif
         </div>
+
         
+					
+            <!-- Chart -->
+            <div class="col-md-6">	
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Leave Chart</h5>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <canvas id="chartBar1" class="h-300"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Chart -->
+            
+            <!-- Chart -->
+            <div class="col-md-6">	
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Type Of Cahrt </h5>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <canvas id="chartBar2" class="h-300"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Chart -->
+        
+							
+						
     </div>
-   </div>
 </div>
 @endsection

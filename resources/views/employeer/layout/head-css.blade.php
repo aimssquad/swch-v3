@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="{{ asset('frontend/assets/plugins/fontawesome/css/fontawesome.min.css') }}">
 <link rel="stylesheet" href="{{ asset('frontend/assets/plugins/fontawesome/css/all.min.css') }}">
 
+
 <!-- Lineawesome CSS -->
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/line-awesome.min.css') }}">
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/material.css') }}">

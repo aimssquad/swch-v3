@@ -22,6 +22,7 @@ use App\Models\EmployeeType;
 use App\Models\Employee;
 use App\Models\leaveAllocation;
 
+
 class LeaveManagementController extends Controller
 {
     public function __construct()
