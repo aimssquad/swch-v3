@@ -9,15 +9,17 @@
 
         <!-- Page Header -->
         <div class="page-header">
-            <div class="row">
-                <div class="col-sm-12">
-                    <h3 class="page-title">Welcome!</h3>
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Settings Dashboard</h3>
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item active">
-                            Settings Dashboard
-                        </li>
+                        <li class="breadcrumb-item"><a href="{{ url('organization/employerdashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item active">Settings Dashboard</li>
                     </ul>
                 </div>
+                {{-- <div class="col-auto float-end ms-auto">
+                    <a href="#" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_employee"><i class="fa-solid fa-plus"></i> Add Job Applied</a>
+                </div> --}}
             </div>
         </div>
         <!-- /Page Header -->
@@ -99,11 +101,14 @@
                                         <div class="d-flex align-items-start">
                                             <div class="text-primary w-100">
                                                 <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
-                                                
-                                                <div class="fw-semibold d-flex justify-content-between">Information Alert</div>
-                                                {{-- <div class="fs-12 op-8 mb-1">Information alert to show to information message</div> --}}
-                                                <div class="fs-12">
-                                                    <a href="javascript:void(0);" class="text-primary fw-semibold"><i class="fa fa-arrow-circle-right" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i>Viwe all</a>
+                                                <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Department</div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">12</div>
+                                                    <div class="fs-12">
+                                                        <a href="#" class="text-primary fw-semibold">
+                                                            <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -115,15 +120,16 @@
                                 <div class="card border-0">
                                     <div class="alert alert-primary border border-primary mb-0 p-3">
                                         <div class="d-flex align-items-start">
-                                            <div class="me-2">                                                    
-                                                <i class="feather-info flex-shrink-0"></i>
-                                            </div>
                                             <div class="text-primary w-100">
-                                                <div class="fw-semibold d-flex justify-content-between">Information Alert<button type="button" class="btn-close p-0" data-bs-dismiss="alert" aria-label="Close"><i class="fas fa-xmark"></i></button></div>
-                                                <div class="fs-12 op-8 mb-1">Information alert to show to information message</div>
-                                                <div class="fs-12">
-                                                    <a href="javascript:void(0);" class="text-secondary fw-semibold me-2 d-inline-block">cancel</a>
-                                                    <a href="javascript:void(0);" class="text-primary fw-semibold">open</a>
+                                                <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
+                                                <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Designation</div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">24</div>
+                                                    <div class="fs-12">
+                                                        <a href="#" class="text-primary fw-semibold">
+                                                            <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -135,15 +141,16 @@
                                 <div class="card border-0">
                                     <div class="alert alert-primary border border-primary mb-0 p-3">
                                         <div class="d-flex align-items-start">
-                                            <div class="me-2">                                                    
-                                                <i class="feather-info flex-shrink-0"></i>
-                                            </div>
                                             <div class="text-primary w-100">
-                                                <div class="fw-semibold d-flex justify-content-between">Information Alert<button type="button" class="btn-close p-0" data-bs-dismiss="alert" aria-label="Close"><i class="fas fa-xmark"></i></button></div>
-                                                <div class="fs-12 op-8 mb-1">Information alert to show to information message</div>
-                                                <div class="fs-12">
-                                                    <a href="javascript:void(0);" class="text-secondary fw-semibold me-2 d-inline-block">cancel</a>
-                                                    <a href="javascript:void(0);" class="text-primary fw-semibold">open</a>
+                                                <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
+                                                <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Employee Type</div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">6</div>
+                                                    <div class="fs-12">
+                                                        <a href="#" class="text-primary fw-semibold">
+                                                            <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -155,15 +162,16 @@
                                 <div class="card border-0">
                                     <div class="alert alert-primary border border-primary mb-0 p-3">
                                         <div class="d-flex align-items-start">
-                                            <div class="me-2">                                                    
-                                                <i class="feather-info flex-shrink-0"></i>
-                                            </div>
                                             <div class="text-primary w-100">
-                                                <div class="fw-semibold d-flex justify-content-between">Information Alert<button type="button" class="btn-close p-0" data-bs-dismiss="alert" aria-label="Close"><i class="fas fa-xmark"></i></button></div>
-                                                <div class="fs-12 op-8 mb-1">Information alert to show to information message</div>
-                                                <div class="fs-12">
-                                                    <a href="javascript:void(0);" class="text-secondary fw-semibold me-2 d-inline-block">cancel</a>
-                                                    <a href="javascript:void(0);" class="text-primary fw-semibold">open</a>
+                                                <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
+                                                <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Employee Mode</div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">24</div>
+                                                    <div class="fs-12">
+                                                        <a href="#" class="text-primary fw-semibold">
+                                                            <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -175,21 +183,46 @@
                                 <div class="card border-0">
                                     <div class="alert alert-primary border border-primary mb-0 p-3">
                                         <div class="d-flex align-items-start">
-                                            <div class="me-2">                                                    
-                                                <i class="feather-info flex-shrink-0"></i>
-                                            </div>
                                             <div class="text-primary w-100">
-                                                <div class="fw-semibold d-flex justify-content-between">Information Alert<button type="button" class="btn-close p-0" data-bs-dismiss="alert" aria-label="Close"><i class="fas fa-xmark"></i></button></div>
-                                                <div class="fs-12 op-8 mb-1">Information alert to show to information message</div>
-                                                <div class="fs-12">
-                                                    <a href="javascript:void(0);" class="text-secondary fw-semibold me-2 d-inline-block">cancel</a>
-                                                    <a href="javascript:void(0);" class="text-primary fw-semibold">open</a>
+                                                <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
+                                                <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Employee Master</div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">10</div>
+                                                    <div class="fs-12">
+                                                        <a href="#" class="text-primary fw-semibold">
+                                                            <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-xl-4">
+                                <div class="card border-0">
+                                    <div class="alert alert-primary border border-primary mb-0 p-3">
+                                        <div class="d-flex align-items-start">
+                                            <div class="text-primary w-100">
+                                                <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
+                                                <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Education Master</div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">12</div>
+                                                    <div class="fs-12">
+                                                        <a href="#" class="text-primary fw-semibold">
+                                                            <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        
+
 
                         </div>
                     </div>
@@ -297,24 +330,6 @@
                                                     </h6>
                                                     <ul class="nav">
                                                         <li>09:00 AM</li>
-                                                        <li>21 Apr 2024</li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                            <li class="employee-notification-grid">
-                                                <div class="employee-notification-icon">
-                                                    <a href="activities.html">
-                                                        <span class="badge-soft-danger rounded-circle">AU</span>
-                                                    </a>
-                                                </div>
-                                                <div class="employee-notification-content">
-                                                    <h6>
-                                                        <a href="activities.html">
-                                                            Our HR system will be down
-                                                        </a>
-                                                    </h6>
-                                                    <ul class="nav">
-                                                        <li>11:50 AM</li>
                                                         <li>21 Apr 2024</li>
                                                     </ul>
                                                 </div>
