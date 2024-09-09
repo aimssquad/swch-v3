@@ -43,12 +43,9 @@ class LandingController extends Controller
                 $data["Roledata"] = DB::table("users")
                     ->where("id", "=", $users_id)
                     ->first();
-                    //dd($dtaem);
                 return view('employeer.employee-corner.dashboard', $data);
                 
             }
-            //dd($data["Roledata"]);
-            //dd($data);
             return view($this->_routePrefix . '.dashboard', $data);
         } else {
             return redirect("/");
