@@ -1,11 +1,25 @@
 @extends('employeer.include.app')
-@section('title', 'Add Bank Short Code')
+@if(isset($bankdetails) && !empty($bankdetails))
+@section('title', 'Edit Bank Sortcode')
+@else
+@section('title', 'Add Bank Sortcode')
+@endif
 @section('content')
 <div class="main-panel">
    <div class="content">
       <div class="page-inner">
          <div class="row">
             <div class="col-md-12">
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+                  @if(isset($bankdetails) && !empty($bankdetails))
+                  <li class="breadcrumb-item active">Edit Bank Sortcode</li>
+                  @else
+                  <li class="breadcrumb-item active">Add New Bank Sortcode</li>
+                  @endif
+                  
+               </ul>
                <div class="card custom-card">
                   <div class="card-header">
                      @if(isset($bankdetails) && !empty($bankdetails))

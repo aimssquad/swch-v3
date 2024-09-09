@@ -39,7 +39,8 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			<div class="col">
 				<h3 class="page-title">Leave Rule</h3>
 				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('leave/dashboard')}}">Dashboard</a></li>
 					<li class="breadcrumb-item active">Leave Rule</li>
 				</ul>
 			</div>
@@ -65,17 +66,16 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 	<div class="row">
 		<div class="col-md-12">
 			<div class="table-responsive">
-				<table class="table table-striped custom-table " id="employeeTable">
+				<table class="table table-striped custom-table datatable" id="employeeTable">
 					<thead>
 						<tr>
-                            <th  class="no-sort">Sl.No.</th>
-                            <th class="no-sort">Employee Type</th>
-                            <th class="no-sort">Leave Type</th>
-                            <th class="no-sort">Max. No.</th>
-                            
-                            <th class="no-sort">Effective From</th>
-                            <th class="no-sort">Effective To</th>
-                            <th class="text-end no-sort">Action</th>
+                            <th>Sl.No.</th>
+                            <th>Employee Type</th>
+                            <th>Leave Type</th>
+                            <th>Max. No.</th>
+                            <th>Effective From</th>
+                            <th>Effective To</th>
+                            <th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -103,13 +103,13 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
                                             @if($user_type == 'employee')
                                                 @foreach($sidebarItems as $value)
                                                     @if($value['rights'] == 'Add' && $value['module_name'] == 3 && $value['menu'] == 44)
-                                                        <a class="dropdown-item" href="{{url('leave/leave-type-listing/'.$leaveRule->id)}}">
+                                                        <a class="dropdown-item" href="{{url('leave/view-leave-rule/'.$leaveRule->id)}}">
                                                             <i class="fa-solid fa-pencil m-r-5"></i> Edit
                                                         </a>
                                                     @endif
                                                 @endforeach
                                             @elseif($user_type == 'employer')
-                                                <a class="dropdown-item" href="{{url('leave/leave-type-listing/'.$leaveRule->id)}}">
+                                                <a class="dropdown-item" href="{{url('leave/view-leave-rule/'.$leaveRule->id)}}">
                                                     <i class="fa-solid fa-pencil m-r-5"></i> Edit
                                                 </a>
                                             @endif

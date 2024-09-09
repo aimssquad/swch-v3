@@ -38,7 +38,8 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			<div class="col">
 				<h3 class="page-title">Leave Type List</h3>
 				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('leave/dashboard')}}">Dashboard</a></li>
 					<li class="breadcrumb-item active">Leave Type List</li>
 				</ul>
 			</div>
@@ -64,14 +65,14 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 	<div class="row">
 		<div class="col-md-12">
 			<div class="table-responsive">
-				<table class="table table-striped custom-table " id="employeeTable">
+				<table class="table table-striped custom-table datatable" id="employeeTable">
 					<thead>
 						<tr>
-							<th class="no-sort">Sl. No.</th>
-							<th class="no-sort">Leave Type</th>
-							<th class="no-sort">Leave Type Short Code</th>
-							<th class="text-nowrap no-sort">Remarks</th>
-							<th class="text-end no-sort">Action</th>
+							<th>Sl. No.</th>
+							<th>Leave Type</th>
+							<th>Leave Type Short Code</th>
+							<th>Remarks</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -127,75 +128,76 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 @endsection
 
 @section('script')
+	<!-- Include jQuery and DataTables JS library -->
+    <script>
+        $(document).ready(function() {
+               $('#basic-datatables').DataTable({
+               });
+   
+               $('#multi-filter-select').DataTable( {
+                   "pageLength": 5,
+                   initComplete: function () {
+                       this.api().columns().every( function () {
+                           var column = this;
+                           var select = $('<select class="form-control"><option value=""></option></select>')
+                           .appendTo( $(column.footer()).empty() )
+                           .on( 'change', function () {
+                               var val = $.fn.dataTable.util.escapeRegex(
+                                   $(this).val()
+                                   );
+   
+                               column
+                               .search( val ? '^'+val+'$' : '', true, false )
+                               .draw();
+                           } );
+   
+                           column.data().unique().sort().each( function ( d, j ) {
+                               select.append( '<option value="'+d+'">'+d+'</option>' )
+                           } );
+                       } );
+                   }
+               });
+   
+               // Add Row
+               $('#add-row').DataTable({
+                   "pageLength": 5,
+               });
+   
+               var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+   
+               $('#addRowButton').click(function() {
+                   $('#add-row').dataTable().fnAddData([
+                       $("#addName").val(),
+                       $("#addPosition").val(),
+                       $("#addOffice").val(),
+                       action
+                       ]);
+                   $('#addRowModal').modal('hide');
+   
+               });
+           });
+           
+           $('#allval').click(function(event) {  
+           
+               if(this.checked) {
+                   //alert("test");
+                   // Iterate each checkbox
+                   $(':checkbox').each(function() {
+                       this.checked = true;                        
+                   });
+               } else {
+                   $(':checkbox').each(function() {
+                       this.checked = false;                       
+                   });
+               }
+           });
+   </script>
 <script>
     function confirmDelete(url) {
         if (confirm("Are you sure you want to delete this record?")) {
             window.location.href = url;
         }
     }
-</script>
-<script>
-	 $(document).ready(function() {
-            $('#basic-datatables').DataTable({
-            });
-
-            $('#multi-filter-select').DataTable( {
-                "pageLength": 5,
-                initComplete: function () {
-                    this.api().columns().every( function () {
-                        var column = this;
-                        var select = $('<select class="form-control"><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                                );
-
-                            column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                        } );
-
-                        column.data().unique().sort().each( function ( d, j ) {
-                            select.append( '<option value="'+d+'">'+d+'</option>' )
-                        } );
-                    } );
-                }
-            });
-
-            // Add Row
-            $('#add-row').DataTable({
-                "pageLength": 5,
-            });
-
-            var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-            $('#addRowButton').click(function() {
-                $('#add-row').dataTable().fnAddData([
-                    $("#addName").val(),
-                    $("#addPosition").val(),
-                    $("#addOffice").val(),
-                    action
-                    ]);
-                $('#addRowModal').modal('hide');
-
-            });
-        });
-        
-        $('#allval').click(function(event) {  
-        
-            if(this.checked) {
-                //alert("test");
-                // Iterate each checkbox
-                $(':checkbox').each(function() {
-                    this.checked = true;                        
-                });
-            } else {
-                $(':checkbox').each(function() {
-                    this.checked = false;                       
-                });
-            }
-        });
 </script>
 
 @endsection

@@ -1,14 +1,31 @@
 @extends('employeer.include.app')
-@section('title', 'Add Holiday List')
+@if(!empty($holidaydtl->id))
+@section('title', 'Edit Holiday')
+@else
+@section('title', 'Add Holiday')
+@endif
 @section('content')
 <div class="main-panel">
 <div class="content">
 <div class="page-inner">
    <div class="row">
       <div class="col-md-12">
+         <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{url('orgaization/holiday-dashboard')}}">Dashboard</a></li>
+            @if(!empty($holidaydtl->id))
+            <li class="breadcrumb-item active">Edit Holiday list</li>
+            @else
+            <li class="breadcrumb-item active">Add New Holiday list</li>
+            @endif
+         </ul>
          <div class="card custom-card">
             <div class="card-header">
+               @if(!empty($holidaydtl->id))
+               <h4 class="card-title"><i class="far fa-user"></i>  Edit New Holiday List</h4>
+               @else
                <h4 class="card-title"><i class="far fa-user"></i>  Add New Holiday List</h4>
+               @endif
             </div>
             <div class="card-body">
                <div class="multisteps-form">

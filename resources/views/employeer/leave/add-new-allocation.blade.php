@@ -1,5 +1,5 @@
 @extends('employeer.include.app')
-@section('title', 'Add Leave Type')
+@section('title', 'Add Leave Allocation')
 @section('content')
 <div class="main-panel">
 <div class="content">
@@ -8,14 +8,14 @@
          <div class="col-md-12">
             <div class="card custom-card">
                <div class="card-header">
-                  <h4 class="card-title"><i class="far fa-user"></i>  Add New Leave type</h4>
+                  <h4 class="card-title"><i class="far fa-user"></i>  Add New Leave Allocation</h4>
                </div>
                <div class="card-body">
                   <div class="multisteps-form">
                      <!--form panels-->
                      <div class="row">
                         <div class="col-12 col-lg-12 m-auto">
-                           <form action="{{ url('leave-management/get-leave-allocation') }}" method="post" enctype="multipart/form-data" >
+                           <form action="{{ url('leave/get-leave-allocation') }}" method="post" enctype="multipart/form-data" >
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <div class="row form-group">
                                     <div class="col-md-4">

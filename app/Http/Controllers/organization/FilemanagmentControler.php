@@ -336,6 +336,28 @@ class FilemanagmentControler extends Controller
      
       }
 
+      public function excelreport(){
+         if (!empty(Session::get("emp_email"))) {
+            $user_type=Session::get('user_type');
+            $arrayEmail=[];
+            if($user_type==="employer"){
+               $email = Session::get('emp_email');
+               array_push($arrayEmail, $email);
+            }else{
+               $user_email=Session::get('user_email');
+               array_push($arrayEmail, $user_email);
+            }
+            $emp_email = implode(", ", $arrayEmail);
+            dd($emp_email);
+            return Excel::download(
+               new ExcelFileManager($emp_email),
+               "filemanagerexcel.xlsx"
+           );
+         }else{
+            return redirect('/');
+         }
+       }
+
 
 
 

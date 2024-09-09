@@ -1,5 +1,5 @@
 @extends('employeer.include.app')
-@section('title', 'File Approver Corner')
+@section('title', 'Leave Application Details')
 @php 
 $user_type = Session::get("user_type");
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
@@ -31,7 +31,8 @@ return $output;
          <div class="col">
             <h3 class="page-title">Leave Application Details</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{url('leaveapprover/leave-dashboard')}}">Dashboard</a></li>
                <li class="breadcrumb-item active">Leave Application Details</li>
             </ul>
          </div>
@@ -45,8 +46,8 @@ return $output;
       <div class="col-md-12">
          <div class="card custom-card">
             <div class="card-header">
-               <h4 class="card-title"><i class="far fa-clock" aria-hidden="true"
-                  style="color:#10277f;"></i>&nbsp;File Division<span>
+               <h4 class="card-title"><i class="far fa-file" aria-hidden="true"
+                  style="color:#ffa318;"></i>&nbsp;Leave Application<span>
                </h4>
             </div>
             <div class="card-body">

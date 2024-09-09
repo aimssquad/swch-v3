@@ -31,7 +31,8 @@ return $output;
          <div class="col">
             <h3 class="page-title"> Wedges pay mode</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
                <li class="breadcrumb-item active">Wedges pay mode</li>
             </ul>
          </div>
@@ -43,7 +44,7 @@ return $output;
             @endif
             @endforeach
             @elseif($user_type == 'employer')
-            <a href="{{ url('org-settings/wedgespay-type') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Wedges pay mode</a>
+            <a href="{{ url('org-settings/wedgespay-type') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Wedges pay mode</a>
             @endif
             {{-- 
             <div class="view-icons">

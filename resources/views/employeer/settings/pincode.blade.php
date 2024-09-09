@@ -31,7 +31,8 @@ return $output;
          <div class="col">
             <h3 class="page-title"> Pincode Master</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
                <li class="breadcrumb-item active">Pincode Master</li>
             </ul>
          </div>
@@ -39,11 +40,11 @@ return $output;
             @if($user_type == 'employee')
             @foreach($sidebarItems as $value)
             @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
-            <a href="{{ url('org-settings/add-new-pincode') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Sub Caste </a>
+            <a href="{{ url('org-settings/add-new-pincode') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Pincode </a>
             @endif
             @endforeach
             @elseif($user_type == 'employer')
-            <a href="{{ url('org-settings/add-new-pincode') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Sub Caste</a>
+            <a href="{{ url('org-settings/add-new-pincode') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Pincode</a>
             @endif
             {{-- 
             <div class="view-icons">

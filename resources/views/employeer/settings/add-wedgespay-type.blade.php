@@ -1,11 +1,24 @@
 @extends('employeer.include.app')
-@section('title', 'Wedges pay mode')
+@if(isset($paytypedetails) && !empty($paytypedetails))
+@section('title', 'Edit Wedges pay mode')
+@else
+@section('title', 'Add Wedges pay mode')
+@endif 
 @section('content')
 <div class="main-panel">
 <div class="content">
    <div class="page-inner">
       <div class="row">
          <div class="col-md-12">
+            <ul class="breadcrumb">
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+               @if(isset($paytypedetails) && !empty($paytypedetails))
+               <li class="breadcrumb-item active">Edit Wedges pay mode</li>
+               @else
+               <li class="breadcrumb-item active">Add New Wedges pay mode</li>
+               @endif
+            </ul>
             <div class="card custom-card">
                <div class="card-header">
                   @if(isset($paytypedetails) && !empty($paytypedetails))

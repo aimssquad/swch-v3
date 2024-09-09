@@ -1,14 +1,19 @@
 @extends('employeer.include.app')
-@section('title', 'Add Pincode')
+@section('title', 'Edit Pincode')
 @section('content')
 <div class="main-panel">
    <div class="content">
       <div class="page-inner">
          <div class="row">
             <div class="col-md-12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Edit Pincode</li>
+                 </ul>
                <div class="card custom-card">
                   <div class="card-header">
-                     <h4 class="card-title"><i class="far fa-user"></i> Add New Pincode</h4>
+                     <h4 class="card-title"><i class="far fa-user"></i> Edit New Pincode</h4>
                   </div>
                   @if(Session::has('message'))										
                   <div class="alert alert-success" style="text-align:center;">{{ Session::get('message') }}</div>

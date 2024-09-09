@@ -1,14 +1,33 @@
 @extends('employeer.include.app')
+@if(isset($_GET['id']))
+@section('title', 'Edit New Designation')
+@else
 @section('title', 'Add New Designation')
+@endif
+
 @section('content')
 <div class="main-panel">
    <div class="content">
       <div class="page-inner">
          <div class="row">
             <div class="col-md-12">
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+                  @if(isset($_GET['id']))
+                  <li class="breadcrumb-item active">Edit Designation</li>
+                  @else
+                  <li class="breadcrumb-item active">Add Designation</li>
+                  @endif
+               </ul>
                <div class="card custom-card">
                   <div class="card-header">
+                     @if(isset($_GET['id']))
+                     <h4 class="card-title"><i class="far fa-user"></i> Edit New Designation</h4>
+                     @else
                      <h4 class="card-title"><i class="far fa-user"></i> Add New Designation</h4>
+                     @endif
+                    
                   </div>
                   @if(Session::has('message'))										
                   <div class="alert alert-success" style="text-align:center;">{{ Session::get('message') }}</div>

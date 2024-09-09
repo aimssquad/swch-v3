@@ -29,10 +29,11 @@ return $output;
    <div class="page-header">
       <div class="row align-items-center">
          <div class="col">
-            <h3 class="page-title"> Employee Master</h3>
+            <h3 class="page-title"> Employee Type</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
-               <li class="breadcrumb-item active">Employee Master</li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item active">Employee Type</li>
             </ul>
          </div>
          <div class="col-auto float-end ms-auto">

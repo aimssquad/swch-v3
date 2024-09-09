@@ -31,7 +31,8 @@ return $output;
          <div class="col">
             <h3 class="page-title">Grace Period</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('rota-org/dashboard')}}">Dashboard</a></li>
                <li class="breadcrumb-item active">Grace Period</li>
             </ul>
          </div>
@@ -62,8 +63,8 @@ return $output;
       <div class="col-md-12">
          <div class="card custom-card">
             <div class="card-header">
-               <h4 class="card-title"><i class="far fa-clock" aria-hidden="true"
-                  style="color:#10277f;"></i>&nbsp;Day Off<span>
+               <h4 class="card-title"><i class="fa fa-hourglass-end" aria-hidden="true"
+                  style="color:#fdaa2d;"></i>&nbsp;Grace Period<span>
                </h4>
             </div>
             <div class="card-body">

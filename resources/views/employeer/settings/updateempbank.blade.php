@@ -6,9 +6,14 @@
    <div class="page-inner">
       <div class="row">
          <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Edit Employee Bank</li>
+             </ul>
             <div class="card custom-card">
                <div class="card-header">
-                  <h4 class="card-title"><i class="far fa-user"></i> Edit Company Bank</h4>
+                  <h4 class="card-title"><i class="far fa-user"></i> Edit Employee Bank</h4>
                </div>
                <div class="card-body">
                   <div class="multisteps-form">
@@ -80,7 +85,7 @@
                                    @endif
                                </div>
                            </div>
-
+                           <br>
                                 <div class="row form-group">
                                    <div class="col-md-2"><button type="submit" class="btn btn-primary">Submit</button></div>
                                 </div>

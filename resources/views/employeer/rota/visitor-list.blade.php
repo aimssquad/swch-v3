@@ -1,5 +1,5 @@
 @extends('employeer.include.app')
-@section('title', 'Visitor Register Link')
+@section('title', 'Visitor Register')
 @php 
 $user_type = Session::get("user_type");
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
@@ -31,7 +31,8 @@ return $output;
          <div class="col">
             <h3 class="page-title">Visitor Register</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('rota-org/dashboard')}}">Dashboard</a></li>
                <li class="breadcrumb-item active">Visitor Register</li>
             </ul>
          </div>
@@ -45,8 +46,8 @@ return $output;
       <div class="col-md-12">
          <div class="card custom-card">
             <div class="card-header">
-               <h4 class="card-title"><i class="far fa-clock" aria-hidden="true"
-                  style="color:#10277f;"></i>&nbsp;Day Off<span>
+               <h4 class="card-title"><i class="far fa-book" aria-hidden="true"
+                  style="color:#ff9e2f;"></i>&nbsp;Visitor Register<span>
                </h4>
             </div>
             <div class="card-body">

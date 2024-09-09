@@ -1,5 +1,5 @@
 @extends('employeer.include.app')
-@section('title', 'Add Performance Request')
+@section('title', 'Sponsor Compaliance')
 @section('content')
 <div class="main-panel">
     <div class="content">

@@ -1,11 +1,24 @@
 @extends('employeer.include.app')
-@section('title', 'IFSC Edit')
+@if(isset($taxdetails) && !empty($taxdetails))                    	
+@section('title', 'Tax Edit')
+@else
+@section('title', 'Tax Add')
+@endif 
 @section('content')
 <div class="main-panel">
    <div class="content">
       <div class="page-inner">
          <div class="row">
             <div class="col-md-12">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+                    @if(isset($taxdetails) && !empty($taxdetails))
+                    <li class="breadcrumb-item active">Edit Tax</li>
+                    @else
+                    <li class="breadcrumb-item active">Add New Tax</li>
+                    @endif
+                 </ul>
                <div class="card custom-card">
                   <div class="card-header">
                     @if(isset($taxdetails) && !empty($taxdetails))

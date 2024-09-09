@@ -1,14 +1,28 @@
 @extends('employeer.include.app')
+
+@if(app('request')->input('id'))
+@section('title', 'Edit Shift Management')
+@else
 @section('title', 'Add Shift Management')
+@endif
 @section('content')
 <div class="content container-fluid pb-0">
    <div class="page-header">
       <div class="row align-items-center">
          <div class="col">
+            @if(app('request')->input('id'))
+            <h3 class="page-title">Edit Shift Management</h3>
+            @else
             <h3 class="page-title">Add Shift Management</h3>
+            @endif
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
-               <li class="breadcrumb-item active">Shift Details</li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('rota-org/dashboard')}}">Dashboard</a></li>
+               @if(app('request')->input('id'))
+               <li class="breadcrumb-item active">Edit Shift Management</li>
+               @else
+               <li class="breadcrumb-item active">Add New Shift Management</li>
+               @endif
             </ul>
          </div>
       </div>

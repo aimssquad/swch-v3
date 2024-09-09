@@ -1,5 +1,5 @@
 @extends('employeer.include.app')
-@section('title', 'Leave Rule')
+@section('title', 'Leave Balance')
 @php 
 $user_type = Session::get("user_type");
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
@@ -49,14 +49,14 @@ return $output;
    <div class="row">
       <div class="col-md-12">
          <div class="table-responsive">
-            <table class="table table-striped custom-table " id="employeeTable">
+            <table class="table table-striped custom-table datatable" id="employeeTable">
                <thead>
                   <tr>
-                     <th class="no-sort">Sl.No.</th>
-                     <th class="no-sort">Employee Code</th>
-                     <th class="no-sort">Employee Name</th>
-                     <th class="no-sort">Leave Type</th>
-                     <th class="no-sort">Leave Balance</th>
+                     <th>Sl.No.</th>
+                     <th>Employee Code</th>
+                     <th>Employee Name</th>
+                     <th>Leave Type</th>
+                     <th>Leave Balance</th>
                   </tr>
                </thead>
                <tbody>

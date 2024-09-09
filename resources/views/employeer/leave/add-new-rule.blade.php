@@ -1,14 +1,31 @@
 @extends('employeer.include.app')
-@section('title', 'Add Leave Type')
+@if(!empty($leave_rule_data->id))
+@section('title', 'Edit Leave Rule')
+@else
+@section('title', 'Add Leave Rule')
+@endif
 @section('content')
 <div class="main-panel">
 <div class="content">
 <div class="page-inner">
    <div class="row">
       <div class="col-md-12">
+         <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{url('leave/dashboard')}}">Dashboard</a></li>
+            @if(!empty($leave_rule_data->id))
+            <li class="breadcrumb-item active">Edit Leave Rule</li>
+            @else
+            <li class="breadcrumb-item active">Add New Leave Rule</li>
+            @endif
+         </ul>
          <div class="card custom-card">
             <div class="card-header">
-               <h4 class="card-title"><i class="far fa-user"></i>  Add New Leave type</h4>
+               @if(!empty($leave_rule_data->id))
+               <h4 class="card-title"><i class="far fa-user"></i>  Edit New Leave Rule</h4>
+               @else
+               <h4 class="card-title"><i class="far fa-user"></i>  Add New Leave Rule</h4>
+               @endif
             </div>
             <div class="card-body">
                <div class="multisteps-form">

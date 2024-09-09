@@ -1,11 +1,16 @@
 @extends('employeer.include.app')
-@section('title', 'Add Pincode')
+@section('title', 'Add Mode Of Employee')
 @section('content')
 <div class="main-panel">
    <div class="content">
       <div class="page-inner">
          <div class="row">
             <div class="col-md-12">
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+                  <li class="breadcrumb-item active"> Add Mode Of Employee</li>
+               </ul>
                <div class="card custom-card">
                   <div class="card-header">
                      <h4 class="card-title"><i class="far fa-user"></i> Add New Mode Employee Type</h4>

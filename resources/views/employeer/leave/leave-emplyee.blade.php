@@ -1,5 +1,5 @@
 @extends('employeer.include.app')
-@section('title', 'Leave Rule')
+@section('title', 'Leave Report Employee Wise')
 @php 
 $user_type = Session::get("user_type");
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
@@ -39,7 +39,7 @@ return $output;
                             <div class="col-md-4">
                             <div class="form-group">
                                 <label for="inputFloatingLabel-choose-year" class="col-form-label">Choose Year</label>
-                                <select id="inputFloatingLabel-choose-year" name="year_value" class="form-control input-border-bottom" required="">
+                                <select id="inputFloatingLabel-choose-year" name="year_value" class="select" required="">
                                     <option value="">&nbsp;</option>
                                     <?php for($i = date("Y")-2; $i <=date("Y")+20; $i++){
                                         ?>
@@ -100,7 +100,7 @@ return $output;
                </div>
                <div class="card-body">
                   <div class="table-responsive">
-                     <table id="basic-datatables" class="display table table-striped table-hover" >
+                     <table id="employeeTable" class="table table-striped custom-table datatable" >
                         <thead>
                            <tr>
                               <th>Sl No.</th>
@@ -130,57 +130,123 @@ return $output;
 <!-- /Page Content -->
 @endsection
 @section('script')
-<!-- Include jQuery and DataTables JS library -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-<script >
+<script>
     $(document).ready(function() {
-        $('#basic-datatables').DataTable({
-        });
+           $('#basic-datatables').DataTable({
+           });
 
-        $('#multi-filter-select').DataTable( {
-            "pageLength": 5,
-            initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select class="form-control"><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                            );
+           $('#multi-filter-select').DataTable( {
+               "pageLength": 5,
+               initComplete: function () {
+                   this.api().columns().every( function () {
+                       var column = this;
+                       var select = $('<select class="form-control"><option value=""></option></select>')
+                       .appendTo( $(column.footer()).empty() )
+                       .on( 'change', function () {
+                           var val = $.fn.dataTable.util.escapeRegex(
+                               $(this).val()
+                               );
 
-                        column
-                        .search( val ? '^'+val+'$' : '', true, false )
-                        .draw();
-                    } );
+                           column
+                           .search( val ? '^'+val+'$' : '', true, false )
+                           .draw();
+                       } );
 
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
-                } );
-            }
-        });
+                       column.data().unique().sort().each( function ( d, j ) {
+                           select.append( '<option value="'+d+'">'+d+'</option>' )
+                       } );
+                   } );
+               }
+           });
 
-        // Add Row
-        $('#add-row').DataTable({
-            "pageLength": 5,
-        });
+           // Add Row
+           $('#add-row').DataTable({
+               "pageLength": 5,
+           });
 
-        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+           var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
 
-        $('#addRowButton').click(function() {
-            $('#add-row').dataTable().fnAddData([
-                $("#addName").val(),
-                $("#addPosition").val(),
-                $("#addOffice").val(),
-                action
-                ]);
-            $('#addRowModal').modal('hide');
+           $('#addRowButton').click(function() {
+               $('#add-row').dataTable().fnAddData([
+                   $("#addName").val(),
+                   $("#addPosition").val(),
+                   $("#addOffice").val(),
+                   action
+                   ]);
+               $('#addRowModal').modal('hide');
 
-        });
-    });
+           });
+       });
+       
+       $('#allval').click(function(event) {  
+       
+           if(this.checked) {
+               //alert("test");
+               // Iterate each checkbox
+               $(':checkbox').each(function() {
+                   this.checked = true;                        
+               });
+           } else {
+               $(':checkbox').each(function() {
+                   this.checked = false;                       
+               });
+           }
+       });
+</script>
+<script>
+function confirmDelete(url) {
+    if (confirm("Are you sure you want to delete this record?")) {
+        window.location.href = url;
+    }
+}
+</script>
+<script >
+    // $(document).ready(function() {
+    //     $('#basic-datatables').DataTable({
+    //     });
+
+    //     $('#multi-filter-select').DataTable( {
+    //         "pageLength": 5,
+    //         initComplete: function () {
+    //             this.api().columns().every( function () {
+    //                 var column = this;
+    //                 var select = $('<select class="form-control"><option value=""></option></select>')
+    //                 .appendTo( $(column.footer()).empty() )
+    //                 .on( 'change', function () {
+    //                     var val = $.fn.dataTable.util.escapeRegex(
+    //                         $(this).val()
+    //                         );
+
+    //                     column
+    //                     .search( val ? '^'+val+'$' : '', true, false )
+    //                     .draw();
+    //                 } );
+
+    //                 column.data().unique().sort().each( function ( d, j ) {
+    //                     select.append( '<option value="'+d+'">'+d+'</option>' )
+    //                 } );
+    //             } );
+    //         }
+    //     });
+
+    //     // Add Row
+    //     $('#add-row').DataTable({
+    //         "pageLength": 5,
+    //     });
+
+    //     var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+    //     $('#addRowButton').click(function() {
+    //         $('#add-row').dataTable().fnAddData([
+    //             $("#addName").val(),
+    //             $("#addPosition").val(),
+    //             $("#addOffice").val(),
+    //             action
+    //             ]);
+    //         $('#addRowModal').modal('hide');
+
+    //     });
+    // });
         function chngdepartmentdesign(val){
     var empid=val;
 

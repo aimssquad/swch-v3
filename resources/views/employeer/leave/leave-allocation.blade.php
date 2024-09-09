@@ -1,7 +1,7 @@
 
 @extends('employeer.include.app')
 
-@section('title', 'Leave Rule')
+@section('title', 'Leave Allocation')
 @php 
 $user_type = Session::get("user_type");
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
@@ -39,7 +39,8 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			<div class="col">
 				<h3 class="page-title">Leave Allocation</h3>
 				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('leave/dashboard')}}">Dashboard</a></li>
 					<li class="breadcrumb-item active">Leave Allocation</li>
 				</ul>
 			</div>
@@ -65,18 +66,18 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 	<div class="row">
 		<div class="col-md-12">
 			<div class="table-responsive">
-				<table class="table table-striped custom-table " id="employeeTable">
+				<table class="table table-striped custom-table datatable" id="employeeTable">
 					<thead>
 						<tr>
-                            <th class="no-sort">Sl.No.</th>
-                            <th class="no-sort">Employee Type</th>
-                            <th class="no-sort">Leave Type</th>
-                            <th class="no-sort">Employee Code</th>
-                            <th class="no-sort">Employee Name</th>
-                            <th class="no-sort">Max. No. of Leave</th>
-                            <th class="no-sort">Leave in Hand</th>
-                            <th class="no-sort">Effective Year</th>
-                            <th class="text-end no-sort">Action</th>
+                            <th>Sl.No.</th>
+                            <th>Employee Type</th>
+                            <th>Leave Type</th>
+                            <th>Employee Code</th>
+                            <th>Employee Name</th>
+                            <th>Max. No. of Leave</th>
+                            <th>Leave in Hand</th>
+                            <th>Effective Year</th>
+                            <th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
