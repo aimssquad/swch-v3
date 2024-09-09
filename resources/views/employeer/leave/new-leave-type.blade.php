@@ -1,14 +1,32 @@
 @extends('employeer.include.app')
 @section('title', 'Add Leave Type')
+@if(!empty($holidaydtl->id))  
+@section('title', 'Edit Leave Type')
+@else   
+@section('title', 'Add Leave Type')
+@endif 
 @section('content')
 <div class="main-panel">
 <div class="content">
 <div class="page-inner">
    <div class="row">
       <div class="col-md-12">
+         <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{url('leave/dashboard')}}">Dashboard</a></li>
+            @if(!empty($holidaydtl->id))
+            <li class="breadcrumb-item active">Edit Leave Type</li>
+            @else
+            <li class="breadcrumb-item active">Add New Leave Type</li>
+            @endif
+         </ul>
          <div class="card custom-card">
             <div class="card-header">
+               @if(!empty($holidaydtl->id))  
+               <h4 class="card-title"><i class="far fa-user"></i>  Edit Leave type</h4>
+               @else   
                <h4 class="card-title"><i class="far fa-user"></i>  Add New Leave type</h4>
+               @endif 
             </div>
             <div class="card-body">
                <div class="multisteps-form">

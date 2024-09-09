@@ -740,7 +740,7 @@ class AttendanceController extends Controller
 
             if (date('m', strtotime($end_date)) != date('m', strtotime($start_date))) {
                 Session::flash('message', 'Month are not same');
-                return redirect('attendance/attendance-report');
+                return redirect('attendance-management/attendance-report');
             } else {
                 if ($job_details->emp_doj != '1970-01-01') {
                     if ($job_details->emp_doj != '') {
@@ -1375,7 +1375,7 @@ class AttendanceController extends Controller
 
             if (date('m', strtotime($end_date)) != date('m', strtotime($start_date))) {
                 Session::flash('message', 'Month are not same');
-                return redirect('attendance/process-attendance');
+                return redirect('attendance-management/process-attendance');
             }
             $holidays = DB::table('holiday')->where('from_date', '>=', $request->start_date)
                 ->where('to_date', '<=', $end_date)

@@ -574,6 +574,7 @@ class LeaveManagementController extends Controller
 
     public function getAddLeaveAllocation(Request $request)
 	{   
+        dd('working');
         try{ 
         if(!empty(Session::get('emp_email')))
         {
@@ -684,6 +685,7 @@ class LeaveManagementController extends Controller
 
     public function saveAddLeaveAllocation(Request $request)
     {
+        //dd('Working On this route');
         try {
            
             if (!empty(Session::get("emp_email"))) {
@@ -970,7 +972,8 @@ class LeaveManagementController extends Controller
     }
 
     public function leaveBalanceReport(Request $request)
-    {   //dd('pp');
+    {   
+        //dd($request->all());
         try {
             if (!empty(Session::get("emp_email"))) {
                 $email = Session::get("emp_email");
@@ -983,7 +986,7 @@ class LeaveManagementController extends Controller
 
                     ->where("email", "=", $email)
                     ->first();
-
+                    //dd($Roledata->reg);
                 $employeelist = DB::table('employee')->join("leave_apply","leave_apply.employee_id",'employee.emp_code')
                     ->join("leave_type","leave_type.id","leave_apply.leave_type")
                     ->select(
@@ -1021,7 +1024,7 @@ class LeaveManagementController extends Controller
             //     ->groupBy("employee.emp_code", "leave_type.leave_type_name")
             //     ->get();
 
-              dd($employeelist);
+              //dd($employeelist);
                $leave_rs = leaveAllocation::leftJoin(
                         "leave_type",
                         "leave_allocation.leave_type_id",
@@ -1054,7 +1057,7 @@ class LeaveManagementController extends Controller
                     )
                     ->orderBy("leave_allocation.leave_type_id", "ASC")
                     ->get();
-                 dd($leave_rs);
+                 //dd($leave_rs);
                 $leave_type = LeaveType::orderBy("id", "ASC")
                     ->where("emid", "=", $Roledata->reg)
                     ->get();

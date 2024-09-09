@@ -31,8 +31,9 @@ return $output;
          <div class="col">
             <h3 class="page-title"> Payment Type</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
-               <li class="breadcrumb-item active">Payment Type</li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item active">Payment Group </li>
             </ul>
          </div>
          <div class="col-auto float-end ms-auto">

@@ -7,8 +7,9 @@
          <div class="col">
             <h3 class="page-title">Add File Managment</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
-               <li class="breadcrumb-item active">Add Add File Managment</li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('file-management/dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item active">Add File Managment</li>
             </ul>
          </div>
       </div>

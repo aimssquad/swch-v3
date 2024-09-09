@@ -1,11 +1,25 @@
 @extends('employeer.include.app')
-@section('title', 'Payment Type')
+
+@if(isset($paytypedetails) && !empty($paytypedetails))
+@section('title', 'Edit Payment Type')
+@else
+@section('title', 'Add Payment Type')
+@endif 
 @section('content')
 <div class="main-panel">
 <div class="content">
    <div class="page-inner">
       <div class="row">
          <div class="col-md-12">
+            <ul class="breadcrumb">
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
+               @if(isset($paytypedetails) && !empty($paytypedetails))
+               <li class="breadcrumb-item active">Edit Payment Type</li>
+               @else
+               <li class="breadcrumb-item active">Add New Payment Type</li>
+               @endif
+            </ul>
             <div class="card custom-card">
                <div class="card-header">
                   @if(isset($paytypedetails) && !empty($paytypedetails))

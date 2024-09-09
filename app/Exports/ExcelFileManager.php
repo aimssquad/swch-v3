@@ -54,7 +54,7 @@ class ExcelFileManager implements FromCollection, WithHeadings, WithEvents
             }
            
            
-
+            
             $customer_array[] = array(
                 'Sl No' => $h,
                 'Emp Name' => $file->emp_fname.' '.$file->emp_lname,
@@ -64,6 +64,7 @@ class ExcelFileManager implements FromCollection, WithHeadings, WithEvents
             );
             $h++;
         }
+        dd($customer_array);
         return collect($customer_array);
     }
 

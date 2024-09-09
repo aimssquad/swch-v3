@@ -177,6 +177,7 @@ Route::get('file-management/fileManagmentList', 'App\Http\Controllers\organizati
 Route::get('file-management/folder-create/{id}', 'App\Http\Controllers\organization\FilemanagmentControler@folderCreate');
 Route::get('file-management/fileManagment-add', 'App\Http\Controllers\organization\FilemanagmentControler@fileManagmentView');
 Route::post('file-management/fileManagment-save', 'App\Http\Controllers\organization\FilemanagmentControler@savefilemanagment');
+Route::get('file-management/report-excel', 'App\Http\Controllers\FilemanagmentControler@excelreport');
 
 //-------------------------------------- End File Management --------------------------------------------
 
@@ -382,7 +383,7 @@ Route::get('recruitment/job_list', 'App\Http\Controllers\organization\Recruitmen
 Route::get('recruitment/dashboard', 'App\Http\Controllers\organization\RecruitmentController@dashboard')->name('recruitment.dashboard');
 // Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@appliedjob')->name('recruitment.job-applied');
 
-Route::get('recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@addJobList')->name('recruitment.add-job-list');
+//Route::get('recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@addJobList')->name('recruitment.add-job-list');
 
 
 Route::get('recruitment/job_posting', 'App\Http\Controllers\organization\RecruitmentController@jobPosting')->name('recruitment.job-posting');
@@ -396,6 +397,12 @@ Route::get('recruitment/rejected', 'App\Http\Controllers\organization\Recruitmen
 
 Route::get('recruitment/edit_candidate/{candidate_id}', 'App\Http\Controllers\organization\RecruitmentController@candidateDetailsView')->name('edit-candidates');
 Route::post('recruitment/edit_candidate', 'App\Http\Controllers\RecruitmentController@savecandidatedetails');
+
+Route::get('org-recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@viewAddNewJobList');
+Route::get('org-recruitment/job-list', 'App\Http\Controllers\organization\RecruitmentController@viewjoblist');
+Route::get('org-recruitment/soccode/{id}', 'App\Http\Controllers\organization\RecruitmentController@soccodess');
+
+Route::get('recruitment/add-job-post', 'App\Http\Controllers\organization\RecruitmentController@viewAddNewJobPost');
 
 
 //-----------------------------End Recruitment Section -------------------------------------------------------------

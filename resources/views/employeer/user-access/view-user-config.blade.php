@@ -1,11 +1,24 @@
 @extends('employeer.include.app')
+@if(isset($user) && !empty($user->id))          	
 @section('title', 'Edit User Configuration')
+@else    
+@section('title', 'Add User Configuration')
+@endif 
 @section('content')
 <div class="main-panel">
 <div class="content">
    <div class="page-inner">
       <div class="row">
          <div class="col-md-12">
+            <ul class="breadcrumb">
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('user-access-role/dashboard')}}">Dashboard</a></li>
+               @if(isset($user) && !empty($user->id))
+               <li class="breadcrumb-item active">Edit User Configuration</li>
+               @else
+               <li class="breadcrumb-item active">Add New User Configuration</li>
+               @endif
+            </ul>
             <div class="card custom-card">
                <div class="card-header">
                   @if(isset($user) && !empty($user->id))  

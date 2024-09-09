@@ -1,7 +1,7 @@
 
 @extends('employeer.include.app')
 
-@section('title', 'User Access')
+@section('title', 'User Configuration')
 @php 
 $user_type = Session::get("user_type");
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
@@ -38,7 +38,8 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			<div class="col">
 				<h3 class="page-title">User Configuration</h3>
 				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('user-access-role/dashboard')}}">Dashboard</a></li>
 					<li class="breadcrumb-item active">User Configuration</li>
 				</ul>
 			</div>

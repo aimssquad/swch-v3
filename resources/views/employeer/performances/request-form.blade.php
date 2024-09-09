@@ -1,16 +1,30 @@
 @extends('employeer.include.app')
+@if($mode == 'edit')
+@section('title', 'Edit Performance Request')
+@else
 @section('title', 'Add Performance Request')
+@endif 
 @section('content')
 <div class="main-panel">
 <div class="content">
    <div class="page-inner">
       <div class="row">
          <div class="col-md-12">
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{url('org-performances/dashboard')}}">Dashboard</a></li>
+                @if($mode == 'edit')
+                <li class="breadcrumb-item active">Edit Performance Management</li>
+                @else
+                <li class="breadcrumb-item active">Add Performance Management</li>
+                @endif 
+                
+             </ul>
             <div class="card custom-card">
                <div class="card-header">
                   {{-- <h4 class="card-title"><i class="far fa-user"></i> Add Performance Request</h4> --}}
                     @if($mode == 'edit')
-                    <h4 class="card-title"><i class="far fa-user"></i> Update Performance Request</h4>
+                    <h4 class="card-title"><i class="far fa-user"></i> Edit Performance Request</h4>
                     @else
                     <h4 class="card-title"><i class="far fa-user"></i> Add Performance Request</h4>
                     @endif 

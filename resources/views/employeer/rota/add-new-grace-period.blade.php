@@ -1,14 +1,31 @@
 @extends('employeer.include.app')
-@section('title', 'Grace Period')
+@if(app('request')->input('id'))
+@section('title', 'Edit Grace Period')
+@else
+@section('title', 'Add Grace Period')
+@endif
 @section('content')
 <div class="content container-fluid pb-0">
    <div class="page-header">
       <div class="row align-items-center">
          <div class="col">
-            <h3 class="page-title">Grace Period</h3>
-            <ul class="breadcrumb">
+            @if(app('request')->input('id'))
+            <h3 class="page-title">Edit Grace Period</h3>
+            @else
+            <h3 class="page-title">Add Grace Period</h3>
+            @endif
+            {{-- <ul class="breadcrumb">
                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
                <li class="breadcrumb-item active">Grace Period Details</li>
+            </ul> --}}
+            <ul class="breadcrumb">
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('rota-org/dashboard')}}">Dashboard</a></li>
+               @if(app('request')->input('id'))
+               <li class="breadcrumb-item active">Edit Grace Period</li>
+               @else
+               <li class="breadcrumb-item active">Add New Grace Period</li>
+               @endif
             </ul>
          </div>
       </div>

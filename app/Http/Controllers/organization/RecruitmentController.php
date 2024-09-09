@@ -501,6 +501,111 @@ class RecruitmentController extends Controller
             return redirect('/');
         }
     }
+
+    public function viewjoblist()
+    {
+        if (!empty(Session::get('emp_email'))) {
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $data['recruitment_job_rs'] = DB::table('company_job_list')->where('emid', '=', $Roledata->reg)->get();
+            return view('recruitment/job-list', $data);
+        } else {
+            return redirect('/');
+        }
+
+    }
+
+    public function viewAddNewJobList()
+    {
+
+        if (!empty(Session::get('emp_email'))) {
+            $email = Session::get('emp_email');
+
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+                
+            $data['oldcust'] = DB::table('company_job_list')->where('emid', $data['Roledata']->reg)->get();
+            $data['depert'] = DB::table('department')->get();
+            if(count($data['oldcust'])==0){
+                //dd('o');
+                return view($this->_routePrefix . '.add-new-job-list');
+               //return view('recruitment/add-new-job-list', $data);
+            }else{
+                $jobId=$data['oldcust']['0']->id;
+                   $dt = DB::table('company_job_list')->where('id', '=',  $jobId)->get();
+                if (count($dt) > 0) {
+                    $data['departments'] = DB::table('company_job_list')->where('id', '=',  $jobId)->get();
+                    //dd($data['departments']);
+                    return view($this->_routePrefix . '.add-new-job-list');
+                    //return view('recruitment/add-new-job-list', $data);
+                } else {
+                    return redirect('org-recruitment/add-new-job-list', $data);
+                }
+            }
+            
+        } else {
+            return redirect('/');
+        }
+
+    }
+
+    public function soccodess($id){
+        $data=DB::table('company_job_list')
+        ->where("soc",$id)
+        ->get();
+        echo json_encode($data);
+        die;
+    }
+    //employeer/recruitment/add-new-job-
+
+    public function viewAddNewJobPost(Request $request)
+    {
+        if (!empty(Session::get('emp_email'))) {
+
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $data['cuurenci_master'] = DB::table('country_new')->get();
+            $data['location'] = DB::table('location_uk')->get();
+            if (Input::get('id')) {
+            //    dd(Input::get('id'));
+                $data['designation'] = DB::Table('company_job')
+                    ->join('company_job_list', 'company_job.soc', '=', 'company_job_list.soc')
+
+                    ->where('company_job.id', '=', Input::get('id'))
+                    ->select('company_job.*')
+                    ->get();
+
+                $data['department_rs'] = DB::Table('company_job_list')->where('emid', '=', $Roledata->reg)->get();
+               
+                return view('recruitment/add-new-job-post', $data);
+            } else {
+
+                $data['department_rs'] = DB::Table('company_job_list')->where('emid', '=', $Roledata->reg)->get();
+                return view('recruitment/add-new-job-post', $data);
+            }
+        } else {
+            return redirect('/');
+        }
+    }
     
 
-}
+
+} // End Class

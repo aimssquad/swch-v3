@@ -38,7 +38,8 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			<div class="col">
 				<h3 class="page-title">File Manager</h3>
 				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('file-management/dashboard')}}">Dashboard</a></li>
 					<li class="breadcrumb-item active">File Manager List</li>
 				</ul>
 			</div>
@@ -47,12 +48,12 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 				@foreach($sidebarItems as $value)
 				@if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 48)
 				<a href="{{ url('file-management/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Manager</a>
-                <span><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('fileManagment/report-excel')}}"><img  style="width: 30px; height:25px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
+                <span><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('file-management/report-excel')}}"><img  style="width: 30px; height:25px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
 				@endif
 				@endforeach
 				@elseif($user_type == 'employer')
 				<a href="{{ url('file-management/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Manager</a>
-                <span style="margin-right:10px; margin-top:5px;"><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('fileManagment/report-excel')}}"><img  style="width: 35px; height:37px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
+                <span style="margin-right:10px; margin-top:5px;"><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('file-management/report-excel')}}"><img  style="width: 35px; height:37px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
 				@endif
 				{{-- <div class="view-icons">
 					<a href="{{url('organization/employeeee')}}" class="grid-view btn btn-link "><i class="fa fa-th"></i></a>
@@ -69,8 +70,8 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
         <div class="col-md-12">
             <div class="card custom-card">
                 <div class="card-header">
-                    <h4 class="card-title"><i class="far fa-clock" aria-hidden="true"
-                            style="color:#10277f;"></i>&nbsp;File Division<span>
+                    <h4 class="card-title"><i class="far fa-file" aria-hidden="true"
+                            style="color:#fa921b;"></i>&nbsp;File Manager<span>
                     </h4>
                 </div>
                 <div class="card-body">
@@ -91,7 +92,7 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
                                 @foreach($file_details as $item)
 
                               <tr>
-                                <td><?php echo $i; ?></td>
+                                <td>{{$loop->iteration}}</td>
                                 <td>{{$item->file_name}}</td>
                                 <td>{{$item->organization_id}}</td>
                                 <td>{{$item->status}}</td>

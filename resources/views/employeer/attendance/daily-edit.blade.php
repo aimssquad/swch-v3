@@ -7,7 +7,8 @@
          <div class="col">
             <h3 class="page-title">Edit Daily Attendance Details</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('attendance-management/dashboard')}}">Dashboard</a></li>
                <li class="breadcrumb-item active">Edit Daily Attendance Details</li>
             </ul>
          </div>

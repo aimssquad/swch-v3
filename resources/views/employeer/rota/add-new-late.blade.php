@@ -1,14 +1,27 @@
 @extends('employeer.include.app')
-@section('title', 'Add Shift Management')
+@if(app('request')->input('id'))
+@section('title', 'Edit Late Policy')
+@else
+@section('title', 'Add Late Policy')
+@endif
 @section('content')
 <div class="content container-fluid pb-0">
    <div class="page-header">
       <div class="row align-items-center">
          <div class="col">
-            <h3 class="page-title">Late Policy</h3>
+            @if(app('request')->input('id'))
+            <h3 class="page-title">Edit Late Policy</h3>
+            @else
+            <h3 class="page-title">Add Late Policy</h3>
+            @endif
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
-               <li class="breadcrumb-item active">Add Late Policy</li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('rota-org/dashboard')}}">Dashboard</a></li>
+               @if(app('request')->input('id'))
+               <li class="breadcrumb-item active">Edit Late Policy</li>
+               @else
+               <li class="breadcrumb-item active">Add New Late Policy</li>
+               @endif
             </ul>
          </div>
       </div>

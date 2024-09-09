@@ -31,7 +31,8 @@ return $output;
          <div class="col">
             <h3 class="page-title"> Bank Sortcode</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/settings-dashboard')}}">Dashboard</a></li>
                <li class="breadcrumb-item active">Bank Sortcode</li>
             </ul>
          </div>

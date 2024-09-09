@@ -1,5 +1,5 @@
 @extends('employeer.include.app')
-@section('title', 'Add Leave Type')
+@section('title', 'Leave Report')
 @section('content')
 <div class="main-panel">
 <div class="content">

@@ -145,6 +145,50 @@ class PerformanceController extends Controller
         }
     }
 
+    public function requestEdit(Request $request, $id)
+    {
+        if (!empty(Session::get('user_type'))) {
+            $currentUser = Session::get('users_id');
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data = [];
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $departments = DB::table('department')->where('emid', '=', $Roledata->reg)->get();
+            // print_r($Roledata);
+            $data['departments'] = $departments;
+            $data['performance'] = Performance::select(
+                'performances.*',
+                'emp.emp_department as emp_department',
+                'emp.emp_designation as emp_designation',
+                'emp.emp_doj',
+                'emp.emp_fname',
+                'emp.emp_mname',
+                'emp.emp_lname',
+                'rep.emp_fname as rep_fname',
+                'rep.emp_mname as rep_mname',
+                'rep.emp_lname as rep_lname',
+            )
+                ->where('performances.id', decrypt($id))
+                ->join('employee as emp', 'emp.emp_code', '=', 'performances.emp_code')
+                ->join('employee as rep', 'rep.emp_code', '=', 'performances.emp_reporting_auth')
+                ->first();
+            $data['mode'] = 'edit';
+            $data['userType'] = Session::get('user_type');
+            //dd($data['performance']->status);
+            return view($this->_routePrefix . '.request-form',$data);
+            //return View('performancemanagement/request/request-form', $data);
+        } else {
+            return redirect("/");
+        }
+    }
+
 
 
 }// End Class

@@ -1,7 +1,7 @@
 
 @extends('employeer.include.app')
 
-@section('title', 'File Manager')
+@section('title', 'Hr Support File')
 @php 
 $user_type = Session::get("user_type");
 $sidebarItems = \App\Helpers\Helper::getSidebarItems();
@@ -38,8 +38,9 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			<div class="col">
 				<h3 class="page-title">Hr Support File List</h3>
 				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
-					<li class="breadcrumb-item active">Hr Support File List List</li>
+					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('hr-support/dashboard')}}">Dashboard</a></li>
+					<li class="breadcrumb-item active">Hr Support File List</li>
 				</ul>
 			</div>
 		</div>
