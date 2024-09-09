@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers;
+
 
 namespace App;
 
@@ -10,6 +10,7 @@ use Session;
 use App\InterviewCandidate;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\organization\OrganizationController;
 
 
 /*
@@ -29,12 +30,24 @@ use App\Http\Controllers\AjaxController;
 
 // new route
 
-Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\LandingController@Dashboard')->name('organization.home');
-Route::get('organization/profile', 'App\Http\Controllers\organization\LandingController@profile')->name('organization.profile');
+
+
 Route::get('forgot-password', 'App\Http\Controllers\organization\LandingController@indexfor');
 Route::post('forgot-password', 'App\Http\Controllers\organization\LandingController@Doforgot');
 
-// Employee 
+
+// organization Controller 
+Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\OrganizationController@Dashboard')->name('organization.home');
+Route::get('/organization-statistics', [OrganizationController::class, 'statistics'])->name('organization.statistics');
+Route::get('/organization/profile', [OrganizationController::class, 'profile'])->name('organization.profile');
+Route::get('/employees-according-to-rti', [OrganizationController::class, 'employeesRTI'])->name('employees.rti');
+Route::get('/authorizing-officer', [OrganizationController::class, 'authorizingOfficer'])->name('authorizing.officer');
+Route::get('/key-contact', [OrganizationController::class, 'keyContact'])->name('key.contact');
+Route::get('/level-1-user', [OrganizationController::class, 'level1User'])->name('level1.user');
+Route::get('/level-2-user', [OrganizationController::class, 'level2User'])->name('level2.user');
+
+// Employee  
+Route::get('organization/employee/employerdashboard', 'App\Http\Controllers\organization\LandingController@employeeDashboard')->name('organization.employee.dashboard');
 Route::get('organization/employeeee', 'App\Http\Controllers\organization\LandingController@allempcard')->name('organization/employee-card');
 Route::get('organization/emplist', 'App\Http\Controllers\organization\LandingController@allEmpList')->name('organization/emp-list');
 Route::get('organization/view-add-employee', 'App\Http\Controllers\organization\EmployeeController@viewAddEmployee')->name('organization/view-add-employee');

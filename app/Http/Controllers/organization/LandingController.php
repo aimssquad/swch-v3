@@ -25,51 +25,15 @@ class LandingController extends Controller
         $this->_model       = new UserModel();
     }
 
-    public function Dashboard(Request $request)
-    {
-        $email = Session::get("emp_email");
-
-        if (!empty($email)) {
-            $user_type = Session::get("user_type");
-            if ($user_type == "employer") {
-                $data["Roledata"] = DB::table("registration")
-                    ->where("status", "=", "active")
-                    ->where("email", "=", $email)
-                    ->first(); 
-                    //dd($data);
-            } else {
-                $usemail = Session::get("user_email");
-                $users_id = Session::get("users_id");
-                $data["Roledata"] = DB::table("users")
-                    ->where("id", "=", $users_id)
-                    ->first();
-                return view('employeer.employee-corner.dashboard', $data);
-                
-            }
-            return view($this->_routePrefix . '.dashboard', $data);
-        } else {
-            return redirect("/");
-        }
+   
+   public function employeeDashboard(Request $request){
+    if (!empty(Session::get('emp_email'))) {
+        $email = Session::get('emp_email');
+        dd($email);
+    }else{
+        return redirect('/');
     }
-    // organization profile made by abbas
-    public function profile(Request $request){
-        if (!empty(Session::get('emp_email'))) {
-            $email = Session::get('emp_email');
-            $data['companies_rs'] = DB::table('registration')
-                ->where('status', '=', 'active')
-                ->where('email', '=', $email)
-                ->first();
-            $data['Roledata'] = DB::table('registration')
-                ->where('status', '=', 'active')
-                ->where('email', '=', $email)
-                ->first();
-            // dd($data);
-            return view($this->_routePrefix . '.profile',$data);
-
-        }else{
-            return redirect('/');
-        }
-    }
+   }
 
     public function allempcard(){
         if (!empty(Session::get('emp_email'))) {
