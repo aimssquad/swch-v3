@@ -47,7 +47,7 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			<div class="col-auto float-end ms-auto">
 				@if($user_type == 'employee')
 				@foreach($sidebarItems as $value)
-				@if($value['rights'] == 'Add' && $value['module_name'] == 3 && $value['menu'] == 44)
+				@if($value['rights'] == 'Add' && $value['module_name'] == 2 && $value['menu'] == 44)
 				<a href="{{ url('org-recruitment/add-job-list') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Job List</a>
 				@endif
 				@endforeach

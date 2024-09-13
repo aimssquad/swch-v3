@@ -1,13 +1,40 @@
 @extends('employeer.include.app')
 
-@section('title', 'Home - HRMS admin template')
+@section('title', 'Job Published')
+@php 
+$user_type = Session::get("user_type");
+$sidebarItems = \App\Helpers\Helper::getSidebarItems();
+
+@endphp
+@section('content')
+@php
+	function my_simple_crypt( $string, $action = 'encrypt' ) {
+		// you may change these values to your own
+		$secret_key = 'bopt_saltlake_kolkata_secret_key';
+		$secret_iv = 'bopt_saltlake_kolkata_secret_iv';
+	
+		$output = false;
+		$encrypt_method = "AES-256-CBC";
+		$key = hash( 'sha256', $secret_key );
+		$iv = substr( hash( 'sha256', $secret_iv ), 0, 16 );
+	
+		if( $action == 'encrypt' ) {
+			$output = base64_encode( openssl_encrypt( $string, $encrypt_method, $key, 0, $iv ) );
+		}
+		else if( $action == 'decrypt' ){
+			$output = openssl_decrypt( base64_decode( $string ), $encrypt_method, $key, 0, $iv );
+		}
+	
+		return $output;
+	}
+
+@endphp
 
 @section('content')
 
 
     <!-- Page Content -->
             <div class="content container-fluid pb-0">
-				
                 <!-- Page Header -->
                 <div class="page-header">
                     <div class="row align-items-center">
@@ -18,35 +45,21 @@
                                 <li class="breadcrumb-item active">Job Published</li>
                             </ul>
                         </div>
-                        {{-- <div class="col-auto float-end ms-auto">
-                            <a href="#" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_employee"><i class="fa-solid fa-plus"></i> Add Job published</a>
-                        </div> --}}
+                        <div class="col-auto float-end ms-auto">
+                            @if($user_type == 'employee')
+                            @foreach($sidebarItems as $value)
+                            @if($value['rights'] == 'Add' && $value['module_name'] == 2 && $value['menu'] == 44)
+                            <a href="{{ url('org-recruitment/add-job-published') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Job Published</a>
+                            @endif
+                            @endforeach
+                            @elseif($user_type == 'employer')
+                            <a href="{{ url('org-recruitment/add-job-published') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Job Published</a>
+                            @endif
+                        </div>
+                        @include('employeer.layout.message')
                     </div>
                 </div>
                 <!-- /Page Header -->
-                
-                <!-- Search Filter -->
-                {{-- <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="input-block mb-3 form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee ID</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="input-block mb-3 form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3"> 
-                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <a href="#" class="btn btn-success w-100"> Search </a>  
-                    </div>     
-                </div> --}}
-                <!-- /Search Filter -->
-                
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
@@ -70,8 +83,19 @@
                                             <div class="dropdown dropdown-action">
                                                 <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_employee"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
-                                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_employee"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                                                    @if($user_type == 'employee')
+                                                    @foreach($sidebarItems as $value)
+                                                        @if($value['rights'] == 'Add' && $value['module_name'] == 2 && $value['menu'] == 35)
+                                                            <a class="dropdown-item" href="{{url('org-recruitment/add-job-published/')}}?id={{$published_job->id}}">
+                                                                <i class="fa-solid fa-pencil m-r-5"></i> Edit
+                                                            </a>
+                                                        @endif
+                                                    @endforeach
+                                                @elseif($user_type == 'employer')
+                                                    <a class="dropdown-item" href="{{url('org-recruitment/add-job-published/')}}?id={{$published_job->id}}">
+                                                        <i class="fa-solid fa-pencil m-r-5"></i> Edit
+                                                    </a>
+                                                @endif
                                                 </div>
                                             </div>
                                         </td>

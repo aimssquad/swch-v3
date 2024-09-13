@@ -1,20 +1,23 @@
 @extends('employeer.include.app')
 @section('title', 'Sponsor Compaliance')
 @section('content')
-<div class="main-panel">
-    <div class="content">
-        <div class="panel-header bg-primary-gradient">
-           <div class="page-inner py-5">
-              <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-                 <div>
-                    <h2 class="text-white pb-2 pl-3 fw-bold">{{$Roledata->com_name}}</h2>
-                    <h4 class="text-white pb-2 fw-bold">	@if($Roledata->address!=''){{ $Roledata->address }} @if($Roledata->address2!='null'),{{ $Roledata->address2 }}@endif,{{  $Roledata->road }},{{  $Roledata->city }},{{  $Roledata->zip }},{{  $Roledata->country }}@endif</h4>
-                 </div>
-                 <div class="ml-md-auto py-2 py-md-0">
-                 </div>
-              </div>
+ <!-- Page Content -->
+ <div class="content container-fluid pb-0">
+
+   <!-- Page Header -->
+   <div class="page-header">
+       <div class="row">
+           <div class="col-sm-12">
+               <h3 class="page-title">Welcome!</h3>
+               <ul class="breadcrumb">
+                   <li class="breadcrumb-item active">
+                     {{$Roledata->com_name}}
+                   </li>
+               </ul>
            </div>
-        </div>
+       </div>
+   </div>
+   <!-- /Page Header -->
         <br>
         <?php
            $usetype = Session::get('user_type'); 
@@ -59,7 +62,7 @@
                                        </div>
                                  </div>
                                  <div class="ms-auto">
-                                       <a href="{{url('dashboard/edit-dashboard-company')}}?c_id={{base64_encode($Roledata->id)}}" class="text-fixed-white"><i class="fa fa-arrow-right"></i></a>
+                                       <a href="{{url('org-company-profile/edit-company')}}?c_id={{base64_encode($Roledata->id)}}" class="text-fixed-white"><i class="fa fa-arrow-right"></i></a>
                                  </div>
                               </div>
                            </div>
@@ -757,7 +760,7 @@
            </div>
         </div>
      </div>
-</div>
+
 @endsection
 @section('script')
 

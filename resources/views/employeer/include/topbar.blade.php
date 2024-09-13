@@ -1,16 +1,11 @@
 @php
-$user_type = Session::get("user_type");
-//dd($Roledata->reg);
-// $roles_auth = DB::table("othorized_organization_module")
-//             ->where("employee_id", "=", $Roledata->reg)
-//             ->get()
-//             ->toArray();;
-// //dd($roles_auth);            
-// $module_names = [];
-// foreach($roles_auth as $role){
-//     $module_names[] = $role->module_name;    
-// }  
-//dd($user_type);
+    $user_type = Session::get("user_type");
+    $email = Session::get('emp_email');
+    $data['companies_rs'] = DB::table('registration')
+    ->where('status', '=', 'active')
+    ->where('email', '=', $email)
+    ->first();
+    //dd($data['companies_rs']);
 @endphp    
 <!-- Header -->
 <div class="header">
@@ -278,12 +273,12 @@ $user_type = Session::get("user_type");
 
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-                <span class="user-img"><img src="{{asset('public/emp_pic/pexels-blaque-x-863963.jpg')}}" alt="User Image" style="
+                <span class="user-img"><img src="{{ asset('storage/' .$data['companies_rs']->logo) }}" alt="User Image" style="
                     width: 40px;
                     height: 30px;
                 ">
                 <span class="status online"></span></span>
-                <span>Admin</span>
+                <span>{{$data['companies_rs']->com_name}}</span>
             </a>
             <div class="dropdown-menu">  
                 @if(Session::get('admin_userp_user_type')=='user')     

@@ -40,11 +40,14 @@ Route::post('forgot-password', 'App\Http\Controllers\organization\LandingControl
 Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\OrganizationController@Dashboard')->name('organization.home');
 Route::get('/organization-statistics', [OrganizationController::class, 'statistics'])->name('organization.statistics');
 Route::get('/organization/profile', [OrganizationController::class, 'profile'])->name('organization.profile');
+Route::get('org-company-profile/edit-company', [OrganizationController::class, 'viewAddCompany']);
+Route::post('org-company-profile/editcompany', [OrganizationController::class, 'saveCompany']);
 Route::get('/employees-according-to-rti', [OrganizationController::class, 'employeesRTI'])->name('employees.rti');
 Route::get('/authorizing-officer', [OrganizationController::class, 'authorizingOfficer'])->name('authorizing.officer');
 Route::get('/key-contact', [OrganizationController::class, 'keyContact'])->name('key.contact');
 Route::get('/level-1-user', [OrganizationController::class, 'level1User'])->name('level1.user');
 Route::get('/level-2-user', [OrganizationController::class, 'level2User'])->name('level2.user');
+Route::get('org-company-profile/pdf', [OrganizationController::class, 'pdf']);
 
 // Employee  
 Route::get('organization/employee/employerdashboard', 'App\Http\Controllers\organization\LandingController@employeeDashboard')->name('organization.employee.dashboard');
@@ -384,7 +387,7 @@ Route::get('org-dashboard/absent-report', 'App\Http\Controllers\organization\Das
 Route::post('org-dashboard/absent-report', 'App\Http\Controllers\organization\DashboardController@getattendanabsent');
 Route::get('org-dashboard/absent-record-card/{absent_id}/{year_value}', 'App\Http\Controllers\organization\DashboardController@viewattendanabsentreport');
 Route::get('org-dashboard/absent-record-card-pdf/{absent_id}/{year_value}', 'App\Http\Controllers\organization\DashboardController@viewattendanabsentreportpdf');
-Route::get('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@viewchangecircumstancesedit');
+Route::get('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@viewchangecircumstancesedit')->name('org-dashboard/change-of-circumstances');
 Route::post('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@savechangecircumstancesedit');
 Route::get('org-dashboard/contract-agreement', 'App\Http\Controllers\organization\DashboardController@viewemployeeagreement');
 Route::post('org-dashboard/contract-agreement', 'App\Http\Controllers\organization\DashboardController@saveemployeeagreement');
@@ -392,6 +395,7 @@ Route::post('org-dashboard/contract-agreement', 'App\Http\Controllers\organizati
 //-----------------------------------------End Sponsor Compliance --------------------------------------------------------
 
 // --------------------------------Start Recruitment Section ---------------------------------------------------------------
+Route::get('sample', 'App\Http\Controllers\organization\RecruitmentController@sample')->name('sample');
 Route::get('recruitment/job_list', 'App\Http\Controllers\organization\RecruitmentController@jobList')->name('recruitment.job-list');
 Route::get('recruitment/dashboard', 'App\Http\Controllers\organization\RecruitmentController@dashboard')->name('recruitment.dashboard');
 // Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@appliedjob')->name('recruitment.job-applied');
@@ -401,21 +405,38 @@ Route::get('recruitment/dashboard', 'App\Http\Controllers\organization\Recruitme
 
 Route::get('recruitment/job_posting', 'App\Http\Controllers\organization\RecruitmentController@jobPosting')->name('recruitment.job-posting');
 Route::get('recruitment/job_published', 'App\Http\Controllers\organization\RecruitmentController@jobPublished')->name('recruitment.job-published');
-Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@jobApplied')->name('recruitment.job-applied');
-Route::get('recruitment/short_listing', 'App\Http\Controllers\organization\RecruitmentController@shortListing')->name('recruitment.short-listing');
-Route::get('recruitment/interview_result', 'App\Http\Controllers\organization\RecruitmentController@interview')->name('recruitment.interview_result');
-Route::get('recruitment/hired_list', 'App\Http\Controllers\organization\RecruitmentController@hired')->name('recruitment.hired-list');
-Route::get('recruitment/offer_letter', 'App\Http\Controllers\organization\RecruitmentController@offerLetter')->name('recruitment.offer-letter');
-Route::get('recruitment/rejected', 'App\Http\Controllers\organization\RecruitmentController@rejected')->name('recruitment.rejected');
+// Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@jobApplied')->name('recruitment.job-applied');
+// Route::get('recruitment/short_listing', 'App\Http\Controllers\organization\RecruitmentController@shortListing')->name('recruitment.short-listing');
+// Route::get('recruitment/interview_result', 'App\Http\Controllers\organization\RecruitmentController@interview')->name('recruitment.interview_result');
+// Route::get('recruitment/hired_list', 'App\Http\Controllers\organization\RecruitmentController@hired')->name('recruitment.hired-list');
+// Route::get('recruitment/offer_letter', 'App\Http\Controllers\organization\RecruitmentController@offerLetter')->name('recruitment.offer-letter');
+// Route::get('recruitment/rejected', 'App\Http\Controllers\organization\RecruitmentController@rejected')->name('recruitment.rejected');
 
 Route::get('recruitment/edit_candidate/{candidate_id}', 'App\Http\Controllers\organization\RecruitmentController@candidateDetailsView')->name('edit-candidates');
 Route::post('recruitment/edit_candidate', 'App\Http\Controllers\RecruitmentController@savecandidatedetails');
 
-Route::get('org-recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@viewAddNewJobList');
+
 Route::get('org-recruitment/job-list', 'App\Http\Controllers\organization\RecruitmentController@viewjoblist');
 Route::get('org-recruitment/soccode/{id}', 'App\Http\Controllers\organization\RecruitmentController@soccodess');
+Route::get('org-recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@viewAddNewJobList');
+Route::post('org-recruitment/add-job-list', 'App\Http\Controllers\organization\RecruitmentController@saveJobListData');
 
-Route::get('recruitment/add-job-post', 'App\Http\Controllers\organization\RecruitmentController@viewAddNewJobPost');
+Route::get('org-recruitment/add-job-post', 'App\Http\Controllers\organization\RecruitmentController@viewAddNewJobPost');
+Route::post('org-recruitment/add-job-post', 'App\Http\Controllers\organization\RecruitmentController@saveJobPostData');
+
+Route::get('org-recruitment/add-job-published', 'App\Http\Controllers\organization\RecruitmentController@viewAddNewpublished');
+Route::post('org-recruitment/add-job-published', 'App\Http\Controllers\organization\RecruitmentController@saveJobpublishedData');
+
+Route::get('org-recruitment/candidate', 'App\Http\Controllers\organization\RecruitmentController@viewcandidate');
+Route::get('org-recruitment/edit-candidate/{candidate_id}', 'App\Http\Controllers\organization\RecruitmentController@viewcandidatedetails');
+Route::post('org-recruitment/edit-candidate', 'App\Http\Controllers\organization\RecruitmentController@savecandidatedetails');
+Route::get('org-recruitment/send-letter-job-applied/{send_id}', 'App\Http\Controllers\organization\RecruitmentController@viewsendcandidatedetailsjobapplied');
+
+Route::get('org-recruitment/short-listing', 'App\Http\Controllers\organization\RecruitmentController@viewshortcandidate');
+Route::get('org-recruitment/edit-short-listing/{short_id}', 'App\Http\Controllers\organization\RecruitmentController@viewshortcandidatedetails');
+Route::post('org-recruitment/edit-short-listing', 'App\Http\Controllers\organization\RecruitmentController@saveshortcandidatedetails');
+
+Route::get('org-recruitment/interview', 'App\Http\Controllers\organization\RecruitmentController@viewinterviewcandidate');
 
 
 //-----------------------------End Recruitment Section -------------------------------------------------------------

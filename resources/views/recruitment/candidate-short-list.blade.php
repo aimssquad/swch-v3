@@ -61,9 +61,9 @@
 								<div class="card-header">
 									<h4 class="card-title"><i class="fas fa-user-tie"></i> Short Listing
 							</h4>
-@if(Session::has('message'))										
-							<div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-					@endif
+								@if(Session::has('message'))										
+															<div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
+													@endif
 									
 								</div>
 								<div class="card-body">
@@ -97,16 +97,16 @@
 												<?php
 												 $job_details=DB::table('candidate_history')->where('user_id', '=', $candidate->id )
 												 ->where(function ($query) {
-        $query ->where('status','=','Short listed')->orWhere('status','=', 'Hold');
-    }
-) ->orderBy('id', 'DESC')->first();
-  		
-     
-if(!empty($job_details)){ 
- echo date('d/m/Y',strtotime($job_details->date));}
-else{
-	echo date('d/m/Y',strtotime($candidate->date));
-}?>
+														$query ->where('status','=','Short listed')->orWhere('status','=', 'Hold');
+													}
+												) ->orderBy('id', 'DESC')->first();
+														
+													
+												if(!empty($job_details)){ 
+												echo date('d/m/Y',strtotime($job_details->date));}
+												else{
+													echo date('d/m/Y',strtotime($candidate->date));
+												}?>
 
  <td class="drp">
 

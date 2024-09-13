@@ -246,7 +246,7 @@ class RecruitmentController extends Controller
            
             if (Input::get('id')) {
 
-//           $ckeck_dept=DB::table('company_job_list')->where('soc', $soc)->where('id','!=', Input::get('id'))->where('emid', $Roledata ->reg)->first();
+            // $ckeck_dept=DB::table('company_job_list')->where('soc', $soc)->where('id','!=', Input::get('id'))->where('emid', $Roledata ->reg)->first();
                 //         if(!empty($ckeck_dept)){
                 //             Session::flash('message','Soc Code  Already Exists.');
                 //             return redirect('recruitment/job-list');

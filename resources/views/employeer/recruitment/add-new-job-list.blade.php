@@ -1,21 +1,20 @@
 @extends('employeer.include.app')
-@section('title', 'Add Bank Short Code')
+@section('title', 'Add Job List')
 @section('content')
-<div class="main-panel">
-   <div class="content">
-      <div class="col">
-         <h3 class="page-title">Job List</h3>
-         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Dashboard</a></li>
-            @if(isset($_GET['id']))
-            <li class="breadcrumb-item active">Edit Job List</li>
-            @else
-            <li class="breadcrumb-item active">Add Job List</li>
-            @endif 
-         </ul>
-      </div>
-      <div class="page-inner">
+<div class="content container-fluid pb-0">
+   <!-- Page Header -->
+   <div class="page-header">
+       <div class="row">
+           <div class="col-sm-12">
+               <h3 class="page-title">Job List</h3>
+               <ul class="breadcrumb">
+                   <li class="breadcrumb-item"><a href="{{route('recruitment.dashboard')}}">Dashboard</a></li>
+                   <li class="breadcrumb-item active">Job List </li>
+               </ul>
+           </div>
+       </div>
+   </div>
+   <!-- /Page Header -->
          <div class="row">
             <div class="col-md-12">
                <div class="card custom-card">
@@ -45,8 +44,8 @@
                                            ?>
                                     <div class="col-md-4">
                                        <div class=" form-group">
-                                          <label for="type" class="placeholder">Select Job Type</label>
-                                          <select id="type" type="text" class="form-control input-border-bottom" required="" name="type" onchange="jobcheck(this.value);">
+                                          <label for="type" class="col-form-label">Select Job Type</label>
+                                          <select id="type" type="text" class="form-control input-border-bottom " required="" name="type" onchange="jobcheck(this.value);">
                                              <option value="" >&nbsp;</option>
                                              <option  value="new"  >New</option>
                                              <option  value="exiting"  >Existing</option>
@@ -60,7 +59,7 @@
                                        ?>
                                     <div class="col-md-4">
                                        <div class=" form-group">
-                                          <label for="inputFloatingLabel-soc-code" class="placeholder">Job Code</label>
+                                          <label for="inputFloatingLabel-soc-code" class="col-form-label">Job Code</label>
                                           <input id="inputFloatingLabel-soc-code" type="text" class="form-control input-border-bottom" required="" name="soc" value="<?php if(isset($_GET['id'])){  echo $departments[0]->soc;  }?>{{ old('soc') }}" <?php if(isset($_GET['id'])){ echo 'readonly';}?>>
                                        </div>
                                     </div>
@@ -70,15 +69,15 @@
                                        ?>
                                     <div class="col-md-4" id="newcust" style="display:none;">
                                        <div class=" form-group">
-                                          <label for="inputFloatingLabel-soc-code" class="placeholder">Job Code</label>
+                                          <label for="inputFloatingLabel-soc-code" class="col-form-label">Job Code</label>
                                           <input id="socnew" type="text" class="form-control input-border-bottom" name="socnew" value="<?php if(isset($_GET['id'])){  echo $departments[0]->soc;  }?>{{ old('soc') }}" <?php if(isset($_GET['id'])){ echo 'readonly';}?>>
                                        </div>
                                     </div>
                                     @if( isset($oldcust) && count($oldcust)!=0)
                                     <div class="col-md-4" id="oldcust" style="display:none;">
                                        <div class=" form-group">
-                                          <label for="soc" class="placeholder">Job Code</label>
-                                          <select id="socold" type="text" class="form-control input-border-bottom"  name="socold" onChange="socClick()">
+                                          <label for="soc" class="col-form-label">Job Code</label>
+                                          <select id="socold" type="text" class="select"  name="socold" onChange="socClick()">
                                              <option value="" >&nbsp;</option>
                                              @foreach($oldcust as $recruitment_job)
                                              <option value="{{ $recruitment_job->soc }}" >{{ $recruitment_job->soc }}</option>
@@ -93,7 +92,7 @@
                                     <div class="col-md-4">
                                        <div id="test">
                                           <div class=" form-group">
-                                             <label>Department</label>
+                                             <label class="col-form-label">Department</label>
                                              <input type="text" id="dept" class="form-control" class="form-control" name="department" placeholder="Enter Your Department">
                                           </div>
                                        </div>
@@ -105,20 +104,21 @@
                                  <div class="row">
                                     <div class="col-md-4">
                                        <div class=" form-group">
-                                          <label for="inputFloatingLabel-job-title" class="placeholder">Job Title  </label>
+                                          <label for="inputFloatingLabel-job-title" class="col-form-label">Job Title  </label>
                                           <input id="inputFloatingLabel-job-title" type="text" class="form-control input-border-bottom" required="" name="title" value="<?php if(isset($_GET['id'])){  echo $departments[0]->title;  }?>{{ old('title') }}">
                                        </div>
                                     </div>
                                     <div class="col-md-12">
                                        <input id="skil_set" type="hidden" class="form-control input-border-bottom" required="" name="skil_set" value="<?php if(isset($_GET['id'])){  echo $departments[0]->skil_set;  }?>{{ old('skil_set') }}" >
                                        <div class=" form-group">
-                                          <label for="editor"  class="placeholder">Job Descriptions</label>
+                                          <label for="editor"  class="col-form-label">Job Descriptions</label>
                                           <textarea   rows="5" class="form-control"  required="" id="editor" name="des_job"><?php if(isset($_GET['id'])){?>  {!! $departments[0]->des_job !!} <?php  }?> </textarea>
                                        </div>
                                     </div>
                                  </div>
+                                 <br>
                                  <div class="row form-group">
-                                    <div class="col-md-6"><button type="submit" class="btn btn-default" style="margin-top: 12px;">Submit</button>
+                                    <div class="col-md-6"><button type="submit" class="btn btn-primary" style="margin-top: 12px;">Submit</button>
                                     </div>
                                  </div>
                               </form>
@@ -134,8 +134,8 @@
 </div>
 @endsection
 @section('script')
-<script src="{{ asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
-<script src="{{ asset('assets/js/setting-demo2.js')}}"></script>
+{{-- <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
+<script src="{{ asset('assets/js/setting-demo2.js')}}"></script> --}}
 <script >
    $(document).ready(function() {
        $('#basic-datatables').DataTable({

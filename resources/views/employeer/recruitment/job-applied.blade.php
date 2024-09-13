@@ -24,29 +24,6 @@
                     </div>
                 </div>
                 <!-- /Page Header -->
-                
-                <!-- Search Filter -->
-                {{-- <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="input-block mb-3 form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee ID</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="input-block mb-3 form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3"> 
-                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <a href="#" class="btn btn-success w-100"> Search </a>  
-                    </div>     
-                </div> --}}
-                <!-- /Search Filter -->
-                
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">

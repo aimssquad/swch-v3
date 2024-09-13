@@ -1,6 +1,18 @@
 @extends('employeer.include.app')
 @section('title', 'Add Leave Allocation')
 @section('content')
+<div class="content container-fluid pb-0">
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title"> Leave Allocation</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{route('organization.home')}}">Dashboard</a></li>
+                <li class="breadcrumb-item active"> Leave Allocation </li>
+            </ul>
+        </div>
+    </div>
+</div>
 <div class="main-panel">
 <div class="content">
    <div class="page-inner">

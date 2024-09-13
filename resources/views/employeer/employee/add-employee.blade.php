@@ -1302,10 +1302,11 @@
                            </div>
                            </div>
                            <div>
-                              <button class="btn btn-square btn-primary btn-lg" id="prevBtn" type="button" onclick="showTab(-1)" disabled>Back</button>
-                              <button class="btn btn-square btn-primary btn-lg" id="nextBtn" type="button" onclick="showTab(1)">Next</button>
-                              <button class="btn btn-square btn-primary btn-lg" id="submitBtn" type="submit" style="display: none;">Submit</button>
+                              <button class="btn rounded-pill btn-primary btn-lg" id="prevBtn" type="button" onclick="showTab(-1)" disabled>Back</button>
+                              <button class="btn rounded-pill btn-primary btn-lg" id="nextBtn" type="button" onclick="showTab(1)">Next</button>
+                              <button class="btn rounded-pill btn-primary btn-lg" id="submitBtn" type="submit" style="display: none;">Submit</button>
                            </div>
+                           
 
                         </form>
                      </div>

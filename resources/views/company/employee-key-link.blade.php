@@ -86,26 +86,21 @@
 											  
 											    
 		
-					@if ($Roledata->key_f_name!='')								
-						<tr>
-							<td>1</td>
-							
-                            <td>{{ $Roledata->key_f_name }} {{ $Roledata->key_f_lname }}</td>
-                              <td>{{ $Roledata->key_designation }}</td>
-                                <td>{{ $Roledata->key_phone }}</td>
-                                  <td>{{ $Roledata->key_email }}</td>
-                                <td>{{ $Roledata->key_bank_status }} 	@if ($Roledata->key_bank_status=='Yes')	 ( {{ $Roledata->key_bank_other }} ) 	@endif	</td>
-                              
-                            <td>	@if ($Roledata->key_proof!='')	<a href="{{ asset($Roledata->key_proof) }}" target="_blank">	<img src="{{ asset($Roledata->key_proof) }}" height="50px" width="50px"/></a>
-																		@endif	</td>
-                           
-                             
-                            
-                           
-						</tr>
-						
-		@endif
-					 
+											@if ($Roledata->key_f_name!='')								
+												<tr>
+													<td>1</td>
+													<td>{{ $Roledata->key_f_name }} {{ $Roledata->key_f_lname }}</td>
+													<td>{{ $Roledata->key_designation }}</td>
+													<td>{{ $Roledata->key_phone }}</td>
+													<td>{{ $Roledata->key_email }}</td>
+													<td>{{ $Roledata->key_bank_status }} @if ($Roledata->key_bank_status=='Yes')( {{ $Roledata->key_bank_other }} ) @endif</td>
+													<td>
+														@if ($Roledata->key_proof!='')
+															<a href="{{ asset($Roledata->key_proof) }}" target="_blank"><img src="{{ asset($Roledata->key_proof) }}" height="50px" width="50px"/></a>
+														@endif	
+													</td>
+												</tr>
+												@endif
 											</tbody>
 										</table>
 									</div>

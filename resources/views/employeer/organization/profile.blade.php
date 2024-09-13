@@ -20,7 +20,9 @@
         </div>
     </div>
     <!-- /Page Header -->
-    
+    @if(Session::has('message'))										
+        <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
+    @endif
     <div class="card mb-0">
         <div class="card-body">
             <div class="row">
@@ -28,7 +30,7 @@
                     <div class="profile-view">
                         <div class="profile-img-wrap">
                             <div class="profile-img">
-                                <a href="#"><img src="{{ asset('frontend/assets/img/profiles/avatar-02.jpg')}}" alt="User Image"></a>
+                                <a href="#"><img src="{{ asset('storage/' . $companies_rs->logo) }}" alt="User Image"></a>
                             </div>
                         </div>
                         <div class="profile-basic">
@@ -45,7 +47,10 @@
                                         <div class="staff-id">Trading Name : {{ $companies_rs->reg }}</div>
                                         <div class="staff-id">Trading Period : {{ $companies_rs->reg }}</div>
                                         <div class="small doj">Date of Create : {{ \Carbon\Carbon::parse($companies_rs->created_at)->format('j M Y') }}</div>
-                                        <div class="staff-msg"><a class="btn btn-custom" href="#">Download PDF</a></div>
+                                        <div class="staff-msg">
+                                            <a class="btn btn-custom" href="{{url('org-company-profile/pdf')}}?c_id={{base64_encode($companies_rs->id)}}">Download PDF</a>
+                                            <a class="btn btn-success" href="{{url('org-company-profile/edit-company')}}?c_id={{base64_encode($companies_rs->id)}}"><i class="fa-solid fa-pencil"></i>Edit Profile</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
@@ -88,7 +93,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="pro-edit"><a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon" href="#"><i class="fa-solid fa-pencil"></i></a></div>
                     </div>
                 </div>
             </div>
@@ -115,39 +119,31 @@
                 <div class="col-md-6 d-flex">
                     <div class="card profile-box flex-fill">
                         <div class="card-body">
-                            <h3 class="card-title">Authorised Person Details <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#personal_info_modal"><i class="fa-solid fa-pencil"></i></a></h3>
+                            <h3 class="card-title">Authorised Person Details </h3>
                             <ul class="personal-info">
                                 <li>
-                                    <div class="title">Passport No.</div>
-                                    <div class="text">9876543210</div>
+                                    <div class="title">Name.</div>
+                                    <div class="text">{{ ucfirst($companies_rs->f_name ?? '') }} {{ ucfirst($companies_rs->l_name ?? '') }}</div>
                                 </li>
                                 <li>
-                                    <div class="title">Passport Exp Date.</div>
-                                    <div class="text">9876543210</div>
+                                    <div class="title">Designation.</div>
+                                    <div class="text">{{ !empty($companies_rs->desig) ? $companies_rs->desig : 'N/A' }}</div>
                                 </li>
                                 <li>
-                                    <div class="title">Tel</div>
-                                    <div class="text"><a href="#">9876543210</a></div>
+                                    <div class="title">Phone No.</div>
+                                    <div class="text"><a href="#">{{ !empty($companies_rs->con_num) ? $companies_rs->con_num : 'N/A' }}</a></div>
                                 </li>
                                 <li>
-                                    <div class="title">Nationality</div>
-                                    <div class="text">Indian</div>
+                                    <div class="title">Email Id.</div>
+                                    <div class="text">{{ !empty($companies_rs->authemail) ? $companies_rs->authemail : 'N/A' }}</div>
                                 </li>
                                 <li>
-                                    <div class="title">Religion</div>
-                                    <div class="text">Christian</div>
+                                    <div class="title">Do you have a history of Criminal conviction/Bankruptcy?</div>
+                                    <div class="text">{{$companies_rs->bank_status}}</div>
                                 </li>
                                 <li>
-                                    <div class="title">Marital status</div>
-                                    <div class="text">Married</div>
-                                </li>
-                                <li>
-                                    <div class="title">Employment of spouse</div>
-                                    <div class="text">No</div>
-                                </li>
-                                <li>
-                                    <div class="title">No. of children</div>
-                                    <div class="text">2</div>
+                                    <div class="title">Proof Of Id</div>
+                                    <div class="text"><a href="{{ asset('storage/' . $companies_rs->level_proof) }}" target="_blank"><img src="{{ asset('storage/' . $companies_rs->level_proof) }}" height="50px" width="50px"/></a></div>
                                 </li>
                             </ul>
                         </div>
@@ -156,36 +152,31 @@
                 <div class="col-md-6 d-flex">
                     <div class="card profile-box flex-fill">
                         <div class="card-body">
-                            <h3 class="card-title">Key Contact <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"><i class="fa-solid fa-pencil"></i></a></h3>
-                            <h5 class="section-title">Primary</h5>
+                            <h3 class="card-title">Key Contact </h3>
                             <ul class="personal-info">
                                 <li>
                                     <div class="title">Name</div>
-                                    <div class="text">John Doe</div>
+                                    <div class="text">{{ ucfirst($companies_rs->key_f_name ?? '') }} {{ ucfirst($companies_rs->key_f_name ?? '') }}</div>
                                 </li>
                                 <li>
-                                    <div class="title">Relationship</div>
-                                    <div class="text">Father</div>
+                                    <div class="title">Designation.</div>
+                                    <div class="text">{{ !empty($companies_rs->key_designation) ? $companies_rs->key_designation : 'N/A' }}</div>
                                 </li>
                                 <li>
-                                    <div class="title">Phone </div>
-                                    <div class="text">9876543210, 9876543210</div>
-                                </li>
-                            </ul>
-                            <hr>
-                            <h3 class="card-title">Organisation Address</h3>
-                            <ul class="personal-info">
-                                <li>
-                                    <div class="title">Name</div>
-                                    <div class="text">Karen Wills</div>
+                                    <div class="title">Phone No.</div>
+                                    <div class="text"><a href="#">{{ !empty($companies_rs->key_phone) ? $companies_rs->key_phone : 'N/A' }}</a></div>
                                 </li>
                                 <li>
-                                    <div class="title">Relationship</div>
-                                    <div class="text">Brother</div>
+                                    <div class="title">Email Id.</div>
+                                    <div class="text">{{ !empty($companies_rs->key_email) ? $companies_rs->key_email : 'N/A' }}</div>
                                 </li>
                                 <li>
-                                    <div class="title">Phone </div>
-                                    <div class="text">9876543210, 9876543210</div>
+                                    <div class="title">Do you have a history of Criminal conviction/Bankruptcy?</div>
+                                    <div class="text">{{$companies_rs->key_bank_status}}</div>
+                                </li>
+                                <li>
+                                    <div class="title">Proof Of Id</div>
+                                    <div class="text"><a href="{{ asset('storage/' . $companies_rs->key_proof) }}" target="_blank"><img src="{{ asset('storage/' . $companies_rs->key_proof) }}" height="50px" width="50px"/></a></div>
                                 </li>
                             </ul>
                         </div>
@@ -196,32 +187,34 @@
                 <div class="col-md-6 d-flex">
                     <div class="card profile-box flex-fill">
                         <div class="card-body">
-                            <h3 class="card-title">Level 1 User <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal"><i class="fa-solid fa-pencil"></i></a></h3>
+                            <h3 class="card-title">Level 1 User </h3>
                             <div class="table-responsive">
                                 <table class="table table-nowrap">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Relationship</th>
-                                            <th>Date of Birth</th>
-                                            <th>Phone</th>
-                                            <th></th>
+                                            <th>Designation </th>
+                                            <th>Phone No</th>
+                                            <th>Email Id</th>
+                                            <th>Do you have a history of Criminal conviction/Bankruptcy?</th>
+                                            <th>Proof Of Id</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Leo</td>
-                                            <td>Brother</td>
-                                            <td>Feb 16th, 2019</td>
-                                            <td>9876543210</td>
-                                            <td class="text-end">
-                                                <div class="dropdown dropdown-action">
-                                                    <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
-                                                        <a href="#" class="dropdown-item"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
-                                                    </div>
-                                                </div>
+                                            <td>{{ !empty($companies_rs->level_f_name) ? $companies_rs->level_f_name : 'N/A' }}</td>
+                                            <td>{{ !empty($companies_rs->level_designation) ? $companies_rs->level_designation : 'N/A' }}</td>
+                                            <td>{{ !empty($companies_rs->level_phone) ? $companies_rs->level_phone : 'N/A' }}</td>
+                                            <td>{{ !empty($companies_rs->level_email) ? $companies_rs->level_email : 'N/A' }}</td>
+                                            <td>{{ !empty($companies_rs->level_bank_status) ? $companies_rs->level_bank_status : 'N/A' }}</td>
+                                            <td>    
+                                                @if (!empty($companies_rs->level_proof))
+                                                    <a href="{{ asset('storage/' . $companies_rs->level_proof) }}" target="_blank">
+                                                        <img src="{{ asset('storage/' . $companies_rs->level_proof) }}" height="50px" width="50px"/>
+                                                    </a>
+                                                @else
+                                                    No Proof Available
+                                                @endif    
                                             </td>
                                         </tr>
                                     </tbody>
@@ -233,33 +226,35 @@
                 <div class="col-md-6 d-flex">
                     <div class="card profile-box flex-fill">
                         <div class="card-body">
-                            <h3 class="card-title">Level 2 User <a href="#" class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal"><i class="fa-solid fa-pencil"></i></a></h3>
+                            <h3 class="card-title">Level 2 User </h3>
                             <div class="table-responsive">
                                 <table class="table table-nowrap">
                                     <thead>
                                         <tr>
                                             <th>Name</th>
-                                            <th>Relationship</th>
-                                            <th>Date of Birth</th>
-                                            <th>Phone</th>
-                                            <th></th>
+                                            <th>Designation </th>
+                                            <th>Phone No</th>
+                                            <th>Email Id</th>
+                                            <th>Do you have a history of Criminal conviction/Bankruptcy?</th>
+                                            <th>Proof Of Id</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Leo</td>
-                                            <td>Brother</td>
-                                            <td>Feb 16th, 2019</td>
-                                            <td>9876543210</td>
-                                            <td class="text-end">
-                                                <div class="dropdown dropdown-action">
-                                                    <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item"><i class="fa-solid fa-pencil m-r-5"></i> Edit</a>
-                                                        <a href="#" class="dropdown-item"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td>{{ !empty($companies_rs->level2_f_name) ? $companies_rs->level2_f_name : 'N/A' }}</td>
+                                            <td>{{ !empty($companies_rs->level2_designation) ? $companies_rs->level2_designation : 'N/A' }}</td>
+                                            <td>{{ !empty($companies_rs->level2_phone) ? $companies_rs->level2_phone : 'N/A' }}</td>
+                                            <td>{{ !empty($companies_rs->level2_email) ? $companies_rs->level2_email : 'N/A' }}</td>
+                                            <td>{{ !empty($companies_rs->level2_bank_status) ? $companies_rs->level2_bank_status : 'N/A' }}</td>
+                                            <td>	
+                                                @if (!empty($companies_rs->level2_proof))
+                                                    <a href="{{ asset('storage/' . $companies_rs->level2_proof) }}" target="_blank">
+                                                        <img src="{{ asset('storage/' . $companies_rs->level2_proof) }}" height="50px" width="50px"/>
+                                                    </a>
+                                                @else
+                                                    No Proof Available
+                                                @endif	
+                                            </td>                                            
                                         </tr>
                                     </tbody>
                                 </table>

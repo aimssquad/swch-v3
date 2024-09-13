@@ -15,8 +15,8 @@
                 ['route' => 'key.contact', 'label' => 'Key Contact'],
                 ['route' => 'level1.user', 'label' => 'Level 1 User'],
                 ['route' => 'level2.user', 'label' => 'Level 2 User'],
-                ['url' => 'org-dashboarddetails', 'label' => 'Sponsor Compliance'],
-                ['url' => '#', 'label' => 'Change Of Circumstances'],
+                ['url' => 'org-dashboarddetails', 'label' => 'Sponsor Compliances'],
+                ['url' => 'org-dashboard/change-of-circumstances', 'label' => 'Change Of Circumstances'],
                 ['url' => '#', 'label' => 'Governance'],
             ]
         ],
@@ -71,10 +71,10 @@
                 ['route' => 'recruitment.job-list', 'label' => 'Job List'],
                 ['route' => 'recruitment.job-posting', 'label' => 'Job Posting'],
                 ['route' => 'recruitment.job-published', 'label' => 'Job Published'],
-                ['route' => 'recruitment.job-applied', 'label' => 'Job Applied'],
-                ['route' => 'recruitment.short-listing', 'label' => 'Short listing'],
-                ['route' => 'recruitment.interview_result', 'label' => 'Interview'],
-                ['url' => 'recruitment/hired_list', 'label' => 'Hired'],
+                ['url' => 'org-recruitment/candidate', 'label' => 'Job Applied'],
+                ['url' => 'org-recruitment/short-listing', 'label' => 'Short listing'],
+                ['url' => 'org-recruitment/interview', 'label' => 'Interview'],
+                // ['url' => 'recruitment/hired_list', 'label' => 'Hired'],
             ]
         ],
         10 => [

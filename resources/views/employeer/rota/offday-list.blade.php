@@ -125,51 +125,51 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
                                     <td> @if(!empty($employee_shift)) {!! $employee_shift->shift_code !!} ( {{ $employee_shift->shift_des }}  ) @endif</td>
                                             
                                         <td>@if($candidate->sun=='1' )
-                                         <i class="fas fa-times check-clr" style="font-size:15px;"></i>
+                                         <i class="fas fa-times check-clr dayoff-danger" ></i>
                                                 
                                               @else
-                                                   <i class="fas fa-check check-clr" style="font-size:15px;"></i>
+                                                   <i class="fas fa-check check-clr dayoff-success" ></i>
                                                 @endif	</td>
                                         
                                         <td>@if($candidate->mon=='1' )
-                                                 <i class="fas fa-times check-clr" style="font-size:15px;"></i>
+                                                 <i class="fas fa-times check-clr dayoff-danger" ></i>
                                               @else
-                                                <i class="fas fa-check check-clr" style="font-size:15px;"></i>
+                                                <i class="fas fa-check check-clr dayoff-success" ></i>
                                                  
                                                 @endif	</td>
                                                 <td>@if($candidate->tue=='1' )
-                                                  <i class="fas fa-times check-clr" style="font-size:15px;"></i> 
+                                                  <i class="fas fa-times check-clr dayoff-danger" ></i> 
                                               @else
-                                              <i class="fas fa-check check-clr" style="font-size:15px;"></i>
+                                              <i class="fas fa-check check-clr dayoff-success" ></i>
                                                  
                                                 @endif	</td>
                                                 <td>@if($candidate->wed=='1' )
-                                                 <i class="fas fa-times check-clr" style="font-size:15px;"></i>
+                                                 <i class="fas fa-times check-clr dayoff-danger" ></i>
                                                  
                                               @else
-                                                  <i class="fas fa-check check-clr" style="font-size:15px;"></i>
+                                                  <i class="fas fa-check check-clr dayoff-success" ></i>
                                                 @endif	</td>
                                                 <td>@if($candidate->thu=='1' )
-                                                 <i class="fas fa-times check-clr" style="font-size:15px;"></i>
+                                                 <i class="fas fa-times check-clr dayoff-danger" ></i>
                                                  
                                               @else
-                                               <i class="fas fa-check check-clr"style="font-size:15px;" ></i>
+                                               <i class="fas fa-check check-clr dayoff-success" ></i>
                                                  
                                                 @endif	</td>
                                                 <td>@if($candidate->fri=='1' )
-                                                 <i class="fas fa-times check-clr"style="font-size:15px;"></i>
+                                                 <i class="fas fa-times check-clr dayoff-danger"></i>
                                                 
                                               @else
-                                                   <i class="fas fa-check check-clr"style="font-size:15px;"></i>
+                                                   <i class="fas fa-check check-clr dayoff-success"></i>
                                                 @endif	</td>
                                                 <td>@if($candidate->sat=='1' )
-                                                 <i class="fas fa-times check-clr"style="font-size:15px;"></i>
+                                                 <i class="fas fa-times check-clr dayoff-danger"></i>
                                                  
                                               @else
-                                                  <i class="fas fa-check check-clr"style="font-size:15px;"></i>
+                                                  <i class="fas fa-check check-clr dayoff-success"></i>
                                                 @endif	</td>
                                     <td class="text-end">
-                                        @if(count($duty_roaster)==0)
+                                        {{-- @if(count($duty_roaster)==0) --}}
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="material-icons">more_vert</i>
@@ -181,17 +181,19 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
                                                         @foreach($sidebarItems as $value)
                                                             @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
                                                                 
-                                                                    <a class="dropdown-item" href="{{url('rota-org/add-offday/')}}?id={{$candidate->id}}">
+                                                                    <a class="dropdown-item" href="{{url('rota/add-offday/')}}?id={{$candidate->id}}">
                                                                         <i class="fa-solid fa-pencil m-r-5"></i> Edit
                                                                     </a>
                                                                 
                                                             @endif
                                                         @endforeach
                                                     @elseif($user_type == 'employer')
-                                                            <a class="dropdown-item" href="{{url('rota-org/add-offday/')}}?id={{$candidate->id}}">
+                                                            <a class="dropdown-item" href="{{url('rota/add-offday/')}}?id={{$candidate->id}}">
                                                                 <i class="fa-solid fa-pencil m-r-5"></i> Edit
                                                             </a>
                                                     @endif
+
+                                                    
                                                 
                         
                                                 {{-- @if($user_type == 'employee')
@@ -206,7 +208,7 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
                                             </div>
                                             
                                         </div>
-                                        @endif
+                                        {{-- @endif --}}
                                     </td>
                                 </tr>
                                 @endforeach

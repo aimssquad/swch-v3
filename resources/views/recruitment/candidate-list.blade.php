@@ -90,15 +90,8 @@
 						</div>
 							<div class="card custom-card">
 								<div class="card-header">
-									<h4 class="card-title"><i class="fas fa-briefcase"></i> Job Applied
-									</h4>
-									
-					@if(Session::has('message'))										
-								<div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-						@endif
-									
+									<h4 class="card-title"><i class="fas fa-briefcase"></i> Job Applied</h4>
 								</div>
-								
 								<div class="card-body">
 								<span>
 									<form method="get">
@@ -160,47 +153,47 @@
 												<td>
 												<?php
 												 $job_details=DB::table('candidate_history')->where('user_id', '=', $candidate->id )->orderBy('id', 'DESC')->first();
-  			
-     
-if(!empty($job_details)){ 
-    
- echo date('d/m/Y ',strtotime($job_details->date));
-    
-    
-   
-}
-else{
-	echo date('d/m/Y',strtotime($candidate->date));
-	    if($candidate->date>='2021-02-22'){
-         echo ' '.date('h:i A ',strtotime($candidate->date));
-    }
-}?>
+																
+														
+													if(!empty($job_details)){ 
+														
+													echo date('d/m/Y ',strtotime($job_details->date));
+														
+														
+													
+													}
+													else{
+														echo date('d/m/Y',strtotime($candidate->date));
+															if($candidate->date>='2021-02-22'){
+															echo ' '.date('h:i A ',strtotime($candidate->date));
+														}
+													}?>
 
- <td class="drp">
+ 													<td class="drp">
 
 
-<div class="dropdown">
-  <button class="btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" href="{{url('recruitment/edit-candidate/'.base64_encode($candidate->id))}}"><i class="far fa-edit"></i>&nbsp; Edit</a> 
-    <a download class="dropdown-item" href="{{asset('public/'.$candidate->resume)}}"><i class="fas fa-download"></i>&nbsp; Download</a> 
-@if($candidate->status=='Application Received')	
-	<a class="dropdown-item" href="{{url('recruitment/send-letter-job-applied/'.base64_encode($candidate->id))}}"><i class="fas fa-paper-plane"></i>&nbsp; Send</a> 
-   @endif
-  </div>
-</div>
+														<div class="dropdown">
+														<button class="btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															Action
+														</button>
+														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+															<a class="dropdown-item" href="{{url('recruitment/edit-candidate/'.base64_encode($candidate->id))}}"><i class="far fa-edit"></i>&nbsp; Edit</a> 
+															<a download class="dropdown-item" href="{{asset('public/'.$candidate->resume)}}"><i class="fas fa-download"></i>&nbsp; Download</a> 
+														@if($candidate->status=='Application Received')	
+															<a class="dropdown-item" href="{{url('recruitment/send-letter-job-applied/'.base64_encode($candidate->id))}}"><i class="fas fa-paper-plane"></i>&nbsp; Send</a> 
+														@endif
+														</div>
+														</div>
 
 
 
 
                 
-                  </td> 
+                  												</td> 
 
      
-                                        </tr>
-                                    @endforeach  
+                                        				</tr>
+                                   				 @endforeach  
             
 												
 											</tbody>

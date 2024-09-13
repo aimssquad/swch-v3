@@ -10,3 +10,15 @@
     font-weight: 600;
 
 }
+.dayoff-danger{
+    color: red;
+    font-size: 15px;
+}
+.dayoff-success{
+    color: green;
+    font-size: 15px;
+}
+.star{
+    color: red;
+    font-size: 10px;
+}
