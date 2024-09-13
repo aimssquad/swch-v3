@@ -121,7 +121,7 @@
 									<h4 class="card-title"> Status Search</h4>
 																		      <?php
 
-if(isset($result) && $result!=''  ){
+												if(isset($result) && $result!=''  ){
 											?>
 											 <form  method="post" action="{{ url('recruitment/status-search-result') }}" enctype="multipart/form-data" >
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -133,10 +133,10 @@ if(isset($result) && $result!=''  ){
 										 <button class="btn btn-default" style="margin-top: -30px;float:right;" type="submit">Download Pdf</button>	
 											</form>
 											<?php
-}?>
-					<?php
+											}?>
+																<?php
 
-if(isset($result) && $result!=''  ){
+											if(isset($result) && $result!=''  ){
 											?>
 											 <form  method="post" action="{{ url('recruitment/status-search-result-excel') }}" enctype="multipart/form-data" >
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -149,7 +149,7 @@ if(isset($result) && $result!=''  ){
 										 <button class="btn btn-default" style="margin-top: -30px;float:right;margin-right: 15px;" type="submit">Download Excel</button>	
 											</form>
 											<?php
-}?>
+											}?>
 		
 								</div>
 								<div class="card-body">
@@ -173,9 +173,9 @@ if(isset($result) && $result!=''  ){
 											<tbody>
 												 <?php
 
-if(isset($result) && $result!=''  ){
-												 print_r($result); 
-}?>
+											if(isset($result) && $result!=''  ){
+																							print_r($result); 
+											}?>
 											</tbody>
 										</table>
 									</div>

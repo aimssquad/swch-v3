@@ -1352,6 +1352,666 @@ class RecruitmentController extends Controller
         }
     }
 
+    public function viewinterviewcandidatedetails($interview_id)
+    {
+        if (!empty(Session::get('emp_email'))) {
+            $data['job'] = DB::table('candidate')->where('id', '=', base64_decode($interview_id))->where(function ($query) {
+                $query->where('candidate.status', '=', 'Interview')
+                    ->orWhere('candidate.status', '=', 'Online Screen Test')
+                    ->orWhere('candidate.status', '=', 'Written Test')
+                    ->orWhere('candidate.status', '=', 'Telephone Interview')
+                    ->orWhere('candidate.status', '=', 'Face to Face Interview')
+                    ->orWhere('candidate.status', '=', 'Job Offered');
+            })
+                ->first();
+
+            $data['job_details'] = DB::table('candidate_history')->where('user_id', '=', base64_decode($interview_id))->orderBy('id', 'DESC')->first();
+            return view($this->_routePrefix . '.interview-edit',$data);
+            //return View('recruitment/interview-edit', $data);
+        } else {
+            return redirect('/');
+        }
+
+    }
+
+    public function saveinterviewcandidatedetails(Request $request)
+    {
+        if (!empty(Session::get('emp_email'))) {
+            $job = DB::table('candidate')->where('id', '=', $request->id)->first();
+            if ($request->has('upload_sh')) {
+
+                $file_per_doc = $request->file('upload_sh');
+                $extension_per_doc = $request->upload_sh->extension();
+                $path_per_doc = $request->upload_sh->store('candidate_up_doc', 'public');
+
+            } else {
+
+                $path_per_doc = '';
+
+            }
+            $data = array(
+                'job_id' => $request->job_id,
+                'job_title' => $job->job_title,
+                'user_id' => $job->id,
+                'name' => $job->name,
+                'gender' => $job->gender,
+                'exp_month' => $job->exp_month,
+                'skill_level' => $job->skill_level,
+                'upload_sh' => $path_per_doc,
+                'email' => $job->email,
+                'phone' => $job->phone,
+                'cover_letter' => $job->cover_letter,
+                'dob' => $job->dob,
+                'exp' => $job->exp,
+                'cur_or' => $job->cur_or,
+                'cur_deg' => $job->cur_deg,
+                'country' => $job->country,
+                'zip' => $job->zip,
+                'location' => $job->location,
+                'exp_sal' => $job->exp_sal,
+                'sal' => $job->sal,
+                'status' => $request->status,
+                'remarks' => $request->remarks,
+                'edu' => $job->edu,
+                'skill' => $job->skill,
+                'date' => date('Y-m-d', strtotime($request->date)),
+                'apply' => $job->apply,
+                'recruited' => $job->recruited,
+                'other' => $job->other,
+                'resume' => $job->resume,
+                'date_up' => date('Y-m-d H:i:s'),
+            );
+
+            DB::table('candidate_history')->insert($data);
+            $dataupdate = array(
+
+                'status' => $request->status,
+                'remarks' => $request->remarks,
+
+            );
+            if ($request->has('upload_sh')) {
+
+                $file_visa_doc = $request->file('upload_sh');
+                $extension_visa_doc = $request->upload_sh->extension();
+                $path_visa_doc = $request->upload_sh->store('candidate_up_doc', 'public');
+                $dataimgvis = array(
+                    'upload_sh' => $path_visa_doc,
+                );
+
+                DB::table('candidate')->where('id', '=', $request->id)
+                    ->update($dataimgvis);
+
+            }
+
+            $job_d = DB::table('company_job')->where('id', '=', $request->job_id)->first();
+
+            if ($request->status == 'Rejected') {
+
+            } else {
+
+            }
+
+            DB::table('candidate')->where('id', '=', $request->id)->update($dataupdate);
+
+            Session::flash('message', 'Candidate Information Successfully Updated.');
+
+            return redirect('recruitment/interview');
+        } else {
+            return redirect('/');
+        }
+
+    }
+
+    public function viewhiredcandidate()
+    {
+        if (!empty(Session::get('emp_email'))) {
+
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $data['candidate_rs'] = DB::Table('candidate')
+                ->join('company_job', 'candidate.job_id', '=', 'company_job.id')
+
+                ->where('company_job.emid', '=', $Roledata->reg)
+                ->where('candidate.status', '=', 'Hired')
+
+                ->select('candidate.*', 'company_job.soc')
+                ->get();
+                // dd($data);
+            return view($this->_routePrefix . '.candidate-hired',$data);
+            //return view('recruitment/candidate-hired', $data);
+            
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function viewsoffercandidate()
+    {
+        //dd('oll');
+        if (!empty(Session::get('emp_email'))) {
+
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $data['candidate_rs'] = DB::Table('candidate_offer')
+                ->join('company_job', 'candidate_offer.job_id', '=', 'company_job.id')
+
+                ->where('company_job.emid', '=', $Roledata->reg)
+                ->where('candidate_offer.status', '=', 'Hired')
+
+                ->select('candidate_offer.*', 'company_job.soc')
+                ->get();
+                // dd($data['candidate_rs']);
+            return view($this->_routePrefix . '.candidate-offer',$data);
+            //return view('recruitment/candidate-offer', $data);
+        } else {
+            return redirect('/');
+        }
+    }
+
+
+    public function viewsofferlattercandidate()
+    {
+        if (!empty(Session::get('emp_email'))) {
+
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['employeeslist'] = DB::Table('candidate')
+                ->join('company_job', 'candidate.job_id', '=', 'company_job.id')
+
+                ->where('company_job.emid', '=', $Roledata->reg)
+                ->where(function ($query) {
+                    $query->where('candidate.status', '=', 'Hired')
+                        ->orWhere('candidate.status', '=', 'Job Offered');
+                })
+
+                ->select('candidate.*', 'company_job.job_code')
+                ->get();
+
+            $data['candidate_rs'] = DB::table('candidate_offer')->join('candidate', 'candidate_offer.user_id', '=', 'candidate.id')
+                ->join('company_job', 'candidate_offer.job_id', '=', 'company_job.id')
+
+                ->where('company_job.emid', '=', $Roledata->reg)
+
+                ->select('candidate_offer.*')->get();
+
+            $userlist = array();
+            foreach ($data['candidate_rs'] as $user) {
+                $userlist[] = $user->user_id;
+            }
+
+            $data['employees'] = array();
+            foreach ($data['employeeslist'] as $employee) {
+                if (in_array($employee->id, $userlist)) {
+
+                } else {
+                    $data['employees'][] = (object) array("user_id" => $employee->id, "name" => $employee->name);
+                }
+
+            }
+            $data['employeelists'] = DB::table('employee')->where('emid', '=', $Roledata->reg)->get();
+            return view($this->_routePrefix . '.candidate-add-offer',$data);
+            //return view('recruitment/candidate-add-offer', $data);
+        } else {
+            return redirect('/');
+        }
+    }
+
+
+    public function saveofferlat(Request $request)
+    {
+        if (!empty(Session::get('emp_email'))) {
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $job = DB::table('candidate')->where('id', '=', $request->user_id)->first();
+
+            $filename = $job->name . time() . '.pdf';
+
+            $datap = ['com_name' => $Roledata->com_name, 'com_logo' => $Roledata->logo, 'address' => $Roledata->address . ',' . $Roledata->address2 . ',' . $Roledata->road, 'addresssub' => $Roledata->city . ',' . $Roledata->zip . ',' . $Roledata->country,
+                'date' => date('Y-m-d'), 'name' => $job->name, 'job_title' => $job->job_title, 'st_date' => date('Y-m-d', strtotime($request->date_jo)), 'em_name' => $job->name, 'em_pos' => $job->job_title];
+            $pdf = PDF::loadView('myPDF', $datap);
+
+            $pdf->save(public_path() . '/pdf/' . $filename);
+            $data = array(
+                'job_id' => $job->job_id,
+                'job_title' => $job->job_title,
+                'user_id' => $job->id,
+                'name' => $job->name,
+                'gender' => $job->gender,
+                'exp_month' => $job->exp_month,
+                'skill_level' => $job->skill_level,
+
+                'email' => $job->email,
+                'phone' => $job->phone,
+                'resume' => $job->resume,
+                'cover_letter' => $job->cover_letter,
+                'exp' => $job->exp,
+                'cur_or' => $job->cur_or,
+                'cur_deg' => $job->cur_deg,
+                'country' => $job->country,
+                'zip' => $job->zip,
+                'location' => $job->location,
+                'exp_sal' => $job->exp_sal,
+                'sal' => $job->sal,
+                'status' => $job->status,
+                'remarks' => $job->remarks,
+                'edu' => $job->edu,
+                'skill' => $job->skill,
+                'date' => $job->date,
+                'offered_sal' => $request->offered_sal,
+                'payment_type' => $request->payment_type,
+
+                'reportauthor' => $request->reportauthor,
+                'date_jo' => date('Y-m-d', strtotime($request->date_jo)),
+                'cr_date' => date('Y-m-d H:i:s'),
+                'dom_pdf' => $filename,
+            );
+
+            DB::table('candidate_offer')->insert($data);
+
+            Session::flash('message', 'Job Offer Letter Generated.');
+
+            return redirect('org-recruitment/offer-letter');
+        } else {
+            return redirect('/');
+        }
+
+    }
+
+    public function viewsearchcandidate()
+    {
+        if (!empty(Session::get('emp_email'))) {
+            $email = Session::get('emp_email');
+
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+                // dd($Roledata->reg);
+            $data['company_job_rs'] = DB::Table('company_job')
+                ->join('company_job_list', 'company_job.soc', '=', 'company_job_list.soc')
+                ->where('company_job.emid', '=', $Roledata->reg)
+                ->select('company_job.*')
+                ->get();
+                // dd($data['company_job_rs']);
+            return view($this->_routePrefix . '.search',$data);
+            //return View('recruitment/search', $data);
+        } else {
+            return redirect('/');
+        }
+
+    }
+
+    public function getsearchcandidate(Request $request)
+    {
+
+        if (!empty(Session::get('emp_email'))) {
+
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $status = $request->status;
+            $start_date = date('Y-m-d', strtotime($request->start_date));
+            $end_date = date('Y-m-d', strtotime($request->end_date));
+            if ($request->job_id != '') {
+                $data['candidate_rs'] = DB::Table('candidate')
+                    ->join('company_job', 'candidate.job_id', '=', 'company_job.id')
+
+                    ->where('company_job.emid', '=', $Roledata->reg)
+                    ->where('company_job.id', '=', $request->job_id)
+                    ->where('candidate.status', '=', $status)
+                    ->whereBetween('candidate.date', [$start_date, $end_date])
+                    ->select('candidate.*', 'company_job.job_code')
+                    ->get();
+            } else {
+                $data['candidate_rs'] = DB::Table('candidate')
+                    ->join('company_job', 'candidate.job_id', '=', 'company_job.id')
+
+                    ->where('company_job.emid', '=', $Roledata->reg)
+                    ->where('candidate.status', '=', $status)
+                    ->whereBetween('candidate.date', [$start_date, $end_date])
+                    ->select('candidate.*', 'company_job.job_code')
+                    ->get();
+            }
+
+            $data['result'] = '';
+            if ($data['candidate_rs']) {$f = 1;
+                foreach ($data['candidate_rs'] as $leave_allocation) {$job_details = DB::table('candidate_history')->where('user_id', '=', $leave_allocation->id)->orderBy('id', 'DESC')->first();
+
+                    if (!empty($job_details)) {
+                        $end = date('d/m/Y', strtotime($job_details->date));
+                        $dte_end = $job_details->date;
+
+                    } else {
+                        $end = date('d/m/Y', strtotime($leave_allocation->date));
+                        $dte_end = $leave_allocation->date;
+                    }
+
+                    $data['result'] .= '<tr>
+
+
+													<td>' . $leave_allocation->job_code . '</td>
+													<td>' . $leave_allocation->job_title . '</td>
+													<td>' . $leave_allocation->name . '</td>
+													<td>' . $leave_allocation->email . '</td>
+
+													<td>' . $leave_allocation->phone . '</td>
+													<td>' . $leave_allocation->status . '</td>
+													<td>' . $end . '</td>
+
+
+									<td>
+									<a href="' . env("BASE_URL") . 'public/' . $leave_allocation->resume . '" download><i class="fas fa-download"></i></a>	</td>
+
+						</tr>';
+                    $f++;
+                }
+            }
+
+            $data['job_id'] = $request->job_id;
+
+            $data['status'] = $request->status;
+            $data['start_date'] = $request->start_date;
+            $email = Session::get('emp_email');
+
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['company_job_rs'] = DB::Table('company_job')
+                ->join('company_job_list', 'company_job.soc', '=', 'company_job_list.id')
+
+                ->where('company_job.emid', '=', $Roledata->reg)
+                ->select('company_job.*')
+                ->get();
+
+            $data['end_date'] = $request->end_date;
+            return view($this->_routePrefix . '.search',$data);
+            //return view('org-recruitment/search', $data);
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function viewsearchcandidatestatus()
+    {
+        if (!empty(Session::get('emp_email'))) {
+            $email = Session::get('emp_email');
+
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['company_job_rs'] = DB::Table('company_job')
+                ->join('company_job_list', 'company_job.soc', '=', 'company_job_list.soc')
+
+                ->where('company_job.emid', '=', $Roledata->reg)
+                ->select('company_job.*')
+                ->get();
+            return view($this->_routePrefix . '.search-status',$data);
+            //return View('recruitment/search-status', $data);
+        } else {
+            return redirect('/');
+        }
+
+    }
+
+    public function viewrejectcandidate()
+    {
+
+        if (!empty(Session::get('emp_email'))) {
+
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $data['candidate_rs'] = DB::Table('candidate')
+                ->join('company_job', 'candidate.job_id', '=', 'company_job.id')
+
+                ->where('company_job.emid', '=', $Roledata->reg)
+                ->where('candidate.status', '=', 'Rejected')
+
+                ->select('candidate.*', 'company_job.soc')
+                ->get();
+                // dd($data['candidate_rs']);
+            return view($this->_routePrefix . '.candidate-reject',$data);
+            //return view('recruitment/candidate-reject', $data);
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function viewmsgcen()
+    {
+        $email = Session::get('emp_email');
+        if (!empty($email)) {
+
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $data['msg_rs'] = DB::Table('recruitment_messaage_center')
+                ->where('emid', '=', $Roledata->reg)
+                ->orderBy('id', 'desc')
+                ->get();
+            return view($this->_routePrefix . '.msg-list',$data);
+            //return View('recruitment/msg-list', $data);
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function addmscen()
+    {
+        $email = Session::get('emp_email');
+        if (!empty($email)) {
+
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+
+            $data['or_rs'] = DB::Table('candidate')
+                ->join('company_job', 'candidate.job_id', '=', 'company_job.id')
+
+                ->where('company_job.emid', '=', $Roledata->reg)
+
+                ->select('candidate.*', 'company_job.job_code')
+                ->get();
+
+            return view($this->_routePrefix . '.msg-add',$data);
+            //return View('recruitment/msg-add', $data);
+        } else {
+            return redirect('/');
+        }
+    }
+
+    public function savemscen(Request $request)
+    {
+
+        $email = Session::get('emp_email');
+        if (!empty($email)) {
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+                ->where('email', '=', $email)
+                ->first();
+
+            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+                ->where('email', '=', $email)
+                ->first();
+
+            $data = array(
+
+                'emid' => $Roledata->reg,
+                'employee_id' => $request->user_id,
+                'subject' => $request->subject,
+                'msg' => $request->msg,
+                'email' => $request->email,
+                'cc' => $request->cc,
+                'date' => date('Y-m-d'),
+
+            );
+
+            DB::table('recruitment_messaage_center')->insert($data);
+
+            $id = DB::getPdo()->lastInsertId();
+
+            if ($request->hasFile('photos')) {
+                $files = $request->file('photos');
+
+                foreach ($request->photos as $photo) {
+                    $filename = $photo->store('can_file_user', 'public');
+                    $dataimf = array();
+                    $dataimf = array(
+
+                        'm_id' => $id,
+                        'file' => $filename,
+
+                    );
+
+                    DB::table('msg_file')->insert($dataimf);
+
+                }
+
+            }
+
+            $Roleempdata = DB::Table('candidate')
+                ->where('id', '=', $request->user_id)
+                ->first();
+
+            if ($request->hasFile('photos')) {
+                $candidate = DB::Table('msg_file')
+                    ->where('m_id', '=', $id)
+                    ->get();
+
+                $path = array();
+                foreach ($candidate as $photoll) {
+                    $path[] = public_path() . '/' . $photoll->file;
+                }
+
+                $sub = $request->subject;
+                $data = array('name' => $Roleempdata->name, 'com_name' => $Roledata->com_name, 'p_no' => $Roleempdata->phone,
+                    'email' => $Roleempdata->email, 'msg' => $request->msg);
+                $toemail = $request->email;
+                Mail::send('mailormsgcenrecru', $data, function ($message) use ($toemail, $sub, $path) {
+                    $message->to($toemail, 'Workpermitcloud')->subject
+                        ($sub);
+                    foreach ($path as $filePath) {
+
+                        $message->attach($filePath);
+                    }
+
+                    $message->from('noreply@workpermitcloud.co.uk', 'Workpermitcloud');
+                });
+
+                if ($request->cc != '') {
+                    $sub = $request->subject;
+                    $data = array('name' => $Roleempdata->name, 'com_name' => $Roledata->com_name, 'p_no' => $Roleempdata->phone,
+                        'email' => $Roleempdata->email, 'msg' => $request->msg);
+                    $toemail = $request->cc;
+                    Mail::send('mailormsgcenrecru', $data, function ($message) use ($toemail, $sub, $path) {
+                        $message->to($toemail, 'Workpermitcloud')->subject
+                            ($sub);
+                        foreach ($path as $filePath) {
+
+                            $message->attach($filePath);
+                        }
+
+                        $message->from('noreply@workpermitcloud.co.uk', 'Workpermitcloud');
+                    });
+
+                }
+            } else {
+                $sub = $request->subject;
+                $data = array('name' => $Roleempdata->name, 'com_name' => $Roledata->com_name, 'p_no' => $Roleempdata->phone,
+                    'email' => $Roleempdata->email, 'msg' => $request->msg);
+                $toemail = $request->email;
+                Mail::send('mailormsgcenrecru', $data, function ($message) use ($toemail, $sub) {
+                    $message->to($toemail, 'Workpermitcloud')->subject
+                        ($sub);
+                    $message->from('noreply@workpermitcloud.co.uk', 'Workpermitcloud');
+                });
+
+                if ($request->cc != '') {
+
+                    $sub = $request->subject;
+                    $data = array('name' => $Roleempdata->name, 'com_name' => $Roledata->com_name, 'p_no' => $Roleempdata->phone,
+                        'email' => $Roleempdata->email, 'msg' => $request->msg);
+                    $toemail = $request->cc;
+                    Mail::send('mailormsgcenrecru', $data, function ($message) use ($toemail, $sub) {
+                        $message->to($toemail, 'Workpermitcloud')->subject
+                            ($sub);
+                        $message->from('noreply@workpermitcloud.co.uk', 'Workpermitcloud');
+                    });
+
+                }
+            }
+
+            Session::flash('message', 'Message Send Successfully .');
+
+            return redirect('org-recruitment/message-centre');
+        } else {
+            return redirect('/');
+        }
+    }
     
 
 

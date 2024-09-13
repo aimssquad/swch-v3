@@ -74,7 +74,12 @@
                 ['url' => 'org-recruitment/candidate', 'label' => 'Job Applied'],
                 ['url' => 'org-recruitment/short-listing', 'label' => 'Short listing'],
                 ['url' => 'org-recruitment/interview', 'label' => 'Interview'],
-                // ['url' => 'recruitment/hired_list', 'label' => 'Hired'],
+                ['url' => 'org-recruitment/hired', 'label' => 'Hired'],
+                ['url' => 'org-recruitment/offer-letter', 'label' => 'Generate Offer Letter'],
+                ['url' => 'org-recruitment/search', 'label' => 'Search'],
+                ['url' => 'org-recruitment/status-search', 'label' => 'Status Search'],
+                ['url' => 'org-recruitment/reject', 'label' => 'Rejected'],
+                ['url' => 'org-recruitment/message-centre', 'label' => 'Message Center'],
             ]
         ],
         10 => [
