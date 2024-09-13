@@ -20,9 +20,13 @@ use App\Models\Masters\Designation;
 use App\Models\LatePolicy;
 use App\Models\offdays;
 use App\Models\GracePeriod;
+use Exception;
 
 class RotaController extends Controller
 {
+    protected $_module;
+    protected $_routePrefix;
+    protected $_model;
     public function __construct()
     {
         $this->_module      = 'Organization';
@@ -31,7 +35,35 @@ class RotaController extends Controller
     }
 
     public function dashboard(Request $request){
-        return view($this->_routePrefix.'.dashboard');
+        if (!empty(Session::get("emp_email"))) {
+            $email = Session::get("emp_email");
+        $Roledata = Registration::where("status", "=", "active")
+                ->where("email", "=", $email)
+                ->first();
+        $data["shift_management"] = ShiftManagment::where("emid", "=", $Roledata->reg)
+                ->count();
+
+        $data["late_policy_count"] = LatePolicy::join('shift_management', 'shift_management.id', '=', 'late_policy.shift_code')
+                ->where("shift_management.emid", "=", $Roledata->reg)
+                ->count();
+
+        $data["day_off_count"] =offdays::where("emid", "=", $Roledata->reg)
+                ->whereNotNull("shift_code")
+                ->count();
+
+        $data["grac_count"] =GracePeriod::where("emid", "=", $Roledata->reg)
+                ->count();
+
+                $data['roast_count'] = DB::table("duty_roster")
+                ->join("employee", "duty_roster.employee_id", "=", "employee.emp_code")
+                ->join('shift_management', 'shift_management.id', '=', 'duty_roster.shift_code')
+                ->where("duty_roster.emid", "=", $Roledata->reg)
+                ->where("employee.emid", "=", $Roledata->reg)
+                ->count();
+        return view($this->_routePrefix.'.dashboard',$data);
+        } else {
+            return redirect("/");
+        }
     }
     public function linkDashboard(Request $request){
         return view($this->_routePrefix.'.link-dashboard');
@@ -43,7 +75,6 @@ class RotaController extends Controller
         if (!empty(Session::get("emp_email"))) {
             $email = Session::get("emp_email");
             $Roledata = Registration::where("status", "=", "active")
-
                 ->where("email", "=", $email)
                 ->first();
             $data["Roledata"] = Registration::where("status", "=", "active")

@@ -11,7 +11,6 @@ use PDF;
 use Session;
 use DB;
 
-
 class OrganizationController extends Controller
 {
     protected $_module;
@@ -179,7 +178,7 @@ class OrganizationController extends Controller
             ->where('email', '=', $email)
             ->first();
          //dd($data['companies_rs']);
-         $pdf = PDF::loadView('my-profile-pdf', $data);
+         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('my-profile-pdf', $data);
          return $pdf->download('profile.pdf');
         //return view($this->_routePrefix . '.profile',$data);
     }
@@ -214,7 +213,7 @@ class OrganizationController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -757,7 +756,7 @@ class OrganizationController extends Controller
             }
 
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }

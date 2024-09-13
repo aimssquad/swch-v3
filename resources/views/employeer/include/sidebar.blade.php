@@ -5,7 +5,7 @@
     $modules = [
         8 => [
             'title' => 'Organization',
-            'icon' => 'la la-cube',
+            'icon' => 'la la-building',
             'items' => [
                 ['route' => 'organization.home', 'label' => 'Dashboard'],
                 ['route' => 'organization.statistics', 'label' => 'Organization Statistics'],

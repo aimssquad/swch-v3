@@ -22,3 +22,6 @@
     color: red;
     font-size: 10px;
 }
+.rota-icon-size-fixed{
+    font-size: 40px !important;
+}

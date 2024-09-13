@@ -36,3 +36,5 @@
 
 <!-- Customize CSS -->
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/customize.css') }}">
+
+@yield('css')
