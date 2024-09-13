@@ -437,6 +437,30 @@ Route::get('org-recruitment/edit-short-listing/{short_id}', 'App\Http\Controller
 Route::post('org-recruitment/edit-short-listing', 'App\Http\Controllers\organization\RecruitmentController@saveshortcandidatedetails');
 
 Route::get('org-recruitment/interview', 'App\Http\Controllers\organization\RecruitmentController@viewinterviewcandidate');
+Route::get('org-recruitment/edit-interview/{interview_id}', 'App\Http\Controllers\organization\RecruitmentController@viewinterviewcandidatedetails');
+Route::post('org-recruitment/edit-interview', 'App\Http\Controllers\organization\RecruitmentController@saveinterviewcandidatedetails');
+
+Route::get('org-recruitment/hired', 'App\Http\Controllers\organization\RecruitmentController@viewhiredcandidate');
+
+Route::get('org-recruitment/offer-letter', 'App\Http\Controllers\organization\RecruitmentController@viewsoffercandidate');
+Route::get('org-recruitment/generate-letter', 'App\Http\Controllers\organization\RecruitmentController@viewsofferlattercandidate');
+Route::post('org-recruitment/edit-offer-letter', 'App\Http\Controllers\organization\RecruitmentController@saveofferlat');
+
+Route::get('org-recruitment/search', 'App\Http\Controllers\organization\RecruitmentController@viewsearchcandidate');
+Route::post('org-recruitment/search', 'App\Http\Controllers\organization\RecruitmentController@getsearchcandidate');
+
+Route::get('org-recruitment/status-search', 'App\Http\Controllers\organization\RecruitmentController@viewsearchcandidatestatus');
+Route::post('org-recruitment/status-search', 'App\Http\Controllers\organization\RecruitmentController@getsearchcandidatestatus');
+Route::post('org-recruitment/status-search-result', 'App\Http\Controllers\organization\RecruitmentController@savesearchopstatus');
+Route::post('org-recruitment/status-search-result-excel', 'App\Http\Controllers\organization\RecruitmentController@savesearchopexcelstatus');
+
+Route::get('org-recruitment/reject', 'App\Http\Controllers\organization\RecruitmentController@viewrejectcandidate');
+Route::get('org-recruitment/edit-reject/{reject_id}', 'App\Http\Controllers\organization\RecruitmentController@viewrejectcandidatedetails');
+Route::post('org-recruitment/edit-reject', 'App\Http\Controllers\organization\RecruitmentController@saverejectcandidatedetails');
+
+Route::get('org-recruitment/message-centre', 'App\Http\Controllers\organization\RecruitmentController@viewmsgcen');
+Route::get('org-recruitment/add-message-centre', 'App\Http\Controllers\organization\RecruitmentController@addmscen');
+Route::post('org-recruitment/add-message-centre', 'App\Http\Controllers\organization\RecruitmentController@savemscen');
 
 
 //-----------------------------End Recruitment Section -------------------------------------------------------------
