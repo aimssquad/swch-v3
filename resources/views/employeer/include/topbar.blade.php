@@ -1,12 +1,17 @@
 @php
     $user_type = Session::get("user_type");
     $email = Session::get('emp_email');
+   
     $data['companies_rs'] = DB::table('registration')
-    ->where('status', '=', 'active')
-    ->where('email', '=', $email)
-    ->first();
-    //dd($data['companies_rs']);
-@endphp    
+        ->where('email', '=', $email)
+        ->first();
+
+    if (!$data['companies_rs']) {
+        Session::flush();
+        header('Location: ' . url('/'));
+        exit(); 
+    }
+@endphp
 <!-- Header -->
 <div class="header">
 

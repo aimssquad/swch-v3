@@ -14,6 +14,9 @@ use view;
 
 class AttendanceController extends Controller
 {
+    protected $_module;
+    protected $_routePrefix;
+    protected $_model;
     public function __construct()
     {
         $this->_module      = 'Organization';
@@ -21,9 +24,94 @@ class AttendanceController extends Controller
         //$this->_model       = new CompanyJobs();
     }
     //return view($this->_routePrefix . '.holiday-list',$data);
-    public function dashboard(Request $request){
-        return view($this->_routePrefix . '.dashboard');
+    public function dashboard(Request $request)
+    {
+        $usetype = Session::get('user_type');
+        $email = Session::get('emp_email');
+    
+        // Check if the user is an employee
+        if ($usetype == 'employee') {
+            $usemail = Session::get('user_email');
+            $users_id = Session::get('users_id');
+    
+            // Get employee data
+            $dtaem = DB::table('users')
+                ->where('id', '=', $users_id)
+                ->first();
+    
+            // Fetch role authorization
+            $Roles_auth = DB::table('role_authorization')
+                ->where('emid', '=', $dtaem->emid)
+                ->where('member_id', '=', $dtaem->email)
+                ->get()
+                ->toArray();
+    
+            $arrrole = [];
+            foreach ($Roles_auth as $valrol) {
+                $arrrole[] = $valrol->menu;
+            }
+        }
+    
+        // Get Roledata from registration table
+        $Roledata = DB::table('registration')
+            ->where('email', '=', $email)
+            ->first();
+    
+        // Fetch the attendance data for employees
+        $employee_rs = DB::table('employee')
+            ->join('attandence', 'employee.emp_code', '=', 'attandence.employee_code')
+            ->where('employee.emid', '=', $Roledata->reg)
+            ->where('attandence.emid', '=', $Roledata->reg)
+            ->where('attandence.date', '=', date('Y-m-d'))
+            ->select('employee.*')
+            ->distinct()
+            ->get();
+        
+        // Count total employees
+        $employee_rs_ab = DB::table('employee')
+            ->where('emid', '=', $Roledata->reg)
+            ->get();
+    
+        // Calculate $ab
+        $ab = count($employee_rs_ab) - count($employee_rs);
+    
+        // Leave apply logic
+        $leave_apply_rs = DB::table('employee')
+            ->join('leave_apply', 'employee.emp_code', '=', 'leave_apply.employee_id')
+            ->where('employee.emid', '=', $Roledata->reg)
+            ->where('leave_apply.emid', '=', $Roledata->reg)
+            ->whereMonth('leave_apply.to_date', date('m'))
+            ->where('leave_apply.status', '=', 'APPROVED')
+            ->select('leave_apply.*')
+            ->distinct()
+            ->get();
+    
+        $co = 0;
+    
+        if (!empty($leave_apply_rs)) {
+            foreach ($leave_apply_rs as $leave_rs) {
+                $leave_apply = DB::table('leave_apply')
+                    ->where('employee_id', '=', $leave_rs->employee_id)
+                    ->where('emid', '=', $Roledata->reg)
+                    ->where('from_date', '<=', date('Y-m-d'))
+                    ->where('to_date', '>=', date('Y-m-d'))
+                    ->where('status', '=', 'APPROVED')
+                    ->first();
+    
+                if (!empty($leave_apply)) {
+                    $co++;
+                }
+            }
+        }
+    
+        // Pass counts to the view
+        return view($this->_routePrefix . '.dashboard', [
+            'employee_rs_count' => count($employee_rs),
+            'ab_count' => $ab,
+            'co_count' => $co
+        ]);
     }
+    
 
     public function viewUploadAttendence()
     {

@@ -1,6 +1,6 @@
 @extends('employeer.include.app')
 
-@section('title', 'Rota Dashboard')
+@section('title', 'Attendance Dashboard')
 
 @section('content')
 
@@ -42,7 +42,7 @@
                                                 <i class="la la-dashboard rota-icon-size-fixed"></i>
                                                 <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total No of Employee Present</div>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">10</div>
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">{{ $employee_rs_count }}</div>
                                                     <div class="fs-12">
                                                         {{-- <a href="{{ url('rota-org/shift-management') }}" class="text-primary fw-semibold">
                                                             <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
@@ -63,7 +63,7 @@
                                                 <i class="la la-dashboard rota-icon-size-fixed"></i>
                                                 <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total No of Employee Absent</div>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">12</div>
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">{{ $ab_count }}</div>
                                                     <div class="fs-12">
                                                         {{-- <a href="{{ url('rota-org/late-policy') }}" class="text-primary fw-semibold">
                                                             <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
@@ -84,7 +84,7 @@
                                                 <i class="la la-dashboard rota-icon-size-fixed"></i>
                                                 <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total No of Employee On Leave</div>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">14</div>
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">{{ $co_count }}</div>
                                                     <div class="fs-12">
                                                         {{-- <a href="{{ url('rota-org/offday') }}" class="text-primary fw-semibold">
                                                             <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
