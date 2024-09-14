@@ -59,76 +59,96 @@ return $output;
    <!-- /Page Header -->
    <div class="row">
       <div class="col-md-12">
-         <div class="table-responsive">
-            <table class="table table-striped custom-table datatable" id="employeeTable">
-               <thead>
-                  <tr>
-                     <th>Sl. No.</th>
-                     <th>Job Code</th>
-                     <th>Job Title</th>
-                     <th>Job Link</th>
-                     <th>Vacancy</th>
-                     <th>Job Location</th>
-                     <th>Job Posted Date</th>
-                     <th>Closing Date</th>
-                     <th>Email</th>
-                     <th>Phone No.</th>
-                     <th>Status</th>
-                     <th>Action</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  @foreach($company_job_rs as $recruitment_job)
-                  <tr>
-                     <td>{{$loop->iteration}}</td>
-                     <td>{{ $recruitment_job->soc }}</td>
-                     <td>{{ $recruitment_job->title }}</td>
-                     <td style="text-align:center" id="myInput">
-                        @if( $recruitment_job->post_date<=date('Y-m-d') && $recruitment_job->clos_date>=date('Y-m-d'))
-                        <a target="_blank" href="{{ $recruitment_job->job_link }}">
-                        @endif {{ $recruitment_job->job_link }}</a>
-                        @if( $recruitment_job->post_date<=date('Y-m-d') && $recruitment_job->clos_date>=date('Y-m-d'))
-                        <button type="button" class="btn btn-default btn-copy js-tooltip js-copy" data-toggle="tooltip" data-placement="bottom" data-copy="{{ $recruitment_job->job_link }}" title="Copy Link">
-                           <!-- icon from google's material design library -->
-                           <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24">
-                              <path d="M17,9H7V7H17M17,13H7V11H17M14,17H7V15H14M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
-                           </svg>
-                        </button>
-                        @endif
-                     </td>
-                     <td>{{ $recruitment_job->no_vac }}</td>
-                     <td>{{ $recruitment_job->job_loc }}</td>
-                     <td>{{ date('d/m/Y',strtotime($recruitment_job->post_date)) }}</td>
-                     <td>{{ date('d/m/Y',strtotime($recruitment_job->clos_date)) }}</td>
-                     <td>{{ $recruitment_job->email }}</td>
-                     <td>{{ $recruitment_job->con_num }}</td>
-                     <td>{{ $recruitment_job->status }}</td>
-                     <td class="text-end">
-                        <div class="dropdown dropdown-action">
-                           <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                           <i class="material-icons">more_vert</i>
-                           </a>
-                           <div class="dropdown-menu dropdown-menu-right">
-                              @if($user_type == 'employee')
-                              @foreach($sidebarItems as $value)
-                              @if($value['rights'] == 'Add' && $value['module_name'] == 2 && $value['menu'] == 35)
-                              <a class="dropdown-item" href="{{url('recruitment/add-job-post/')}}?id={{$recruitment_job->id}}">
-                              <i class="fa-solid fa-pencil m-r-5"></i> Edit
-                              </a>
+         <div class="card custom-card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+               <h4 class="card-title">
+                   <i class="far fa-user" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;
+               </h4>
+               <div>
+                   <!-- Excel Link -->
+                   <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                       <i class="fas fa-file-excel"></i> Export to Excel
+                   </a>
+                   
+                   <!-- PDF Link -->
+                   <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+                       <i class="fas fa-file-pdf"></i> Export to PDF
+                   </a>
+               </div>
+           </div>
+            <div class="card-body">
+               <div class="table-responsive">
+                  <table class="table table-striped custom-table datatable" id="employeeTable">
+                     <thead>
+                        <tr>
+                           <th>Sl. No.</th>
+                           <th>Job Code</th>
+                           <th>Job Title</th>
+                           <th>Job Link</th>
+                           <th>Vacancy</th>
+                           <th>Job Location</th>
+                           <th>Job Posted Date</th>
+                           <th>Closing Date</th>
+                           <th>Email</th>
+                           <th>Phone No.</th>
+                           <th>Status</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach($company_job_rs as $recruitment_job)
+                        <tr>
+                           <td>{{$loop->iteration}}</td>
+                           <td>{{ $recruitment_job->soc }}</td>
+                           <td>{{ $recruitment_job->title }}</td>
+                           <td style="text-align:center" id="myInput">
+                              @if( $recruitment_job->post_date<=date('Y-m-d') && $recruitment_job->clos_date>=date('Y-m-d'))
+                              <a target="_blank" href="{{ $recruitment_job->job_link }}">
+                              @endif {{ $recruitment_job->job_link }}</a>
+                              @if( $recruitment_job->post_date<=date('Y-m-d') && $recruitment_job->clos_date>=date('Y-m-d'))
+                              <button type="button" class="btn btn-default btn-copy js-tooltip js-copy" data-toggle="tooltip" data-placement="bottom" data-copy="{{ $recruitment_job->job_link }}" title="Copy Link">
+                                 <!-- icon from google's material design library -->
+                                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                                    <path d="M17,9H7V7H17M17,13H7V11H17M14,17H7V15H14M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" />
+                                 </svg>
+                              </button>
                               @endif
-                              @endforeach
-                              @elseif($user_type == 'employer')
-                              <a class="dropdown-item" href="{{url('recruitment/add-job-post/')}}?id={{$recruitment_job->id}}">
-                              <i class="fa-solid fa-pencil m-r-5"></i> Edit
-                              </a>
-                              @endif
-                           </div>
-                        </div>
-                     </td>
-                  </tr>
-                  @endforeach
-               </tbody>
-            </table>
+                           </td>
+                           <td>{{ $recruitment_job->no_vac }}</td>
+                           <td>{{ $recruitment_job->job_loc }}</td>
+                           <td>{{ date('d/m/Y',strtotime($recruitment_job->post_date)) }}</td>
+                           <td>{{ date('d/m/Y',strtotime($recruitment_job->clos_date)) }}</td>
+                           <td>{{ $recruitment_job->email }}</td>
+                           <td>{{ $recruitment_job->con_num }}</td>
+                           <td>{{ $recruitment_job->status }}</td>
+                           <td class="text-end">
+                              <div class="dropdown dropdown-action">
+                                 <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                 <i class="material-icons">more_vert</i>
+                                 </a>
+                                 <div class="dropdown-menu dropdown-menu-right">
+                                    @if($user_type == 'employee')
+                                    @foreach($sidebarItems as $value)
+                                    @if($value['rights'] == 'Add' && $value['module_name'] == 2 && $value['menu'] == 35)
+                                    <a class="dropdown-item" href="{{url('recruitment/add-job-post/')}}?id={{$recruitment_job->id}}">
+                                    <i class="fa-solid fa-pencil m-r-5"></i> Edit
+                                    </a>
+                                    @endif
+                                    @endforeach
+                                    @elseif($user_type == 'employer')
+                                    <a class="dropdown-item" href="{{url('recruitment/add-job-post/')}}?id={{$recruitment_job->id}}">
+                                    <i class="fa-solid fa-pencil m-r-5"></i> Edit
+                                    </a>
+                                    @endif
+                                 </div>
+                              </div>
+                           </td>
+                        </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+            </div>
          </div>
       </div>
    </div>

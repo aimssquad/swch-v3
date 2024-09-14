@@ -98,29 +98,49 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
     @endif
 	<div class="row">
 		<div class="col-md-12">
-			<div class="table-responsive">
-				<table class="table table-striped custom-table datatable" id="employeeTable">
-					<thead>
-						<tr>
-                            <th>Sl No.</th>
-                            <th>Date</th>
-                            <th>Clock In</th>
-                            <th>Clock In Location</th>
-                            <th>Clock Out</th>
-                            <th>Clock Out Location</th>	
-                            <th>Duty Hours</th>
-                        </tr>
-					</thead>
-					<tbody>  
-                        @if(isset($result) && $result!='')
-                            @php
-                                print_r($result);
-                            @endphp
-                        @endif
-
-                    </tbody>
-				</table>
-			</div>
+            <div class="card custom-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">
+                        <i class="far fa-file" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;
+                    </h4>
+                    <div>
+                        <!-- Excel Link -->
+                        <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                            <i class="fas fa-file-excel"></i> Export to Excel
+                        </a>
+                        
+                        <!-- PDF Link -->
+                        <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+                            <i class="fas fa-file-pdf"></i> Export to PDF
+                        </a>
+                    </div>
+                 </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table datatable" id="employeeTable">
+                            <thead>
+                                <tr>
+                                    <th>Sl No.</th>
+                                    <th>Date</th>
+                                    <th>Clock In</th>
+                                    <th>Clock In Location</th>
+                                    <th>Clock Out</th>
+                                    <th>Clock Out Location</th>	
+                                    <th>Duty Hours</th>
+                                </tr>
+                            </thead>
+                            <tbody>  
+                                @if(isset($result) && $result!='')
+                                    @php
+                                        print_r($result);
+                                    @endphp
+                                @endif
+        
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
 </div>

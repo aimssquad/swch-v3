@@ -62,47 +62,67 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
                 <!-- /Page Header -->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped custom-table datatable">
-                                <thead>
-                                    <tr>
-                                        <th>SL NO</th>
-                                        <th>Job Code</th>
-                                        <th>Job Title</th>
-                                        <th class="text-end no-sort">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $i = 1; ?>
-                                    @foreach($company_job_rs as $published_job)
-                                    <tr>
-                                        <td><?=$i++;?></td>
-                                        <td>{{ $published_job->job_id }}</td>
-                                        <td>{{ $published_job->title }}</td>
-                                        <td class="text-end">
-                                            <div class="dropdown dropdown-action">
-                                                <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                <div class="dropdown-menu dropdown-menu-right">
-                                                    @if($user_type == 'employee')
-                                                    @foreach($sidebarItems as $value)
-                                                        @if($value['rights'] == 'Add' && $value['module_name'] == 2 && $value['menu'] == 35)
+                        <div class="card custom-card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h4 class="card-title">
+                                    <i class="far fa-user" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;
+                                </h4>
+                                <div>
+                                    <!-- Excel Link -->
+                                    <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                                        <i class="fas fa-file-excel"></i> Export to Excel
+                                    </a>
+                                    
+                                    <!-- PDF Link -->
+                                    <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+                                        <i class="fas fa-file-pdf"></i> Export to PDF
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped custom-table datatable">
+                                        <thead>
+                                            <tr>
+                                                <th>SL NO</th>
+                                                <th>Job Code</th>
+                                                <th>Job Title</th>
+                                                <th class="text-end no-sort">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $i = 1; ?>
+                                            @foreach($company_job_rs as $published_job)
+                                            <tr>
+                                                <td><?=$i++;?></td>
+                                                <td>{{ $published_job->job_id }}</td>
+                                                <td>{{ $published_job->title }}</td>
+                                                <td class="text-end">
+                                                    <div class="dropdown dropdown-action">
+                                                        <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            @if($user_type == 'employee')
+                                                            @foreach($sidebarItems as $value)
+                                                                @if($value['rights'] == 'Add' && $value['module_name'] == 2 && $value['menu'] == 35)
+                                                                    <a class="dropdown-item" href="{{url('org-recruitment/add-job-published/')}}?id={{$published_job->id}}">
+                                                                        <i class="fa-solid fa-pencil m-r-5"></i> Edit
+                                                                    </a>
+                                                                @endif
+                                                            @endforeach
+                                                        @elseif($user_type == 'employer')
                                                             <a class="dropdown-item" href="{{url('org-recruitment/add-job-published/')}}?id={{$published_job->id}}">
                                                                 <i class="fa-solid fa-pencil m-r-5"></i> Edit
                                                             </a>
                                                         @endif
-                                                    @endforeach
-                                                @elseif($user_type == 'employer')
-                                                    <a class="dropdown-item" href="{{url('org-recruitment/add-job-published/')}}?id={{$published_job->id}}">
-                                                        <i class="fa-solid fa-pencil m-r-5"></i> Edit
-                                                    </a>
-                                                @endif
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

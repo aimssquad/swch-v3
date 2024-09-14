@@ -16,8 +16,15 @@
                 ['route' => 'level1.user', 'label' => 'Level 1 User'],
                 ['route' => 'level2.user', 'label' => 'Level 2 User'],
                 ['url' => 'org-dashboarddetails', 'label' => 'Sponsor Compliances'],
-                ['url' => 'org-dashboard/change-of-circumstances', 'label' => 'Change Of Circumstances'],
+                // ['url' => 'org-dashboard/change-of-circumstances', 'label' => 'Change Of Circumstances'],
                 ['url' => '#', 'label' => 'Governance'],
+            ]
+        ],
+        18 => [
+            'title' => 'Change Of Circumstances',
+            'icon' => 'la la-user',
+            'items' => [
+                ['url' => 'organization/employee/employerdashboard', 'label' => 'Change Of Circumstances'],
             ]
         ],
         1 => [
@@ -170,7 +177,7 @@
                 ['url' => 'hr-support/dashboard', 'label' => 'Dashboard'],
             ]
         ],
-        18 => [
+        19 => [
             'title' => 'Organogram Chart',
             'icon' => 'la la-user',
             'items' => [
@@ -178,7 +185,7 @@
                 ['url' => '#', 'label' => 'Organisation Hierarchy'],
             ]
         ],
-        19 => [
+        20 => [
             'title' => 'Billing',
             'icon' => 'la la-user',
             'items' => [

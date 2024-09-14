@@ -61,58 +61,79 @@ return $output;
    @endif
    <div class="row">
       <div class="col-md-12">
-         <div class="table-responsive">
-            <table class="table table-striped custom-table datatable" id="employeeTable">
-               <thead>
-                    <tr>
-                        <th>Sl. No.</th>
-                        <th>Mode Employee Type</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-               </thead>
-               <tbody>
-                @foreach($enteries as $entry)	   
-                    <tr>
-                        <td>{{$loop->iteration}}</td>
-                        <td>{{ $entry->mode_emp_name}}</td>
-                        <td>{{ $entry->status}}</td>
-                        <td class="text-end">
-                            <div class="dropdown dropdown-action">
-                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="material-icons">more_vert</i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                @if($user_type == 'employee')
-                                @foreach($sidebarItems as $value)
-                                @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
-                                <a class="dropdown-item" href="{{url('org-settings/mode-of-emp-edit/'.$entry->id)}}">
-                                <i class="fa-solid fa-pencil m-r-5"></i> Edit
-                                </a>
-                                @endif
-                                @endforeach
-                                @elseif($user_type == 'employer')
-                                <a class="dropdown-item" href="{{url('org-settings/mode-of-emp-edit/'.$entry->id)}}">
-                                <i class="fa-solid fa-pencil m-r-5"></i> Edit
-                                </a>
-                                @endif
-                                {{-- @if($user_type == 'employee')
-                                @foreach($sidebarItems as $value)
-                                @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
-                                <a class="dropdown-item" href='{{url("user-accessrole/view-users-role/$role->id")}}' onclick="return confirm('Are you sure you want to delete this Access?');"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
-                                @endif
-                                @endforeach
-                                @elseif($user_type == 'employer')
-                                <a class="dropdown-item" href='{{url("user-accessrole/view-users-role/$role->id")}}' onclick="return confirm('Are you sure you want to delete this Access?');"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
-                                @endif --}}
-                            </div>
-                            </div>
-                        </td>
-                    </tr>
-                  @endforeach
-               </tbody>
-            </table>
-         </div>
+        <div class="card custom-card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                {{-- <h4 class="card-title">
+                    <i class="far fa-file" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;Employees According to RTI
+                </h4> --}}
+                <div>
+                    <!-- Excel Link -->
+                    <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                        <i class="fas fa-file-excel"></i> Export to Excel
+                    </a>
+                    
+                    <!-- PDF Link -->
+                    <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+                        <i class="fas fa-file-pdf"></i> Export to PDF
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable" id="employeeTable">
+                       <thead>
+                            <tr>
+                                <th>Sl. No.</th>
+                                <th>Mode Employee Type</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                       </thead>
+                       <tbody>
+                        @foreach($enteries as $entry)	   
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{ $entry->mode_emp_name}}</td>
+                                <td>{{ $entry->status}}</td>
+                                <td class="text-end">
+                                    <div class="dropdown dropdown-action">
+                                    <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        @if($user_type == 'employee')
+                                        @foreach($sidebarItems as $value)
+                                        @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
+                                        <a class="dropdown-item" href="{{url('org-settings/mode-of-emp-edit/'.$entry->id)}}">
+                                        <i class="fa-solid fa-pencil m-r-5"></i> Edit
+                                        </a>
+                                        @endif
+                                        @endforeach
+                                        @elseif($user_type == 'employer')
+                                        <a class="dropdown-item" href="{{url('org-settings/mode-of-emp-edit/'.$entry->id)}}">
+                                        <i class="fa-solid fa-pencil m-r-5"></i> Edit
+                                        </a>
+                                        @endif
+                                        {{-- @if($user_type == 'employee')
+                                        @foreach($sidebarItems as $value)
+                                        @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
+                                        <a class="dropdown-item" href='{{url("user-accessrole/view-users-role/$role->id")}}' onclick="return confirm('Are you sure you want to delete this Access?');"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                                        @endif
+                                        @endforeach
+                                        @elseif($user_type == 'employer')
+                                        <a class="dropdown-item" href='{{url("user-accessrole/view-users-role/$role->id")}}' onclick="return confirm('Are you sure you want to delete this Access?');"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                                        @endif --}}
+                                    </div>
+                                    </div>
+                                </td>
+                            </tr>
+                          @endforeach
+                       </tbody>
+                    </table>
+                 </div>
+            </div>
+        </div>
+         
       </div>
    </div>
 </div>
