@@ -81,15 +81,35 @@
                    Daily Attendance
                </h4>
                <div>
-                   <!-- Excel Link -->
-                   <a href="path_to_excel_export" class="btn btn-success btn-sm">
-                       <i class="fas fa-file-excel"></i> Export to Excel
-                   </a>
-                   
-                   <!-- PDF Link -->
-                   <a href="path_to_pdf_export" class="btn btn-info btn-sm">
-                       <i class="fas fa-file-pdf"></i> Export to PDF
-                   </a>
+                  
+                  <div class="row">
+                     <div class="col-auto">
+                         <form action="{{ route('exportTableData') }}" method="POST" id="exportForm" class="d-inline">
+                             @csrf
+                             <input type="hidden" name="data" id="data">
+                             <input type="hidden" name="headings" id="headings">
+                             <input type="hidden" name="filename" id="filename">
+                             {{-- put the value - that is your file name --}}
+                             <input type="hidden" id="filenameInput" value="Daily-Attendance">
+                             <button type="submit" class="btn btn-success btn-sm">
+                                 <i class="fas fa-file-excel"></i> Export to Excel
+                             </button>
+                         </form>
+                     </div>
+                     <div class="col-auto">
+                         <form action="{{ route('exportPDF') }}" method="POST" id="exportPDFForm">
+                           @csrf
+                           <input type="hidden" name="data" id="pdfData">
+                           <input type="hidden" name="headings" id="pdfHeadings">
+                           <input type="hidden" name="filename" id="pdfFilename">
+                           <button type="submit" class="btn btn-info btn-sm">
+                               <i class="fas fa-file-pdf"></i> Export to PDF
+                           </button>
+                       </form>
+                     </div>
+                 </div>
+
+
                </div>
             </div>
             <div class="card-body">

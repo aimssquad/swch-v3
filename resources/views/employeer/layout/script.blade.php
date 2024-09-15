@@ -52,6 +52,8 @@
         "lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]], 
     });
 
+});
+
     $('#exportForm').on('submit', function(e) {
         e.preventDefault();
 
@@ -61,11 +63,11 @@
         let filename = $('#filenameInput').val();
         
         $('#basic-datatables thead th').each(function(index) {
-            let headingText = $(this).text().trim();
-            if (headingText.toLowerCase() !== 'actions') {
-                tableHeadings.push(headingText);
-            } else {
+            let headingText = $(this).text().trim().toLowerCase();
+            if (headingText === 'action' || headingText === 'actions') {
                 excludeColumnIndex = index;
+            } else {
+                tableHeadings.push($(this).text().trim());
             }
         });
 
@@ -92,7 +94,12 @@
         $('#filename').val(filename + '_' + today + '.xls');
         $(this).off('submit').submit();
     });
-});
+
+
+
+
+// export pdf coddeing
+
 
 $('#exportPDFForm').on('submit', function(e) {
       e.preventDefault();
@@ -103,13 +110,13 @@ $('#exportPDFForm').on('submit', function(e) {
       let filename = $('#filenameInput').val();
       
       $('#basic-datatables thead th').each(function(index) {
-         let headingText = $(this).text().trim();
-         if (headingText.toLowerCase() !== 'actions') {
-               tableHeadings.push(headingText);
-         } else {
-               excludeColumnIndex = index;
-         }
-      });
+            let headingText = $(this).text().trim().toLowerCase();
+            if (headingText === 'action' || headingText === 'actions') {
+                excludeColumnIndex = index;
+            } else {
+                tableHeadings.push($(this).text().trim());
+            }
+        });
 
       $('#basic-datatables tbody tr').each(function() {
          let row = [];
@@ -134,5 +141,6 @@ $('#exportPDFForm').on('submit', function(e) {
       $('#pdfFilename').val(filename + '_' + today + '.pdf');
       $(this).off('submit').submit();
    });
+
 
 </script>

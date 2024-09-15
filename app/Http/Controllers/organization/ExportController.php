@@ -11,6 +11,8 @@ class ExportController extends Controller
 {
     public function exportTableData(Request $request)
     {
+
+       // dd($request->all());
         $data = json_decode($request->input('data'), true);
         $headings = json_decode($request->input('headings'), true);
         $filename = $request->input('filename');
