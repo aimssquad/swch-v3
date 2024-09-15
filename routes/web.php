@@ -3,6 +3,8 @@
 
 namespace App;
 
+use App\Http\Controllers\organization\ExportController;
+use App\Http\Controllers\organization\PDFController;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Route;
@@ -35,6 +37,9 @@ use App\Http\Controllers\organization\OrganizationController;
 Route::get('forgot-password', 'App\Http\Controllers\organization\LandingController@indexfor');
 Route::post('forgot-password', 'App\Http\Controllers\organization\LandingController@Doforgot');
 
+//Export Excel Dynamically route
+Route::post('/export-table-data', [ExportController::class, 'exportTableData'])->name('exportTableData');
+Route::post('/export-pdf', [PDFController::class, 'exportPDF'])->name('exportPDF');
 
 // organization Controller 
 Route::get('organization/employerdashboard', 'App\Http\Controllers\organization\OrganizationController@Dashboard')->name('organization.home');

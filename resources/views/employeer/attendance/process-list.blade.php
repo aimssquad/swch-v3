@@ -14,9 +14,7 @@
          </div>
       </div>
    </div>
-   @if(Session::has('message'))										
-   <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-   @endif
+   @include('employeer.layout.message')
    <div class="row">
       <div class="col-md-12">
          <div class="card custom-card">
@@ -84,14 +82,36 @@
                <h4 class="card-title"><i class="fa fa-cog" aria-hidden="true" style="color:#10277f;"></i>&nbsp;Process Attendance</h4>
                <div>
                   <!-- Excel Link -->
-                  <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                  {{-- <a href="path_to_excel_export" class="btn btn-success btn-sm">
                       <i class="fas fa-file-excel"></i> Export to Excel
-                  </a>
-                  
-                  <!-- PDF Link -->
-                  <a href="path_to_pdf_export" class="btn btn-info btn-sm">
-                      <i class="fas fa-file-pdf"></i> Export to PDF
-                  </a>
+                  </a> --}}
+
+                  <div class="row">
+                     <div class="col-auto">
+                         <form action="{{ route('exportTableData') }}" method="POST" id="exportForm" class="d-inline">
+                             @csrf
+                             <input type="hidden" name="data" id="data">
+                             <input type="hidden" name="headings" id="headings">
+                             <input type="hidden" name="filename" id="filename">
+                             {{-- put the value - that is your file name --}}
+                             <input type="hidden" id="filenameInput" value="Process-Attendence">
+                             <button type="submit" class="btn btn-success btn-sm">
+                                 <i class="fas fa-file-excel"></i> Export to Excel
+                             </button>
+                         </form>
+                     </div>
+                     <div class="col-auto">
+                         <form action="{{ route('exportPDF') }}" method="POST" id="exportPDFForm">
+                           @csrf
+                           <input type="hidden" name="data" id="pdfData">
+                           <input type="hidden" name="headings" id="pdfHeadings">
+                           <input type="hidden" name="filename" id="pdfFilename">
+                           <button type="submit" class="btn btn-info btn-sm">
+                               <i class="fas fa-file-pdf"></i> Export to PDF
+                           </button>
+                       </form>
+                     </div>
+                 </div>
               </div>
             </div>
             <div class="card-body">
@@ -145,8 +165,6 @@
 @section('script')
     <script >
         $(document).ready(function() {
-            $('#basic-datatables').DataTable({
-            });
 
             $('#multi-filter-select').DataTable( {
                 "pageLength": 5,
@@ -235,19 +253,16 @@
         }
         });
     }
-    function chngdepartment(empid){
-    
+   function chngdepartment(empid){
         $.ajax({
         type:'GET',
         url:'{{url('pis/getEmployeedesigByshiftId')}}/'+empid,
         cache: false,
         success: function(response){
-            
-            
             document.getElementById("designation").innerHTML = response;
         }
         });
-    }
+   }
 
     </script>
 @endsection

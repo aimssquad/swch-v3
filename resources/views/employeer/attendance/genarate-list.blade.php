@@ -17,9 +17,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card custom-card">
-                    @if(Session::has('message'))										
-                    <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-                    @endif
+                    @include('employeer.layout.message')
                     <div class="card-body">
                     <form  method="post" action="{{ url('attendance-management/generate-data') }}" enctype="multipart/form-data" >
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -150,8 +148,7 @@
 @section('script')                  
     <script >
         $(document).ready(function() {
-            $('#basic-datatables').DataTable({
-            });
+           
         
             $('#multi-filter-select').DataTable( {
                 "pageLength": 5,

@@ -14,9 +14,7 @@
          </div>
       </div>
    </div>
-   @if(Session::has('message'))										
-   <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-   @endif
+   @include('employeer.layout.message')
    <div class="row">
       <div class="col-md-12">
          <div class="card custom-card">
@@ -146,8 +144,7 @@
 @section('script')
     <script >
         $(document).ready(function() {
-            $('#basic-datatables').DataTable({
-            });
+           
 
             $('#multi-filter-select').DataTable( {
                 "pageLength": 5,

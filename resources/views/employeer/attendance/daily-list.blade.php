@@ -8,7 +8,7 @@
             <h3 class="page-title">Daily Attendance</h3>
             <ul class="breadcrumb">
                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-               <li class="breadcrumb-item"><a href="{{url('attendance-management/dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('attendance-management/dashboard')}}">Attendance</a></li>
                <li class="breadcrumb-item active">Daily Attendance</li>
             </ul>
          </div>
@@ -17,9 +17,7 @@
    <div class="row">
       <div class="col-md-12">
          <div class="card custom-card">
-            @if(Session::has('message'))										
-            <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-            @endif
+            @include('employeer.layout.message')
             <div class="card-body">
                <form  method="post" action="{{ url('attendance-management/daily-attendance') }}" enctype="multipart/form-data" >
                   <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -80,6 +78,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                <h4 class="card-title">
                    <i class="far fa-file" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;
+                   Daily Attendance
                </h4>
                <div>
                    <!-- Excel Link -->
@@ -129,8 +128,7 @@
 @section('script')                  
     <script >
     $(document).ready(function() {
-        $('#basic-datatables').DataTable({
-        });
+       
     
         $('#multi-filter-select').DataTable( {
             "pageLength": 5,

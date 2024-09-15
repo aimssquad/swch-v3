@@ -44,3 +44,95 @@
 
 <!-- Custom JS -->
 <script src="{{ asset('frontend/assets/js/app.js') }}"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#basic-datatables').DataTable({
+        "pageLength": 100, 
+        "lengthMenu": [[100, 200, 500, -1], [100, 200, 500, "All"]], 
+    });
+
+    $('#exportForm').on('submit', function(e) {
+        e.preventDefault();
+
+        let tableData = [];
+        let tableHeadings = [];
+        let excludeColumnIndex = -1;
+        let filename = $('#filenameInput').val();
+        
+        $('#basic-datatables thead th').each(function(index) {
+            let headingText = $(this).text().trim();
+            if (headingText.toLowerCase() !== 'actions') {
+                tableHeadings.push(headingText);
+            } else {
+                excludeColumnIndex = index;
+            }
+        });
+
+        $('#basic-datatables tbody tr').each(function() {
+            let row = [];
+            $(this).find('td').each(function(index) {
+                if (index !== excludeColumnIndex) {
+                    let cellText;
+                    if ($(this).find('span').length > 0) {
+                        cellText = $(this).find('span').text().trim();
+                    } else {
+                        cellText = $(this).text().trim();
+                    }
+                    row.push(cellText);
+                }
+            });
+            tableData.push(row);
+        });
+
+        $('#data').val(JSON.stringify(tableData));
+        $('#headings').val(JSON.stringify(tableHeadings));
+
+        let today = new Date().toISOString().split('T')[0];
+        $('#filename').val(filename + '_' + today + '.xls');
+        $(this).off('submit').submit();
+    });
+});
+
+$('#exportPDFForm').on('submit', function(e) {
+      e.preventDefault();
+
+      let tableData = [];
+      let tableHeadings = [];
+      let excludeColumnIndex = -1;
+      let filename = $('#filenameInput').val();
+      
+      $('#basic-datatables thead th').each(function(index) {
+         let headingText = $(this).text().trim();
+         if (headingText.toLowerCase() !== 'actions') {
+               tableHeadings.push(headingText);
+         } else {
+               excludeColumnIndex = index;
+         }
+      });
+
+      $('#basic-datatables tbody tr').each(function() {
+         let row = [];
+         $(this).find('td').each(function(index) {
+               if (index !== excludeColumnIndex) {
+                  let cellText;
+                  if ($(this).find('span').length > 0) {
+                     cellText = $(this).find('span').text().trim();
+                  } else {
+                     cellText = $(this).text().trim();
+                  }
+                  row.push(cellText);
+               }
+         });
+         tableData.push(row);
+      });
+
+      $('#pdfData').val(JSON.stringify(tableData));
+      $('#pdfHeadings').val(JSON.stringify(tableHeadings));
+
+      let today = new Date().toISOString().split('T')[0];
+      $('#pdfFilename').val(filename + '_' + today + '.pdf');
+      $(this).off('submit').submit();
+   });
+
+</script>

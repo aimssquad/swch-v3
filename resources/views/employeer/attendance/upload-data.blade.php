@@ -18,9 +18,7 @@
         <div class="col-md-12">
             <div class="card custom-card">
                 <div class="card-body">
-                    @if(Session::has('message'))
-                    <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-                    @endif
+                    @include('employeer.layout.message')
                     <div class="col-auto float-end ms-auto">
                         <a class="btn add-btn" href="{{ asset('public/excel/attendence1.csv')}}" download> Downlode</a>
                     </div>
