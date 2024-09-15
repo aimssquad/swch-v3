@@ -45,10 +45,21 @@ return $output;
    <div class="row">
       <div class="col-md-12">
          <div class="card custom-card">
-            <div class="card-header">
+            <div class="card-header d-flex justify-content-between align-items-center">
                <h4 class="card-title"><i class="far fa-book" aria-hidden="true"
                   style="color:#ff9e2f;"></i>&nbsp;Visitor Register<span>
                </h4>
+               <div>
+                <!-- Excel Link -->
+                <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                    <i class="fas fa-file-excel"></i> Export to Excel
+                </a>
+                
+                <!-- PDF Link -->
+                <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+                    <i class="fas fa-file-pdf"></i> Export to PDF
+                </a>
+            </div>
             </div>
             <div class="card-body">
                <div class="table-responsive">

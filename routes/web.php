@@ -114,6 +114,7 @@ Route::post('leave/leave-report-employee-wise-excel', 'App\Http\Controllers\orga
 //------------------------------End Leave Management -----------------------------------------
 //-------------------------------Change of Circumstances----------------------------------------
 Route::get('organization/circumstances','App\Http\Controllers\organization\CircumstanceController@dashboard')->name('organization/circumstances');
+Route::get('org-employee/change-of-circumstances-add', 'App\Http\Controllers\organization\CircumstanceController@viewchangecircumstanceseditadd');
 
 //-------------------------------End Cirrcumstances -------------------------------------------------
 //----------------------------------- Attendance Mangement ---------------------------------------------
