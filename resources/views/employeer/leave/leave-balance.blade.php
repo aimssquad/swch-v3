@@ -25,9 +25,20 @@ return $output;
 @endphp
 <!-- Page Content -->
 <div class="content container-fluid pb-0">
+    <div class="page-header">
+		<div class="row align-items-center">
+			<div class="col">
+				<h3 class="page-title">Leave Balance</h3>
+				<ul class="breadcrumb">
+					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('leave/dashboard')}}">Dashboard</a></li>
+					<li class="breadcrumb-item active">Leave Balance</li>
+				</ul>
+			</div>
+		</div>
+	</div>
    <!-- Page Header -->
    <div class="page-header">
-      <h4 class="card-title"><i class="far fa-hourglass" aria-hidden="true" style="color:#10277f;"></i> &nbsp;Leave Balance </h4>
       <?php
          if(count($leave_balance_rs)!=0  ){
                              ?>
@@ -48,30 +59,50 @@ return $output;
    <!-- /Page Header -->
    <div class="row">
       <div class="col-md-12">
-         <div class="table-responsive">
-            <table class="table table-striped custom-table datatable" id="employeeTable">
-               <thead>
-                  <tr>
-                     <th>Sl.No.</th>
-                     <th>Employee Code</th>
-                     <th>Employee Name</th>
-                     <th>Leave Type</th>
-                     <th>Leave Balance</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  @foreach($leave_balance_rs as $leave_balance)
-                  <tr>
-                     <td>{{$loop->iteration}}</td>
-                     <td>{{ $leave_balance->emp_code }}</td>
-                     <td>{{ $leave_balance->emp_fname.' '.$leave_balance->emp_mname.' '.$leave_balance->emp_lname }}</td>
-                     <td>{{ $leave_balance->leave_type_name }}</td>
-                     <td>{{ $leave_balance->leave_in_hand }}</td>
-                  </tr>
-                  @endforeach
-               </tbody>
-            </table>
-         </div>
+        <div class="card custom-card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title">
+                    <i class="far fa-hourglass" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;
+                </h4>
+                <div>
+                    <!-- Excel Link -->
+                    <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                        <i class="fas fa-file-excel"></i> Export to Excel
+                    </a>
+                    
+                    <!-- PDF Link -->
+                    <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+                        <i class="fas fa-file-pdf"></i> Export to PDF
+                    </a>
+                </div>
+             </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped custom-table datatable" id="employeeTable">
+                       <thead>
+                          <tr>
+                             <th>Sl.No.</th>
+                             <th>Employee Code</th>
+                             <th>Employee Name</th>
+                             <th>Leave Type</th>
+                             <th>Leave Balance</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                          @foreach($leave_balance_rs as $leave_balance)
+                          <tr>
+                             <td>{{$loop->iteration}}</td>
+                             <td>{{ $leave_balance->emp_code }}</td>
+                             <td>{{ $leave_balance->emp_fname.' '.$leave_balance->emp_mname.' '.$leave_balance->emp_lname }}</td>
+                             <td>{{ $leave_balance->leave_type_name }}</td>
+                             <td>{{ $leave_balance->leave_in_hand }}</td>
+                          </tr>
+                          @endforeach
+                       </tbody>
+                    </table>
+                 </div>
+            </div>
+        </div>
       </div>
    </div>
 </div>

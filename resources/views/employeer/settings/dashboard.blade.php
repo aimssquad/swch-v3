@@ -26,65 +26,65 @@
 
 
         <div class="row">
-            <div class="col-xl-8">
+            <div class="col-xl-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
                             <!-- Buttons -->
-                            <div class="col-4 mb-4">
-                                <div class="alert alert-outline-info alert-dismissible fade show">
+                            <div class="col-md-4 col-6 mb-4">
+                                <div class="alert alert-outline-info alert-dismissible fade show h-100 w-100">
                                     Add New Department
-                                    <a href="your-link-here">
+                                    <a href="{{url('org-settings/add-new-department')}}">
                                         <button type="button" class="btn-close" aria-label="add">
                                             <i class="fas fa-add"></i>
                                         </button>
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-4 mb-4">
-                                <div class="alert alert-outline-info alert-dismissible fade show">
+                            <div class="col-md-4 col-6 mb-4">
+                                <div class="alert alert-outline-info alert-dismissible fade show h-100 w-100">
                                     Add New Dsignation
-                                    <a href="your-link-here">
+                                    <a href="{{url('org-settings/designation')}}">
                                         <button type="button" class="btn-close" aria-label="add">
                                             <i class="fas fa-add"></i>
                                         </button>
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-4 mb-4">
-                                <div class="alert alert-outline-info alert-dismissible fade show">
+                            <div class="col-md-4 col-6 mb-4">
+                                <div class="alert alert-outline-info alert-dismissible fade show h-100 w-100">
                                     Add New Employee Type
-                                    <a href="your-link-here">
+                                    <a href="{{url('org-settings/employee-type')}}">
                                         <button type="button" class="btn-close" aria-label="add">
                                             <i class="fas fa-add"></i>
                                         </button>
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-4 mb-4">
-                                <div class="alert alert-outline-info alert-dismissible fade show">
+                            <div class="col-md-4 col-6 mb-4">
+                                <div class="alert alert-outline-info alert-dismissible fade show h-100 w-100">
                                    Add Employee Mode Type
-                                    <a href="your-link-here">
+                                    <a href="{{url('org-settings/add-mode-emp')}}">
                                         <button type="button" class="btn-close" aria-label="add">
                                             <i class="fas fa-add"></i>
                                         </button>
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-4 mb-4">
-                                <div class="alert alert-outline-info alert-dismissible fade show">
+                            <div class="col-md-4 col-6 mb-4">
+                                <div class="alert alert-outline-info alert-dismissible fade show h-100 w-100">
                                    Add Employee Master Type
-                                    <a href="your-link-here">
+                                    <a href="{{url('org-settings/add-new-type')}}">
                                         <button type="button" class="btn-close" aria-label="add">
                                             <i class="fas fa-add"></i>
                                         </button>
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-4 mb-4">
-                                <div class="alert alert-outline-info alert-dismissible fade show">
+                            <div class="col-md-4 col-6 mb-4">
+                                <div class="alert alert-outline-info alert-dismissible fade show h-100 w-100">
                                    Add Education Master Type
-                                    <a href="your-link-here">
+                                    <a href="{{url('org-settings/add-new-education')}}">
                                         <button type="button" class="btn-close" aria-label="add">
                                             <i class="fas fa-add"></i>
                                         </button>
@@ -103,9 +103,9 @@
                                                 <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
                                                 <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Department</div>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">12</div>
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">{{ $department_count }}</div>
                                                     <div class="fs-12">
-                                                        <a href="#" class="text-primary fw-semibold">
+                                                        <a href="{{url('org-settings/vw-department')}}" class="text-primary fw-semibold">
                                                             <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
                                                         </a>
                                                     </div>
@@ -124,9 +124,9 @@
                                                 <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
                                                 <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Designation</div>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">24</div>
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">{{ $designation_count }}</div>
                                                     <div class="fs-12">
-                                                        <a href="#" class="text-primary fw-semibold">
+                                                        <a href="{{url('org-settings/vw-designation')}}" class="text-primary fw-semibold">
                                                             <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
                                                         </a>
                                                     </div>
@@ -145,9 +145,9 @@
                                                 <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
                                                 <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Employee Type</div>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">6</div>
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">{{ $employee_type_count }}</div>
                                                     <div class="fs-12">
-                                                        <a href="#" class="text-primary fw-semibold">
+                                                        <a href="{{url('org-settings/vw-type')}}" class="text-primary fw-semibold">
                                                             <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
                                                         </a>
                                                     </div>
@@ -166,9 +166,9 @@
                                                 <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
                                                 <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Employee Mode</div>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">24</div>
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">{{ $employee_mode_count }}</div>
                                                     <div class="fs-12">
-                                                        <a href="#" class="text-primary fw-semibold">
+                                                        <a href="{{url('org-settings/vw-mode-type')}}" class="text-primary fw-semibold">
                                                             <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
                                                         </a>
                                                     </div>
@@ -187,9 +187,9 @@
                                                 <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
                                                 <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Employee Master</div>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">10</div>
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">{{ $employee_master_count}}</div>
                                                     <div class="fs-12">
-                                                        <a href="#" class="text-primary fw-semibold">
+                                                        <a href="{{url('org-settings/vw-type')}}" class="text-primary fw-semibold">
                                                             <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
                                                         </a>
                                                     </div>
@@ -208,9 +208,9 @@
                                                 <i class="fa fa-braille" data-bs-toggle="tooltip" aria-label="fa fa-braille" data-bs-original-title="fa fa-braille"></i>
                                                 <div class="fw-semibold d-flex justify-content-between text-card-size-fixed">Total Education Master</div>
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">12</div>
+                                                    <div class="fs-12 op-8 mb-1 text-card-size-fixed fixed-12">{{ $education_count }}</div>
                                                     <div class="fs-12">
-                                                        <a href="#" class="text-primary fw-semibold">
+                                                        <a href="{{url('org-settings/vw-education')}}" class="text-primary fw-semibold">
                                                             <i class="fa fa-arrow-circle-right fixed-card" data-bs-toggle="tooltip" aria-label="fa fa-arrow-circle-right" data-bs-original-title="fa fa-arrow-circle-right"></i> View all
                                                         </a>
                                                     </div>

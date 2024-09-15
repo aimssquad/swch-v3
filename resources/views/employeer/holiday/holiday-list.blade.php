@@ -63,73 +63,93 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 	<!-- /Page Header -->
 	<div class="row">
 		<div class="col-md-12">
-			<div class="table-responsive">
-				<table class="table table-striped custom-table datatable" id="employeeTable">
-					<thead>
-						<tr>
-							<th>Sl. No.</th>
-							<th>Year</th>
-							<th>Date</th>
-							<th>No. Of Days </th>
-							<th class="text-nowrap">Holiday Description</th>
-							<th>Day Of Week</th>
-							<th>Holiday Type</th>
-							<th class="text-end no-sort">Action</th>
-						</tr>
-					</thead>
-					<tbody>
-                        @php $i = 1; @endphp
-                        @foreach($holiday_rs as $holiday)
-                            @php
-                                $from_date = date("d-m-Y", strtotime($holiday->from_date));
-                                $to_date = date("d-m-Y", strtotime($holiday->to_date));
-                            @endphp
-                            <tr>
-                                <td>{{ $i }}</td>
-                                <td>{{ $holiday->years }}</td>
-                                <td>{{ $from_date . ' - ' . $to_date }}</td>
-                                <td>{{ $holiday->day }}</td>
-                                <td>{{ $holiday->holiday_descripion }}</td>
-                                <td>{{ ucfirst($holiday->weekname) }}</td>
-                                <td>{{ ucfirst($holiday->name) }}</td>
-                                <td class="text-end">
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="material-icons">more_vert</i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            @if($user_type == 'employee')
-                                                @foreach($sidebarItems as $value)
-                                                    @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
+            <div class="card custom-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">
+                        <i class="far fa-file" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;
+                    </h4>
+                    <div>
+                        <!-- Excel Link -->
+                        <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                            <i class="fas fa-file-excel"></i> Export to Excel
+                        </a>
+                        
+                        <!-- PDF Link -->
+                        <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+                            <i class="fas fa-file-pdf"></i> Export to PDF
+                        </a>
+                    </div>
+                 </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table datatable" id="employeeTable">
+                            <thead>
+                                <tr>
+                                    <th>Sl. No.</th>
+                                    <th>Year</th>
+                                    <th>Date</th>
+                                    <th>No. Of Days </th>
+                                    <th class="text-nowrap">Holiday Description</th>
+                                    <th>Day Of Week</th>
+                                    <th>Holiday Type</th>
+                                    <th class="text-end no-sort">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php $i = 1; @endphp
+                                @foreach($holiday_rs as $holiday)
+                                    @php
+                                        $from_date = date("d-m-Y", strtotime($holiday->from_date));
+                                        $to_date = date("d-m-Y", strtotime($holiday->to_date));
+                                    @endphp
+                                    <tr>
+                                        <td>{{ $i }}</td>
+                                        <td>{{ $holiday->years }}</td>
+                                        <td>{{ $from_date . ' - ' . $to_date }}</td>
+                                        <td>{{ $holiday->day }}</td>
+                                        <td>{{ $holiday->holiday_descripion }}</td>
+                                        <td>{{ ucfirst($holiday->weekname) }}</td>
+                                        <td>{{ ucfirst($holiday->name) }}</td>
+                                        <td class="text-end">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="material-icons">more_vert</i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    @if($user_type == 'employee')
+                                                        @foreach($sidebarItems as $value)
+                                                            @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
+                                                                <a class="dropdown-item" href="{{ url("organization/add-holiday-list/$holiday->id") }}">
+                                                                    <i class="fa-solid fa-pencil m-r-5"></i> Edit
+                                                                </a>
+                                                            @endif
+                                                        @endforeach
+                                                    @elseif($user_type == 'employer')
                                                         <a class="dropdown-item" href="{{ url("organization/add-holiday-list/$holiday->id") }}">
                                                             <i class="fa-solid fa-pencil m-r-5"></i> Edit
                                                         </a>
                                                     @endif
-                                                @endforeach
-                                            @elseif($user_type == 'employer')
-                                                <a class="dropdown-item" href="{{ url("organization/add-holiday-list/$holiday->id") }}">
-                                                    <i class="fa-solid fa-pencil m-r-5"></i> Edit
-                                                </a>
-                                            @endif
-                    
-                                            @if($user_type == 'employee')
-                                                @foreach($sidebarItems as $value)
-                                                    @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
-													<a class="dropdown-item" href="#" onclick="confirmDelete('{{ url('organization/delete-holiday-list/' . $holiday->id) }}')"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                            
+                                                    @if($user_type == 'employee')
+                                                        @foreach($sidebarItems as $value)
+                                                            @if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 49)
+                                                            <a class="dropdown-item" href="#" onclick="confirmDelete('{{ url('organization/delete-holiday-list/' . $holiday->id) }}')"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
+                                                            @endif
+                                                        @endforeach
+                                                    @elseif($user_type == 'employer')
+                                                    <a class="dropdown-item" href="#" onclick="confirmDelete('{{ url('organization/delete-holiday-list/' . $holiday->id) }}')"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
                                                     @endif
-                                                @endforeach
-                                            @elseif($user_type == 'employer')
-											<a class="dropdown-item" href="#" onclick="confirmDelete('{{ url('organization/delete-holiday-list/' . $holiday->id) }}')"><i class="fa-regular fa-trash-can m-r-5"></i> Delete</a>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            @php $i++; @endphp
-                        @endforeach
-                    </tbody>
-				</table>
-			</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @php $i++; @endphp
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
 </div>

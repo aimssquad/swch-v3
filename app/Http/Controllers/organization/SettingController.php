@@ -27,7 +27,19 @@ class SettingController extends Controller
     }
     
     public function dashboard(Request $request){
-        return view($this->_routePrefix. '.dashboard');
+        $email = Session::get('emp_email');
+        $Roledata = DB::table('registration')->where('status', '=', 'active')->where('email', '=', $email)->first();
+        $data['department_count'] = DB::table('department')->where('emid', '=', $Roledata->reg)->count();
+
+        $data['designation_count'] = DB::Table('designation')->where('designation_status', '=', 'active')
+                                    ->where('emid', '=', $Roledata->reg)->count();
+
+        $data['employee_type_count'] = DB::Table('employee_type')->where('emid', '=', $Roledata->reg)->count();
+        $data['employee_mode_count']=DB::table("mode_of_employee")->count();
+       // $data['employee_type_count'] = DB::Table('employee_type')->where('emid', '=', $Roledata->reg)->count();
+        $data['employee_master_count'] = DB::table('employ_type_master')->where('emid',$Roledata->reg)->count();
+        $data['education_count'] = DB::table('education_master')->count();
+        return view($this->_routePrefix. '.dashboard',$data);
     }
 
     public function getCompanyBank(){

@@ -62,7 +62,23 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 	</div>
 	<!-- /Page Header -->
     <div class="row">
-        <div class="card">
+        <div class="card  custom-card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title">
+                    <i class="far fa-user" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;
+                </h4>
+                <div>
+                    <!-- Excel Link -->
+                    <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                        <i class="fas fa-file-excel"></i> Export to Excel
+                    </a>
+                    
+                    <!-- PDF Link -->
+                    <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+                        <i class="fas fa-file-pdf"></i> Export to PDF
+                    </a>
+                </div>
+            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="basic-datatables" class="table table-striped custom-table datatable" >

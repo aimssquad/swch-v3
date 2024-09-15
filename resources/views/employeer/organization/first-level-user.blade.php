@@ -25,6 +25,17 @@
                 <h4 class="card-title">
                     <i class="far fa-user" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;Level 1 User 
                 </h4>
+                <div>
+                    <!-- Excel Link -->
+                    <a href="path_to_excel_export" class="btn btn-success btn-sm">
+                        <i class="fas fa-file-excel"></i> Export to Excel
+                    </a>
+                    
+                    <!-- PDF Link -->
+                    <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+                        <i class="fas fa-file-pdf"></i> Export to PDF
+                    </a>
+                </div>
             </div>
               <div class="card-body">
                  <div class="table-responsive">
