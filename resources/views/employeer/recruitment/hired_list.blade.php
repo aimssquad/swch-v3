@@ -1,6 +1,6 @@
 @extends('employeer.include.app')
 
-@section('title', 'Home - HRMS admin template')
+@section('title', 'Hired')
 
 @section('content')
 
@@ -14,7 +14,8 @@
                         <div class="col">
                             <h3 class="page-title">Hired</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ url('recruitment/dashboard') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Recruitment Dashboard</a></li>
                                 <li class="breadcrumb-item active">Hired</li>
                             </ul>
                         </div>
@@ -24,51 +25,44 @@
                     </div>
                 </div>
                 <!-- /Page Header -->
-                
-                <!-- Search Filter -->
-                {{-- <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="input-block mb-3 form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee ID</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <div class="input-block mb-3 form-focus">
-                            <input type="text" class="form-control floating">
-                            <label class="focus-label">Employee Name</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-3"> 
-                    </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <a href="#" class="btn btn-success w-100"> Search </a>  
-                    </div>     
-                </div> --}}
-                <!-- /Search Filter -->
-                
+                @include('employeer.layout.message')
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card custom-card">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h4 class="card-title">
-                                    <i class="far fa-user" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;
+                                    <i class="far fa-file" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;Hired
                                 </h4>
-                                <div>
-                                    <!-- Excel Link -->
-                                    <a href="path_to_excel_export" class="btn btn-success btn-sm">
-                                        <i class="fas fa-file-excel"></i> Export to Excel
-                                    </a>
-                                    
-                                    <!-- PDF Link -->
-                                    <a href="path_to_pdf_export" class="btn btn-info btn-sm">
-                                        <i class="fas fa-file-pdf"></i> Export to PDF
-                                    </a>
-                                </div>
-                            </div>
+                                <div class="row">
+                                   <div class="col-auto">
+                                       <form action="{{ route('exportTableData') }}" method="POST" id="exportForm" class="d-inline">
+                                           @csrf
+                                           <input type="hidden" name="data" id="data">
+                                           <input type="hidden" name="headings" id="headings">
+                                           <input type="hidden" name="filename" id="filename">
+                                           {{-- put the value - that is your file name --}}
+                                           <input type="hidden" id="filenameInput" value="Hired">
+                                           <button type="submit" class="btn btn-success btn-sm">
+                                               <i class="fas fa-file-excel"></i> Export to Excel
+                                           </button>
+                                       </form>
+                                   </div>
+                                   <div class="col-auto">
+                                       <form action="{{ route('exportPDF') }}" method="POST" id="exportPDFForm">
+                                         @csrf
+                                         <input type="hidden" name="data" id="pdfData">
+                                         <input type="hidden" name="headings" id="pdfHeadings">
+                                         <input type="hidden" name="filename" id="pdfFilename">
+                                         <button type="submit" class="btn btn-info btn-sm">
+                                             <i class="fas fa-file-pdf"></i> Export to PDF
+                                         </button>
+                                     </form>
+                                   </div>
+                               </div>
+                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-striped custom-table datatable">
+                                    <table class="table table-striped custom-table" id="basic-datatables">
                                         <thead>
                                             <tr>
                                                 <th>SL NO</th>

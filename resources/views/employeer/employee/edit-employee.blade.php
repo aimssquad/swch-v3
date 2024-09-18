@@ -222,7 +222,7 @@
                                                 <select class="select" id="selectFloatingLabel5"   name="emp_status">
                                                 <option value="">&nbsp;</option>
                                                 @foreach($employee_type as $emp)
-                                                <option value="{{$emp->employ_type_name}}" <?php if (request()->get('q') != '') {if ($employee_rs[0]->emp_status == $emp->employ_type_name) {echo 'selected';}}?>>{{$emp->employ_type_name}}</option>
+                                                <option value="{{$emp->employee_type_name}}" <?php if (request()->get('q') != '') {if ($employee_rs[0]->emp_status == $emp->employee_type_name) {echo 'selected';}}?>>{{$emp->employee_type_name}}</option>
                                                 @endforeach
                                                 </select>
                                             </div>

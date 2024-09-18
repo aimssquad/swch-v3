@@ -8,7 +8,7 @@
             <h3 class="page-title">Process Attendence</h3>
             <ul class="breadcrumb">
                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-               <li class="breadcrumb-item"><a href="{{url('attendance-management/dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('attendance-management/dashboard')}}">Attendence Dashboard</a></li>
                <li class="breadcrumb-item active">Process Attendence</li>
             </ul>
          </div>
@@ -81,11 +81,6 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                <h4 class="card-title"><i class="fa fa-cog" aria-hidden="true" style="color:#10277f;"></i>&nbsp;Process Attendance</h4>
                <div>
-                  <!-- Excel Link -->
-                  {{-- <a href="path_to_excel_export" class="btn btn-success btn-sm">
-                      <i class="fas fa-file-excel"></i> Export to Excel
-                  </a> --}}
-
                   <div class="row">
                      <div class="col-auto">
                          <form action="{{ route('exportTableData') }}" method="POST" id="exportForm" class="d-inline">
@@ -164,50 +159,50 @@
 @endsection         
 @section('script')
     <script >
-        $(document).ready(function() {
+      //   $(document).ready(function() {
 
-            $('#multi-filter-select').DataTable( {
-                "pageLength": 5,
-                initComplete: function () {
-                    this.api().columns().every( function () {
-                        var column = this;
-                        var select = $('<select class="form-control"><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                                );
+      //       $('#multi-filter-select').DataTable( {
+      //           "pageLength": 5,
+      //           initComplete: function () {
+      //               this.api().columns().every( function () {
+      //                   var column = this;
+      //                   var select = $('<select class="form-control"><option value=""></option></select>')
+      //                   .appendTo( $(column.footer()).empty() )
+      //                   .on( 'change', function () {
+      //                       var val = $.fn.dataTable.util.escapeRegex(
+      //                           $(this).val()
+      //                           );
 
-                            column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                        } );
+      //                       column
+      //                       .search( val ? '^'+val+'$' : '', true, false )
+      //                       .draw();
+      //                   } );
 
-                        column.data().unique().sort().each( function ( d, j ) {
-                            select.append( '<option value="'+d+'">'+d+'</option>' )
-                        } );
-                    } );
-                }
-            });
+      //                   column.data().unique().sort().each( function ( d, j ) {
+      //                       select.append( '<option value="'+d+'">'+d+'</option>' )
+      //                   } );
+      //               } );
+      //           }
+      //       });
 
-            // Add Row
-            $('#add-row').DataTable({
-                "pageLength": 5,
-            });
+      //       // Add Row
+      //       $('#add-row').DataTable({
+      //           "pageLength": 5,
+      //       });
 
-            var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+      //       var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
 
-            $('#addRowButton').click(function() {
-                $('#add-row').dataTable().fnAddData([
-                    $("#addName").val(),
-                    $("#addPosition").val(),
-                    $("#addOffice").val(),
-                    action
-                    ]);
-                $('#addRowModal').modal('hide');
+      //       $('#addRowButton').click(function() {
+      //           $('#add-row').dataTable().fnAddData([
+      //               $("#addName").val(),
+      //               $("#addPosition").val(),
+      //               $("#addOffice").val(),
+      //               action
+      //               ]);
+      //           $('#addRowModal').modal('hide');
 
-            });
-        });
+      //       });
+      //   });
         
         $('#allval').click(function(event) {  
         

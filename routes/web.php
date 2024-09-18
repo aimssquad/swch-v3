@@ -120,6 +120,9 @@ Route::post('leave/leave-report-employee-wise-excel', 'App\Http\Controllers\orga
 //-------------------------------Change of Circumstances----------------------------------------
 Route::get('organization/circumstances','App\Http\Controllers\organization\CircumstanceController@dashboard')->name('organization/circumstances');
 Route::get('org-employee/change-of-circumstances-add', 'App\Http\Controllers\organization\CircumstanceController@viewchangecircumstanceseditadd');
+Route::get('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@viewchangecircumstancesedit')->name('org-dashboard/change-of-circumstances');
+Route::post('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@savechangecircumstancesedit');
+Route::get('org-employee/change-of-circumstances-add-new', 'App\Http\Controllers\EmployeeController@viewchangecircumstanceseditnew');
 
 //-------------------------------End Cirrcumstances -------------------------------------------------
 //----------------------------------- Attendance Mangement ---------------------------------------------
@@ -393,8 +396,6 @@ Route::get('org-dashboard/absent-report', 'App\Http\Controllers\organization\Das
 Route::post('org-dashboard/absent-report', 'App\Http\Controllers\organization\DashboardController@getattendanabsent');
 Route::get('org-dashboard/absent-record-card/{absent_id}/{year_value}', 'App\Http\Controllers\organization\DashboardController@viewattendanabsentreport');
 Route::get('org-dashboard/absent-record-card-pdf/{absent_id}/{year_value}', 'App\Http\Controllers\organization\DashboardController@viewattendanabsentreportpdf');
-Route::get('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@viewchangecircumstancesedit')->name('org-dashboard/change-of-circumstances');
-Route::post('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@savechangecircumstancesedit');
 Route::get('org-dashboard/contract-agreement', 'App\Http\Controllers\organization\DashboardController@viewemployeeagreement');
 Route::post('org-dashboard/contract-agreement', 'App\Http\Controllers\organization\DashboardController@saveemployeeagreement');
 

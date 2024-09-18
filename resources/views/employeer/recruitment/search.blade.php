@@ -37,15 +37,15 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			<div class="col">
 				<h3 class="page-title">Search</h3>
 				<ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-					<li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Recruitment Dashboard</a></li>
 					<li class="breadcrumb-item active">Search</li>
 				</ul>
 			</div>
-            @include('employeer.layout.message')
 		</div>
 	</div>
 	<!-- /Page Header -->
+   @include('employeer.layout.message')
     <div class="row">
         <div class="col-md-12">
            <div class="card custom-card">
@@ -108,18 +108,35 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
         <div class="col-md-12">
            <div class="card">
               <div class="card-header d-flex justify-content-between align-items-center">
-                 <h4 class="card-title">Search</h4>
-                  <div>
-                        <!-- Excel Link -->
-                        <a href="path_to_excel_export" class="btn btn-success btn-sm">
-                           <i class="fas fa-file-excel"></i> Export to Excel
-                        </a>
-                        
-                        <!-- PDF Link -->
-                        <a href="path_to_pdf_export" class="btn btn-info btn-sm">
+               <h4 class="card-title">
+                  <i class="far fa-file" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;Search
+              </h4>
+              <div class="row">
+                 <div class="col-auto">
+                     <form action="{{ route('exportTableData') }}" method="POST" id="exportForm" class="d-inline">
+                         @csrf
+                         <input type="hidden" name="data" id="data">
+                         <input type="hidden" name="headings" id="headings">
+                         <input type="hidden" name="filename" id="filename">
+                         {{-- put the value - that is your file name --}}
+                         <input type="hidden" id="filenameInput" value="Search">
+                         <button type="submit" class="btn btn-success btn-sm">
+                             <i class="fas fa-file-excel"></i> Export to Excel
+                         </button>
+                     </form>
+                 </div>
+                 <div class="col-auto">
+                     <form action="{{ route('exportPDF') }}" method="POST" id="exportPDFForm">
+                       @csrf
+                       <input type="hidden" name="data" id="pdfData">
+                       <input type="hidden" name="headings" id="pdfHeadings">
+                       <input type="hidden" name="filename" id="pdfFilename">
+                       <button type="submit" class="btn btn-info btn-sm">
                            <i class="fas fa-file-pdf"></i> Export to PDF
-                        </a>
-                  </div>
+                       </button>
+                   </form>
+                 </div>
+             </div>
                  <?php
                     if(isset($result) && $result!=''  ){
                                                                 ?>

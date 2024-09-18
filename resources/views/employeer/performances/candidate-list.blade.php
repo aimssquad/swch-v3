@@ -32,7 +32,8 @@ return $output;
          <div class="col">
             <h3 class="page-title">Job Applied</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{ url('recruitment/dashboard') }}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{ url('org-performances/dashboard') }}">Performance Management Dashboard</a></li>
                <li class="breadcrumb-item active">Job Applied</li>
             </ul>
          </div>
@@ -88,9 +89,7 @@ return $output;
             <div class="card-header">
                <h4 class="card-title"><i class="fas fa-briefcase"></i> Job Applied
                </h4>
-               @if(Session::has('message'))										
-               <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-               @endif
+               @include('employeer.layout.message')
             </div>
             <div class="card-body">
                <span>

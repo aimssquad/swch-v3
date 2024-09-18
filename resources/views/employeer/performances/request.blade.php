@@ -31,8 +31,8 @@ return $output;
          <div class="col">
             <h3 class="page-title"> Performance Management List</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-               <li class="breadcrumb-item"><a href="{{url('org-performances/dashboard')}}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('org-performances/dashboard') }}">Performance Management Dashboard</a></li>
                <li class="breadcrumb-item active">Performance Management List</li>
             </ul>
          </div>
@@ -56,9 +56,7 @@ return $output;
       </div>
    </div>
    <!-- /Page Header -->
-   @if(Session::has('message'))										
-   <div class="alert alert-success" style="text-align:center;">{{ Session::get('message') }}</div>
-   @endif
+   @include('employeer.layout.message')
    <?php $status = request()->get('status');
     ?>
    <div class="row">
@@ -82,7 +80,7 @@ return $output;
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="basic-datatables" class="table table-striped custom-table datatable">
+                    <table id="basic-datatables" class="table table-striped custom-table">
                         <thead>
                             <tr>
                                 <th>Sl. No.</th>
@@ -166,53 +164,6 @@ return $output;
 @endsection
 @section('script')
 <script>
-   $(document).ready(function() {
-            $('#basic-datatables').DataTable({
-            });
-        
-            $('#multi-filter-select').DataTable( {
-                "pageLength": 5,
-                initComplete: function () {
-                    this.api().columns().every( function () {
-                        var column = this;
-                        var select = $('<select class="form-control"><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                                );
-        
-                            column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                        } );
-        
-                        column.data().unique().sort().each( function ( d, j ) {
-                            select.append( '<option value="'+d+'">'+d+'</option>' )
-                        } );
-                    } );
-                }
-            });
-        
-            // Add Row
-            $('#add-row').DataTable({
-                "pageLength": 5,
-            });
-        
-            var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-        
-            $('#addRowButton').click(function() {
-                $('#add-row').dataTable().fnAddData([
-                    $("#addName").val(),
-                    $("#addPosition").val(),
-                    $("#addOffice").val(),
-                    action
-                    ]);
-                $('#addRowModal').modal('hide');
-        
-            });
-        });
-   
     function confirmDelete(url) {
         if (confirm("Are you sure you want to delete this holiday type?")) {
             window.location.href = url;

@@ -22,7 +22,16 @@ class PerformanceController extends Controller
     //return view($this->_routePrefix . '.company_bank',$data);
 
     public function dashboard(Request $request){
-        return view($this->_routePrefix . '.dashboard');
+        if(!empty(Session::get('emp_email'))){
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')->where('email', '=', $email)->first();
+            $data['performence_list'] = Performance::where('emid', $Roledata->reg)->count();
+            //dd($data);
+            return view($this->_routePrefix . '.dashboard',$data);
+        } else {
+            return redirect('/');
+        }
+       
     }
 
     public function index(Request $request)

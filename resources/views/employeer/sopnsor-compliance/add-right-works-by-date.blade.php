@@ -10,12 +10,7 @@
                <div class="card-header">
                   <h4 class="card-title"><i class="far fa-user"></i> Add New Right to Work Checklist </h4>
                </div>
-               @if(Session::has('message'))										
-               <div class="alert alert-success" style="text-align:center;">{{ Session::get('message') }}</div>
-               @endif
-               @if(Session::has('error'))										
-               <div class="alert alert-success" style="text-align:center;">{{ Session::get('error') }}</div>
-               @endif
+               @include('employeer.layout.message')
                <div class="card-body">
                   <div class="multisteps-form">
                      <!--form panels-->

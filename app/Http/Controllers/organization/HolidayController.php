@@ -26,7 +26,16 @@ class HolidayController extends Controller
     }
 
     public function dashboard(Request $request){
-        return view($this->_routePrefix . '.dashboard');
+        if (!empty(Session::get("emp_email"))) {
+            $email = Session::get("emp_email");
+            $Roledata = Registration::where("status", "=", "active")
+                    ->where("email", "=", $email)
+                    ->first();
+            $data["holiday_list_count"] = Holiday::where("holiday.emid", "=", $Roledata->reg)->count();
+            $data["holiday_type_count"] = HolidayType::where("emid", "=", $Roledata->reg)->count();
+            //dd($data);
+            return view($this->_routePrefix . '.dashboard',$data);
+        }
     }
 
     public function holidayList(Request $request)

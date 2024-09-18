@@ -7,7 +7,8 @@
          <div class="col">
             <h3 class="page-title">Add File Managment</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('file-management/dashboard')}}">File Manager Dashboard</a></li>
                <li class="breadcrumb-item active">Add Add File Managment</li>
             </ul>
          </div>
@@ -17,9 +18,7 @@
       <div class="col-md-12">
          <div class="card custom-card">
             <div class="card-body">
-               @if(Session::has('message'))
-               <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-               @endif
+               @include('employeer.layout.message')
                <form  method="post" action="{{url('file-management/fileManagment-save')}}" enctype="multipart/form-data" >
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="row">

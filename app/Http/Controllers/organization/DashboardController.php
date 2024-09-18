@@ -2733,7 +2733,7 @@ class DashboardController extends Controller
 
                 ->where('email', '=', $email)
                 ->first();
-
+            //dd($data['Roledata']);
             $data['employee_type_rs'] = DB::table('employee_type')->where('emid', '=', $Roledata->reg)->where('employee_type_status', '=', 'Active')->get();
             return view($this->_routePrefix . '.change-list',$data);
             //return view('dashboard/change-list', $data);
@@ -2782,7 +2782,7 @@ class DashboardController extends Controller
 
             $employee_code = $request->employee_code;
             $employee_type = $request->employee_type;
-
+            //dd($Roledata->reg);
             $data['result'] = '';
             //dd($leave_allocation_rs);
             $f = 2;
@@ -2805,7 +2805,7 @@ class DashboardController extends Controller
             $dataeotherdoc = '';
 
             if (count($employeetemployeeother) != 0) {
-
+                //dd('okk');
                 foreach ($employeetemployeeother as $valother) {
                     if ($valother->doc_exp_date != '1970-01-01') {if ($valother->doc_exp_date != '') {
                         $other_exp_date = date('d/m/Y', strtotime($valother->doc_exp_date));
@@ -2818,7 +2818,8 @@ class DashboardController extends Controller
                 }
 
             }
-            if (!empty($employeetcircumnew)) {
+            if (!empty($employeetcircumnew)) { 
+                //dd('okkllll');
                 $date_doj = date('d/m/Y', strtotime($employeetcircumnew->date_change));
                 $anual_datenew = date('Y-m-d', strtotime($employeetcircumnew->date_change . '  + 1 year'));
                 $peradd = '';
@@ -2875,8 +2876,9 @@ class DashboardController extends Controller
                 $newpnati = $employeetcircumnew->nationality;
                 $newpnavia = $employeetcircumnew->visa_doc_no;
                 $newpnapasas = $employeetcircumnew->pass_doc_no;
-            } else { $date_doj = date('d/m/Y', strtotime($employeet->emp_doj));
-
+            } else { 
+                //dd('oppps');
+                $date_doj = date('d/m/Y', strtotime($employeet->emp_doj));
                 $anual_datenew = date('Y-m-d', strtotime($employeet->emp_doj . '  + 1 year'));
                 $peradd = '';
                 $peradd = $employeetnew->emp_pr_street_no;
@@ -2932,43 +2934,35 @@ class DashboardController extends Controller
                 $newpnavia = $employeetnew->visa_doc_no;
                 $newpnapasas = $employeetnew->pass_doc_no;
             }
-            $data['result'] .= '<tr>
-			<td>1</td>
-													<td>' . $date_doj . '</td>
-													<td>' . $employee_type . '</td>
-													<td>' . $employee_code . '</td>
-													<td>' . $employeetnew->emp_fname . '  ' . $employeetnew->emp_mname . ' ' . $employeetnew->emp_lname . '</td>
-
-													<td>' . $desinf . '</td>
-														<td>' . $peradd . '</td>
-
-													<td>' . $newph . '</td>
-														<td>' . $newpnati . '</td>
-
-															<td>' . $newpnavia . '</td>
-															<td>' . $visa_exp_date . '</td>
-																<td>Not Applicable </td>
-															<td>' . $newpnapasas . '
-														( ' . $stfol . ' )</td>
-                                                        <td>'.$euss_exp.'</td>
-                                                        <td>'.$dbs_exp.'</td>
-                                                        <td>'.$nid_exp.'</td>
-														<td>' . $dataeotherdoc . '</td>
-															<td></td>
-															<td></td>
-															<td>' . date('d/m/Y', strtotime($anual_datenew)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_datenew) . '" target="_blank"><i class="fas fa-eye" ></i></a>
-
-
-															 &nbsp &nbsp <a href="' . env("BASE_URL") . 'employee/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_datenew) . '" ><i class="fas fa-paper-plane" ></i></a></td>
-
-
-						</tr>';
-
+            $data['result'] .= 
+                '<tr>
+                    <td>1</td>
+                    <td>' . $date_doj . '</td>
+                    <td>' . $employee_type . '</td>
+                    <td>' . $employee_code . '</td>
+                    <td>' . $employeetnew->emp_fname . '  ' . $employeetnew->emp_mname . ' ' . $employeetnew->emp_lname . '</td>
+                    <td>' . $desinf . '</td>
+                    <td>' . $peradd . '</td>
+                    <td>' . $newph . '</td>
+                    <td>' . $newpnati . '</td>
+                    <td>' . $newpnavia . '</td>
+                    <td>' . $visa_exp_date . '</td>
+                    <td>Not Applicable </td>
+                    <td>' . $newpnapasas . '( ' . $stfol . ' )</td>
+                    <td>'.$euss_exp.'</td>
+                    <td>'.$dbs_exp.'</td>
+                    <td>'.$nid_exp.'</td>
+                    <td>' . $dataeotherdoc . '</td>
+                    <td></td>
+                    <td></td>
+                    <td>' . date('d/m/Y', strtotime($anual_datenew)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_datenew) . '" target="_blank"><i class="fas fa-eye" ></i></a>
+                        &nbsp &nbsp <a href="' . env("BASE_URL") . 'employee/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_datenew) . '" ><i class="fas fa-paper-plane" ></i></a>
+                    </td>
+                </tr>';
+            //dd($employeet->emp_doj);
             for ($m = date('Y', strtotime($employeet->emp_doj)); $m <= $endtyear; $m++) {
-
                 $strartye = date($m . '-01-01');
                 $endtye = date($m . '-12-31');
-
                 $leave_allocation_rs = DB::table('change_circumstances')
                     ->join('employee', 'change_circumstances.emp_code', '=', 'employee.emp_code')
                     ->where('change_circumstances.emp_code', '=', $employee_code)
@@ -2981,7 +2975,7 @@ class DashboardController extends Controller
                     ->select('change_circumstances.*')
                     ->get();
                 if (count($leave_allocation_rs) != 0) {
-
+                    //dd('okkmmmm');
                     foreach ($leave_allocation_rs as $leave_allocation) {
 
                         $peradd = '';
@@ -3072,41 +3066,36 @@ class DashboardController extends Controller
 
                         }
 
-                        $data['result'] .= '<tr>
-			<td>' . $f . '</td>
-													<td>' . date('d/m/Y', strtotime($leave_allocation->date_change)) . '</td>
-													<td>' . $employee_type . '</td>
-													<td>' . $leave_allocation->emp_code . '</td>
-													<td>' . $employeet->emp_fname . '  ' . $employeet->emp_mname . ' ' . $employeet->emp_lname . '</td>
-
-													<td>' . $leave_allocation->emp_designation . '</td>
-														<td>' . $peradd . '</td>
-
-													<td>' . $leave_allocation->emp_ps_phone . '</td>
-														<td>' . $leave_allocation->nationality . '</td>
-
-															<td>' . $leave_allocation->visa_doc_no . '</td>
-															<td>' . $visa_exp_date . '</td>
-																<td>' . $leave_allocation->res_remark . '</td>
-															<td>' . $leave_allocation->pass_doc_no . '
-														( ' . $stfol . ' )</td>
-                                                        <td>'.$euss_exp.'</td>
-                                                        <td>'.$dbs_exp.'</td>
-                                                        <td>'.$nid_exp.'</td>
-															<td>' . $dataeotherdoc . '</td>
-															<td>' . $leave_allocation->hr . '</td>
-															<td>' . $leave_allocation->home . '</td>
-															<td>' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>
-
-
-															 &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a></td>
-
-
-						</tr>';
-
-                        $f++;}
+                        $data['result'] .= 
+                            '<tr>
+                                <td>' . $f . '</td>
+                                <td>' . date('d/m/Y', strtotime($leave_allocation->date_change)) . '</td>
+                                <td>' . $employee_type . '</td>
+                                <td>' . $leave_allocation->emp_code . '</td>
+                                <td>' . $employeet->emp_fname . '  ' . $employeet->emp_mname . ' ' . $employeet->emp_lname . '</td>
+                                <td>' . $leave_allocation->emp_designation . '</td>
+                                <td>' . $peradd . '</td>
+                                <td>' . $leave_allocation->emp_ps_phone . '</td>
+                                <td>' . $leave_allocation->nationality . '</td>
+                                <td>' . $leave_allocation->visa_doc_no . '</td>
+                                <td>' . $visa_exp_date . '</td>
+                                <td>' . $leave_allocation->res_remark . '</td>
+                                <td>' . $leave_allocation->pass_doc_no . '( ' . $stfol . ' )</td>
+                                <td>'.$euss_exp.'</td>
+                                <td>'.$dbs_exp.'</td>
+                                <td>'.$nid_exp.'</td>
+                                <td>' . $dataeotherdoc . '</td>
+                                <td>' . $leave_allocation->hr . '</td>
+                                <td>' . $leave_allocation->home . '</td>
+                                <td>
+                                    ' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>
+                                                &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a>
+                                </td>
+                            </tr>';
+                        $f++;
+                    }
                 } else {
-
+                    //dd('dddd');
                     $dojg = date('m-d', strtotime($employeet->emp_doj));
                     $anual_date = date('Y-m-d', strtotime($m . '-' . $dojg . '  + 1 year'));
                     $no = '';
@@ -3116,69 +3105,61 @@ class DashboardController extends Controller
                         } else {
                             $no = '';
                         }
-                        $data['result'] .= '<tr>
-				<td>' . $f . '</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-
-													<td></td>
-														<td></td>
-
-													<td></td>
-														<td></td>
-
-															<td></td>
-															<td> </td>
-																<td>' . $no . '</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td>' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>&nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a></td>
-
-
-						</tr>';
-                        $f++;}
+                        $data['result'] .= 
+                            '<tr>
+				                    <td>' . $f . '</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td> </td>
+                                    <td>' . $no . '</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>&nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a></td>
+						        </tr>';
+                        $f++;
+                        //dd($data['result']);
+                    }
                 }
             }
 
             for ($o = ($endtyear + 1); $o <= ($endtyear + 4); $o++) {
-
                 $dojg = date('m-d', strtotime($employeet->emp_doj));
                 $anual_date = date('Y-m-d', strtotime($o . '-' . $dojg . '  + 1 year'));
-
-                $data['result'] .= '<tr>
-				<td>' . $f . '</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-
-													<td></td>
-														<td></td>
-
-													<td></td>
-														<td></td>
-
-															<td></td>
-															<td> </td>
-																<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td>' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>&nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a></td>
-
-
-						</tr>';
+                $data['result'] .= 
+                '<tr>
+				    <td>' . $f . '</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>&nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a></td>
+				</tr>';
                 $f++;
             }
 

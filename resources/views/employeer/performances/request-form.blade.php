@@ -12,7 +12,7 @@
          <div class="col-md-12">
             <ul class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{url('org-performances/dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{ url('org-performances/dashboard') }}">Performance Management Dashboard</a></li>
                 @if($mode == 'edit')
                 <li class="breadcrumb-item active">Edit Performance Management</li>
                 @else
@@ -29,12 +29,7 @@
                     <h4 class="card-title"><i class="far fa-user"></i> Add Performance Request</h4>
                     @endif 
                </div>
-               @if(Session::has('message'))										
-               <div class="alert alert-success" style="text-align:center;">{{ Session::get('message') }}</div>
-               @endif
-               @if(Session::has('error'))										
-               <div class="alert alert-success" style="text-align:center;">{{ Session::get('error') }}</div>
-               @endif
+               @include('employeer.layout.message')
                <div class="card-body">
                   <div class="multisteps-form">
                      <!--form panels-->

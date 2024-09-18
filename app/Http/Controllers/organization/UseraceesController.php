@@ -29,7 +29,19 @@ class UseraceesController extends Controller
     }
 
     public function dashboard(Request $request){
-        return view($this->_routePrefix . '.dashboard');
+        if (!empty(Session::get("emp_email"))) {
+            $email = Session::get("emp_email");
+            $Roledata = DB::table("registration")->where("status", "=", "active")->where("email", "=", $email)->first();
+            $data["user_config_count"] = DB::table("users")
+            ->where("emid", "=", $Roledata->reg)
+            ->where("user_type", "=", "employee")
+            ->count();
+            $data["roles_management_count"] = RoleAuthorization::where("emid", "=", $Roledata->reg)->count();
+            //dd($data);
+            return view($this->_routePrefix . '.dashboard',$data);
+        } else {
+            return redirect("/"); 
+        }
     }
 
     public function viewUserConfig()

@@ -10,14 +10,14 @@
 				<h3 class="page-title">Short Listing</h3>
 				<ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-					<li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Recruitment Dashboard</a></li>
 					<li class="breadcrumb-item active">Short Listing</li>
 				</ul>
 			</div>
-            @include('employeer.layout.message')
 		</div>
 	</div>
 	<!-- /Page Header -->
+    @include('employeer.layout.message')
     <div class="row">
         <div class="card">
             <div class="card-body">

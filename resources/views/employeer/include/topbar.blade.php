@@ -278,12 +278,13 @@
 
         <li class="nav-item dropdown has-arrow main-drop">
             <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-                <span class="user-img"><img src="{{ asset('storage/' .$data['companies_rs']->logo) }}" alt="User Image" style="
-                    width: 40px;
-                    height: 30px;
-                ">
-                <span class="status online"></span></span>
-                <span>{{$data['companies_rs']->com_name}}</span>
+                <span class="user-img">
+                    <img src="{{ Storage::exists('public/' . $data['companies_rs']->logo) ? asset('storage/' . $data['companies_rs']->logo) : asset('assets/img/user.png') }}" 
+                         alt="User Image" 
+                         style="width: 40px; height: 30px;">
+                    <span class="status online"></span>
+                </span>
+                <span>{{ strtoupper($data['companies_rs']->com_name) }}</span>
             </a>
             <div class="dropdown-menu">  
                 @if(Session::get('admin_userp_user_type')=='user')     

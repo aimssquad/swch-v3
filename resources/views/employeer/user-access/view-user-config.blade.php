@@ -12,7 +12,7 @@
          <div class="col-md-12">
             <ul class="breadcrumb">
                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-               <li class="breadcrumb-item"><a href="{{url('user-access-role/dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('user-access-role/dashboard')}}">User Access Dashboard</a></li>
                @if(isset($user) && !empty($user->id))
                <li class="breadcrumb-item active">Edit User Configuration</li>
                @else

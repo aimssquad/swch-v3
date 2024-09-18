@@ -8,19 +8,14 @@
             <div class="col-md-12">
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{url('org-task-management/dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('org-task-management/dashboard')}}">Task Management Dashboard</a></li>
                     <li class="breadcrumb-item active">Project</li>
                  </ul>
                <div class="card custom-card">
                   <div class="card-header">
                      <h4 class="card-title"><i class="far fa-user"></i> Add New Project</h4>
                   </div>
-                  @if(Session::has('message'))										
-                  <div class="alert alert-success" style="text-align:center;">{{ Session::get('message') }}</div>
-                  @endif
-                  @if(Session::has('error'))										
-                  <div class="alert alert-success" style="text-align:center;">{{ Session::get('error') }}</div>
-                  @endif
+                  @include('employeer.layout.message')
                   <div class="card-body">
                      <div class="multisteps-form">
                         <!--form panels-->

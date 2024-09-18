@@ -32,15 +32,14 @@ return $output;
             <h3 class="page-title">  Sponsor Management Dossier</h3>
             <ul class="breadcrumb">
                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('org-dashboarddetails')}}">Sponsor Compliance Dashboard</a></li>
                <li class="breadcrumb-item active"> Sponsor Management Dossier</li>
             </ul>
          </div>
       </div>
    </div>
    <!-- /Page Header -->
-   @if(Session::has('message'))										
-   <div class="alert alert-success" style="text-align:center;">{{ Session::get('message') }}</div>
-   @endif
+   @include('employeer.layout.message')
    <div class="row">
       <div class="col-md-12">
          <div class="table-responsive">

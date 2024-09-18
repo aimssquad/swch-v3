@@ -8,13 +8,15 @@
            <div class="col-sm-12">
                <h3 class="page-title">Job List</h3>
                <ul class="breadcrumb">
-                   <li class="breadcrumb-item"><a href="{{route('recruitment.dashboard')}}">Dashboard</a></li>
+                   <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                   <li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Recruitment Dashboard</a></li>
                    <li class="breadcrumb-item active">Job List </li>
                </ul>
            </div>
        </div>
    </div>
    <!-- /Page Header -->
+   @include('employeer.layout.message')
          <div class="row">
             <div class="col-md-12">
                <div class="card custom-card">
@@ -25,12 +27,6 @@
                      <h4 class="card-title"><i class="far fa-user"></i> Add Job List</h4>
                      @endif 
                   </div>
-                  @if(Session::has('message'))										
-                  <div class="alert alert-success" style="text-align:center;">{{ Session::get('message') }}</div>
-                  @endif
-                  @if(Session::has('error'))										
-                  <div class="alert alert-success" style="text-align:center;">{{ Session::get('error') }}</div>
-                  @endif
                   <div class="card-body">
                      <div class="multisteps-form">
                         <!--form panels-->
@@ -137,52 +133,6 @@
 {{-- <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js')}}"></script>
 <script src="{{ asset('assets/js/setting-demo2.js')}}"></script> --}}
 <script >
-   $(document).ready(function() {
-       $('#basic-datatables').DataTable({
-       });
-   
-       $('#multi-filter-select').DataTable( {
-           "pageLength": 5,
-           initComplete: function () {
-               this.api().columns().every( function () {
-                   var column = this;
-                   var select = $('<select class="form-control"><option value=""></option></select>')
-                   .appendTo( $(column.footer()).empty() )
-                   .on( 'change', function () {
-                       var val = $.fn.dataTable.util.escapeRegex(
-                           $(this).val()
-                           );
-   
-                       column
-                       .search( val ? '^'+val+'$' : '', true, false )
-                       .draw();
-                   } );
-   
-                   column.data().unique().sort().each( function ( d, j ) {
-                       select.append( '<option value="'+d+'">'+d+'</option>' )
-                   } );
-               } );
-           }
-       });
-   
-       // Add Row
-       $('#add-row').DataTable({
-           "pageLength": 5,
-       });
-   
-       var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-   
-       $('#addRowButton').click(function() {
-           $('#add-row').dataTable().fnAddData([
-               $("#addName").val(),
-               $("#addPosition").val(),
-               $("#addOffice").val(),
-               action
-               ]);
-           $('#addRowModal').modal('hide');
-   
-       });
-   });
    function jobcheck(val) {
    if(val=='new'){
     console.log(val);

@@ -1,3 +1,7 @@
+@php
+
+//dd($employee_type_rs);
+@endphp
 @extends('employeer.include.app')
 @section('title', 'Change Of Circumstances')
 @php 
@@ -32,6 +36,7 @@ return $output;
             <h3 class="page-title"> Change Of Circumstances</h3>
             <ul class="breadcrumb">
                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('org-dashboarddetails')}}">Sponsor Compliance Dashboard</a></li>
                <li class="breadcrumb-item active">Change Of Circumstances</li>
             </ul>
          </div>
@@ -60,10 +65,9 @@ return $output;
                         <div class=" form-group">
                            <label for="employee_code" class="col-form-label">Employee Code</label>
                            <select id="employee_code" type="text" class="select"  required=""  name="employee_code"  style="margin-top: 20px;">
-                              <?php if(isset($employee_type)) {
+                              <?php if(isset($employee_type_rs)) {
                                  $employee_rs=DB::table('employee')
-                                 
-                                 ->where('emp_status', '=',  $employee_type)
+                                 //->where('emp_status', '=',  $employee_type_status)
                                  ->where('emid', '=',  $Roledata->reg)
                                  ->get();
                                  ?>
@@ -111,7 +115,7 @@ return $output;
                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                <input type="hidden" name="employee_code" value="{{ $employee_code }}">
                <input type="hidden" name="employee_type" value="{{$employee_type}}">
-               <button  data-toggle="tooltip" data-placement="bottom" title="Download Excel" class="btn btn-default" style="margin-top: -30px;float:right;background:none!important;font-size:16px; margin-bottom:10px;" type="submit"><<img  style="width: 35px;" src="{{ asset('img/excel-dnld.png')}}">  </button>	
+               <button  data-toggle="tooltip" data-placement="bottom" title="Download Excel" class="btn btn-default" style="margin-top: -30px;float:right;background:none!important;font-size:16px; margin-bottom:10px;" type="submit"><img  style="width: 35px;" src="{{ asset('img/excel-dnld.png')}}">  </button>	
             </form>
             <?php
                }?>	
@@ -119,7 +123,7 @@ return $output;
          <div class="card-body">
             <div class="col-md-12">
                <div class="table-responsive">
-                  <table class="table table-striped custom-table datatable" id="employeeTable">
+                  <table class="table table-striped custom-table" id="basic-datatables">
                      <thead>
                         <tr>
                            <th>Sl No</th>
@@ -147,8 +151,9 @@ return $output;
                      <tbody>
                         <?php
                            if(isset($result) && $result!=''  ){
-                                                                            print_r($result); 
-                           }?>
+                              print_r($result); 
+                           }
+                        ?>
                      </tbody>
                   </table>
                </div>
@@ -161,53 +166,6 @@ return $output;
 @endsection
 @section('script')
 <script>
-   $(document).ready(function() {
-            $('#basic-datatables').DataTable({
-            });
-        
-            $('#multi-filter-select').DataTable( {
-                "pageLength": 5,
-                initComplete: function () {
-                    this.api().columns().every( function () {
-                        var column = this;
-                        var select = $('<select class="form-control"><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                                );
-        
-                            column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                        } );
-        
-                        column.data().unique().sort().each( function ( d, j ) {
-                            select.append( '<option value="'+d+'">'+d+'</option>' )
-                        } );
-                    } );
-                }
-            });
-        
-            // Add Row
-            $('#add-row').DataTable({
-                "pageLength": 5,
-            });
-        
-            var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-        
-            $('#addRowButton').click(function() {
-                $('#add-row').dataTable().fnAddData([
-                    $("#addName").val(),
-                    $("#addPosition").val(),
-                    $("#addOffice").val(),
-                    action
-                    ]);
-                $('#addRowModal').modal('hide');
-        
-            });
-        });
-   
         $('#allval').click(function(event) {  
    
       if(this.checked) {

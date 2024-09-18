@@ -521,7 +521,8 @@ class RecruitmentController extends Controller
                 ->first();
 
             $data['recruitment_job_rs'] = DB::table('company_job_list')->where('emid', '=', $Roledata->reg)->get();
-            return view('recruitment/job-list', $data);
+            return view($this->_routePrefix . '.job-list',$data);
+           // return view('recruitment/job-list', $data);
         } else {
             return redirect('/');
         }

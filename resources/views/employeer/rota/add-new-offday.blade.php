@@ -8,7 +8,7 @@
             <h3 class="page-title">Day Off</h3>
             <ul class="breadcrumb">
                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-               <li class="breadcrumb-item"><a href="{{url('rota-org/dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('rota-org/dashboard')}}">Rota Dashboard</a></li>
                <li class="breadcrumb-item active"> Add Day Off Details</li>
             </ul>
          </div>
@@ -18,9 +18,7 @@
       <div class="col-md-12">
          <div class="card custom-card">
             <div class="card-body">
-               @if(Session::has('message'))
-               <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-               @endif
+               @include('employeer.layout.message')
                <form action="" method="post" enctype="multipart/form-data">
                   {{csrf_field()}}
                   <div class="row form-group">

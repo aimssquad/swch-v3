@@ -38,8 +38,8 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			<div class="col">
 				<h3 class="page-title">File Manager</h3>
 				<ul class="breadcrumb">
-					<li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{url('file-management/dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{url('file-management/dashboard')}}">File Manager Dashboard</a></li>
 					<li class="breadcrumb-item active">File Manager List</li>
 				</ul>
 			</div>
@@ -48,12 +48,10 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 				@foreach($sidebarItems as $value)
 				@if($value['rights'] == 'Add' && $value['module_name'] == 4 && $value['menu'] == 48)
 				<a href="{{ url('file-management/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Manager</a>
-                <span><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('file-management/report-excel')}}"><img  style="width: 30px; height:25px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
 				@endif
 				@endforeach
 				@elseif($user_type == 'employer')
 				<a href="{{ url('file-management/fileManagment-add') }}" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add File Manager</a>
-                <span style="margin-right:10px; margin-top:5px;"><a data-toggle="tooltip" data-placement="bottom" title="Excel Download" href="{{url('file-management/report-excel')}}"><img  style="width: 35px; height:37px; border-radius:5px" src="{{ asset('img/ex.png')}}"></a></span>
 				@endif
 				{{-- <div class="view-icons">
 					<a href="{{url('organization/employeeee')}}" class="grid-view btn btn-link "><i class="fa fa-th"></i></a>
@@ -62,17 +60,41 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 			</div>
 		</div>
 	</div>
-    @if(Session::has('message'))										
-    <div class="alert alert-success" style="text-align:center;"><span class="glyphicon glyphicon-ok" ></span><em > {{ Session::get('message') }}</em></div>
-    @endif
+    @include('employeer.layout.message')
 	<!-- /Page Header -->
 	<div class="row">
         <div class="col-md-12">
             <div class="card custom-card">
-                <div class="card-header">
-                    <h4 class="card-title"><i class="far fa-file" aria-hidden="true"
-                            style="color:#fa921b;"></i>&nbsp;File Manager<span>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">
+                        <i class="far fa-file" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;File Manager List
                     </h4>
+                    <div class="row">
+                       <div class="col-auto">
+                           <form action="{{ route('exportTableData') }}" method="POST" id="exportForm" class="d-inline">
+                               @csrf
+                               <input type="hidden" name="data" id="data">
+                               <input type="hidden" name="headings" id="headings">
+                               <input type="hidden" name="filename" id="filename">
+                               {{-- put the value - that is your file name --}}
+                               <input type="hidden" id="filenameInput" value="File-Manager-List">
+                               <button type="submit" class="btn btn-success btn-sm">
+                                   <i class="fas fa-file-excel"></i> Export to Excel
+                               </button>
+                           </form>
+                       </div>
+                       <div class="col-auto">
+                           <form action="{{ route('exportPDF') }}" method="POST" id="exportPDFForm">
+                             @csrf
+                             <input type="hidden" name="data" id="pdfData">
+                             <input type="hidden" name="headings" id="pdfHeadings">
+                             <input type="hidden" name="filename" id="pdfFilename">
+                             <button type="submit" class="btn btn-info btn-sm">
+                                 <i class="fas fa-file-pdf"></i> Export to PDF
+                             </button>
+                         </form>
+                       </div>
+                   </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -146,53 +168,6 @@ $sidebarItems = \App\Helpers\Helper::getSidebarItems();
 
 @section('script')
 <script>
-   $(document).ready(function() {
-            $('#basic-datatables').DataTable({
-            });
-        
-            $('#multi-filter-select').DataTable( {
-                "pageLength": 5,
-                initComplete: function () {
-                    this.api().columns().every( function () {
-                        var column = this;
-                        var select = $('<select class="form-control"><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        .on( 'change', function () {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                                );
-        
-                            column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                        } );
-        
-                        column.data().unique().sort().each( function ( d, j ) {
-                            select.append( '<option value="'+d+'">'+d+'</option>' )
-                        } );
-                    } );
-                }
-            });
-        
-            // Add Row
-            $('#add-row').DataTable({
-                "pageLength": 5,
-            });
-        
-            var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-        
-            $('#addRowButton').click(function() {
-                $('#add-row').dataTable().fnAddData([
-                    $("#addName").val(),
-                    $("#addPosition").val(),
-                    $("#addOffice").val(),
-                    action
-                    ]);
-                $('#addRowModal').modal('hide');
-        
-            });
-        });
-
     function confirmDelete(url) {
         if (confirm("Are you sure you want to delete this holiday type?")) {
             window.location.href = url;

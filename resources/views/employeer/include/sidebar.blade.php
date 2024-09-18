@@ -26,6 +26,7 @@
             'items' => [
                 ['url' => 'organization/employee/employerdashboard', 'label' => 'Change Of Circumstances'],
                 ['url' => 'org-employee/change-of-circumstances-add', 'label' => 'Change Of Circumstances List'],
+                ['url' => 'org-dashboard/change-of-circumstances', 'label' => 'Change Of Circumstances List'],
             ]
         ],
         1 => [
@@ -194,7 +195,7 @@
                 ['url' => '#', 'label' => 'Payment Receipt'],
             ]
         ],
-        16 => [
+        23 => [
             'title' => 'Task Management',
             'icon' => 'la la-user',
             'items' => [

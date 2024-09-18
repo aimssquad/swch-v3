@@ -13,15 +13,15 @@
                 <h4 class="card-title"><i class="fas fa-briefcase"></i> Add Job Published</h4>
                 @endif 
 				<ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-					<li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Recruitment Dashboard</a></li>
 					<li class="breadcrumb-item active">Job Published</li>
 				</ul>
 			</div>
-            @include('employeer.layout.message')
 		</div>
 	</div>
 	<!-- /Page Header -->
+   @include('employeer.layout.message')
     <div class="row">
         <div class="card">
             <div class="card-body">

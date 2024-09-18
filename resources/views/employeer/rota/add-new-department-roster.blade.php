@@ -7,7 +7,8 @@
          <div class="col">
             <h3 class="page-title">Department Wise Duty Roaster</h3>
             <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
+               <li class="breadcrumb-item"><a href="{{url('rota-org/dashboard')}}">Rota Dashboard</a></li>
                <li class="breadcrumb-item active"> Add Department Wise Duty Roaster</li>
             </ul>
          </div>

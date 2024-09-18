@@ -32,7 +32,14 @@ class FilemanagmentControler extends Controller
     }
 
     public function dashboard(Request $request){
-      return view($this->_routePrefix . '.dashboard');
+      $email = Session::get('emp_email');
+      $user_email=Session::get('user_email');
+      $dataReg = Registration::where("email",$email)->first();
+      $organization_id = $dataReg['id'];
+      $data['file_devision_count']= fileDivision::where("organization_id",$organization_id)->count();
+      $data['file_manager_count'] = fileManager::where('organization_id', $dataReg->reg)->count();
+      //dd($data);
+      return view($this->_routePrefix . '.dashboard',$data);
     }
 
     public function filedivisionlist(Request $request){

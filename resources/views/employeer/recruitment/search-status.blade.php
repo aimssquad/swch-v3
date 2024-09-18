@@ -33,14 +33,14 @@ return $output;
             <h3 class="page-title">Status Search</h3>
             <ul class="breadcrumb">
                <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Home</a></li>
-               <li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="{{url('recruitment/dashboard')}}">Recruitment Dashboard</a></li>
                <li class="breadcrumb-item active">Status Search</li>
             </ul>
          </div>
-         @include('employeer.layout.message')
       </div>
    </div>
    <!-- /Page Header -->
+   @include('employeer.layout.message')
    <div class="row">
       <div class="col-md-12">
          <div class="card custom-card">
@@ -84,18 +84,35 @@ return $output;
       <div class="col-md-12">
          <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-               <h4 class="card-title"> Status Search</h4>
-               <div>
-                  <!-- Excel Link -->
-                  <a href="path_to_excel_export" class="btn btn-success btn-sm">
-                      <i class="fas fa-file-excel"></i> Export to Excel
-                  </a>
-                  
-                  <!-- PDF Link -->
-                  <a href="path_to_pdf_export" class="btn btn-info btn-sm">
-                      <i class="fas fa-file-pdf"></i> Export to PDF
-                  </a>
-              </div>
+               <h4 class="card-title">
+                  <i class="far fa-file" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;Status Search
+              </h4>
+              <div class="row">
+                 <div class="col-auto">
+                     <form action="{{ route('exportTableData') }}" method="POST" id="exportForm" class="d-inline">
+                         @csrf
+                         <input type="hidden" name="data" id="data">
+                         <input type="hidden" name="headings" id="headings">
+                         <input type="hidden" name="filename" id="filename">
+                         {{-- put the value - that is your file name --}}
+                         <input type="hidden" id="filenameInput" value="Status-search">
+                         <button type="submit" class="btn btn-success btn-sm">
+                             <i class="fas fa-file-excel"></i> Export to Excel
+                         </button>
+                     </form>
+                 </div>
+                 <div class="col-auto">
+                     <form action="{{ route('exportPDF') }}" method="POST" id="exportPDFForm">
+                       @csrf
+                       <input type="hidden" name="data" id="pdfData">
+                       <input type="hidden" name="headings" id="pdfHeadings">
+                       <input type="hidden" name="filename" id="pdfFilename">
+                       <button type="submit" class="btn btn-info btn-sm">
+                           <i class="fas fa-file-pdf"></i> Export to PDF
+                       </button>
+                   </form>
+                 </div>
+             </div>
                <?php
                   if(isset($result) && $result!=''  ){
                   ?>
@@ -154,52 +171,6 @@ return $output;
 @endsection
 @section('script')
 <script >
-    $(document).ready(function() {
-        $('#basic-datatables').DataTable({
-        });
-
-        $('#multi-filter-select').DataTable( {
-            "pageLength": 5,
-            initComplete: function () {
-                this.api().columns().every( function () {
-                    var column = this;
-                    var select = $('<select class="form-control"><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                            );
-
-                        column
-                        .search( val ? '^'+val+'$' : '', true, false )
-                        .draw();
-                    } );
-
-                    column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' )
-                    } );
-                } );
-            }
-        });
-
-        // Add Row
-        $('#add-row').DataTable({
-            "pageLength": 5,
-        });
-
-        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $('#addRowButton').click(function() {
-            $('#add-row').dataTable().fnAddData([
-                $("#addName").val(),
-                $("#addPosition").val(),
-                $("#addOffice").val(),
-                action
-                ]);
-            $('#addRowModal').modal('hide');
-
-        });
-    });
     function employeetype(val){
         var empid=val;
         
