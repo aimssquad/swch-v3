@@ -1,7 +1,7 @@
 <?php
 $arrrole = Session::get('empsu_role');
 $userType = Session::get('usersu_type');
-//dd($userType);
+//dd($arrrole);
 ?>
 <div class="sidebar sidebar-style-2">
     <div class="sidebar-wrapper scrollbar scrollbar-inner">

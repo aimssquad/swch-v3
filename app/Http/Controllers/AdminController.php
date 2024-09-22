@@ -58,6 +58,11 @@ class AdminController extends Controller
         }
     }
 
+    public function hh(Request $request){
+        //dd('opppp');
+        return view('sub-admin/dashboard');
+    }
+
     public function addadddress()
     {
         try {
@@ -79,7 +84,6 @@ class AdminController extends Controller
             if (!empty($email)) {
 
                 $usersu_type = Session::get('usersu_type');
-
                 $start_date = '';
                 if (isset($request->start_date)) {
                     $start_date = $request->start_date . ' 00:00:00';
@@ -95,8 +99,8 @@ class AdminController extends Controller
 
                  //dd($data);
 
-                if ($usersu_type == 'admin' || $usersu_type == 'user') {
-
+                if ($usersu_type == 'admin' || $usersu_type == 'user' || $usersu_type == 'sub-admin') {
+                    //dd('okk');
                     $assignedOrgs = DB::Table('role_authorization_admin_organ')
                         ->whereNotNull('role_authorization_admin_organ.module_name')
                         ->pluck('role_authorization_admin_organ.module_name');
@@ -671,7 +675,7 @@ class AdminController extends Controller
                             ->get();
 
                     } else {
-
+                        dd('okk');
                         $data['or_active'] = DB::Table('registration')
                             ->where('status', '=', 'active')
                         // ->where('verify', '=', 'not approved')
@@ -1346,9 +1350,12 @@ class AdminController extends Controller
                     //     ->get();
 
                 } else {
-
+                    //dd('pppp'); 
                 }
                 //dd($data);
+                if($usersu_type == 'sub-admin'){
+                    return view('sub-admin.dashboard', $data);
+                }
                 return View('admin/dashboard', $data);
             } else {
                 //dd($data);
@@ -1580,7 +1587,7 @@ class AdminController extends Controller
                     ->get();
                 }
                 //dd($data['bill_rs']);
-
+                return view('sub-admin/billing/billing-list',$data);
                 return View('admin/billing-list', $data);
             } else {
                 return redirect('superadmin');
@@ -1772,7 +1779,7 @@ class AdminController extends Controller
                 $data['tax_rs'] = DB::Table('tax_bill')
                     ->where('status', '=', 'active')
                     ->get();
-
+                return view('sub-admin/billing/billing-add-new', $data);
                 return View('admin/billing-add-new', $data);
 
             } else {
@@ -3315,8 +3322,10 @@ class AdminController extends Controller
                         Session::put('org_code', $organization_code);
                         // return redirect()->intended('subadmindasboard');superadmindasboard
                         return redirect()->intended('superadmindasboard');
+                        //dd('okk');
+                        //return redirect("sub-admin/dashboard");
                     }
-                    // dd("hello");
+                    //dd("hello");
                     // $randomNumber = mt_rand(100000, 999999);
                     // $base_url = env('BASE_URL');
                     // $data = ["otp" =>$randomNumber, "name" => $Employee->name, "url" => $base_url];
@@ -3557,8 +3566,8 @@ class AdminController extends Controller
                 }
 
                 $this->addAdminLog(3, 'Organisation - Active Organisation list view.');
-
-                return view('admin/activecompany', $data);
+                return View('sub-admin/organization/activecompany',$data);
+                //return view('admin/activecompany', $data);
             } else {
                 return redirect('superadmin');
             }
@@ -3694,7 +3703,8 @@ class AdminController extends Controller
 
                 $this->addAdminLog(3, 'Organisation - Verified Organisation list view.');
         //dd($data);
-                return view('admin/verifycompany', $data);
+                //return view('admin/verifycompany', $data);
+                return view('sub-admin/organization/verifycompany',$data);
             } else {
                 return redirect('superadmin');
             }
@@ -3950,8 +3960,8 @@ class AdminController extends Controller
                 $this->addAdminLog(3, 'Organisation - Not Verified Organisation list view.');
 
 
-
-                return view('admin/notverifycompany', $data);
+                return view('sub-admin/organization/notverifycompany',$data);
+                //return view('admin/notverifycompany', $data);
             } else {
                 return redirect('superadmin');
             }
@@ -15915,7 +15925,9 @@ class AdminController extends Controller
                     ->get();
 
                 $this->addAdminLog(4, 'Billing - Tax Master view.');
-                return view('admin/taxbill', $data);
+                //dd($data);
+                return view('sub-admin/billing/taxbill',$data);
+                //return view('admin/taxbill', $data);
             } else {
                 return redirect('superadmin');
             }
@@ -15938,8 +15950,8 @@ class AdminController extends Controller
                         throw new \App\Exceptions\AdminException('You are not authorized to access this section.');
                     }
                 }
-
-                return view('admin/add-new-taxbill');
+                return view('sub-admin/billing/add-new-taxbill');
+                //return view('admin/add-new-taxbill');
             } else {
                 return redirect('superadmin');
             }
@@ -16005,7 +16017,7 @@ class AdminController extends Controller
                 }
 
                 $data['employee_type'] = DB::table('tax_bill')->where('id', base64_decode($id))->first();
-
+                return view('sub-admin/billing/add-new-taxbill',$data);
                 return view('admin/add-new-taxbill', $data);
             } else {
                 return redirect('superadmin');

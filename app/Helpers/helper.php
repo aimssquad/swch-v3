@@ -52,7 +52,7 @@ class Helper
                 }
             }
         }
-        //  dd($sidebarItems);
+          //dd($sidebarItems);
         return $sidebarItems;
     }
 }
