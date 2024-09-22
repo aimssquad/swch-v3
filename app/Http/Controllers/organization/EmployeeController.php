@@ -15,6 +15,7 @@ use Exception;
 class EmployeeController extends Controller
 {
     //
+    protected $_routePrefix;
     public function __construct()
     {
         $this->_module      = 'Organization';
@@ -751,108 +752,202 @@ class EmployeeController extends Controller
                     ->where('emid', '=', $Roledata->reg)
                     ->update($dataupdate);
 
-                $datachangecir = array(
 
-                    'emp_fname' => strtoupper($request->emp_fname),
-                    'emp_mname' => strtoupper($request->emp_mid_name),
-                    'emp_lname' => strtoupper($request->emp_lname),
+                    // new code for change of circumtances 
+                    $existingData = DB::table('change_circumstances_history')
+                    ->where('emp_code', $decrypted_id)
+                    ->where('emid', $Roledata->reg)
+                    ->latest('date_change')  // Get the latest record if there are multiple
+                    ->first();
 
-                    'visa_upload_doc' => $sm_cch_visa_upload_doc,
-                    'visaback_doc' => $sm_cch_visaback_doc,
+                    $datachangecir = array(
+                        'emp_fname' => strtoupper($request->emp_fname),
+                        'emp_mname' => strtoupper($request->emp_mid_name),
+                        'emp_lname' => strtoupper($request->emp_lname),
+                        'visa_upload_doc' => $sm_cch_visa_upload_doc,
+                        'visaback_doc' => $sm_cch_visaback_doc,
+                        'pass_docu' => $sm_cch_pass_docu,
+                        'pr_add_proof' => $sm_cch_pr_add_proof,
+                        'emp_designation' => $request->emp_designation,
+                        'emp_ps_phone' => $request->emp_ps_phone,
+                        'nationality' => $request->nationality,
+                        'ni_no' => $request->ni_no,
+                        'pass_doc_no' => $request->pass_doc_no,
+                        'pass_nat' => $request->pass_nat,
+                        'place_birth' => $request->place_birth,
+                        'issue_by' => $request->issue_by,
+                        'pas_iss_date' => date('Y-m-d', strtotime($request->pas_iss_date)),
+                        'pass_exp_date' => date('Y-m-d', strtotime($request->pass_exp_date)),
+                        'pass_review_date' => date('Y-m-d', strtotime($request->pass_review_date)),
+                        'remarks' => $request->remarks,
+                        'cur_pass' => $request->cur_pass,
+                        'visa_doc_no' => $request->visa_doc_no,
+                        'visa_nat' => $request->visa_nat,
+                        'visa_issue' => $request->visa_issue,
+                        'visa_issue_date' => date('Y-m-d', strtotime($request->visa_issue_date)),
+                        'visa_exp_date' => date('Y-m-d', strtotime($request->visa_exp_date)),
+                        'visa_review_date' => date('Y-m-d', strtotime($request->visa_review_date)),
+                        'country_residence' => $request->country_residence,
+                        'visa_remarks' => $request->visa_remarks,
+                        'visa_cur' => $request->visa_cur,
+                        'dbs_ref_no' => $request->dbs_ref_no,
+                        'dbs_nation' => $request->dbs_nation,
+                        'dbs_issue_date' => date('Y-m-d', strtotime($request->dbs_issue_date)),
+                        'dbs_exp_date' => date('Y-m-d', strtotime($request->dbs_exp_date)),
+                        'dbs_review_date' => date('Y-m-d', strtotime($request->dbs_review_date)),
+                        'dbs_cur' => $request->dbs_cur,
+                        'dbs_remarks' => $request->dbs_remarks,
+                        'dbs_type' => $request->dbs_type,
+                        'euss_ref_no' => $request->euss_ref_no,
+                        'euss_nation' => $request->euss_nation,
+                        'euss_issue_date' => date('Y-m-d', strtotime($request->euss_issue_date)),
+                        'euss_exp_date' => date('Y-m-d', strtotime($request->euss_exp_date)),
+                        'euss_review_date' => date('Y-m-d', strtotime($request->euss_review_date)),
+                        'euss_cur' => $request->euss_cur,
+                        'euss_remarks' => $request->euss_remarks,
+                        'nat_id_no' => $request->nat_id_no,
+                        'nat_nation' => $request->nat_nation,
+                        'nat_country_res' => $request->nat_country_res,
+                        'nat_issue_date' => date('Y-m-d', strtotime($request->nat_issue_date)),
+                        'nat_exp_date' => date('Y-m-d', strtotime($request->nat_exp_date)),
+                        'nat_review_date' => date('Y-m-d', strtotime($request->nat_review_date)),
+                        'nat_cur' => $request->nat_cur,
+                        'nat_remarks' => $request->nat_remarks,
+                        'emp_dob' => date('Y-m-d', strtotime($request->emp_dob)),
+                        'emp_pr_street_no' => $request->emp_pr_street_no,
+                        'emp_per_village' => $request->emp_per_village,
+                        'emp_pr_city' => $request->emp_pr_city,
+                        'emp_pr_country' => $request->emp_pr_country,
+                        'emp_pr_pincode' => $request->emp_pr_pincode,
+                        'emp_pr_state' => $request->emp_pr_state,
+                        'emp_ps_street_no' => $request->emp_ps_street_no,
+                        'emp_ps_village' => $request->emp_ps_village,
+                        'emp_ps_city' => $request->emp_ps_city,
+                        'emp_ps_country' => $request->emp_ps_country,
+                        'emp_ps_pincode' => $request->emp_ps_pincode,
+                        'emp_ps_state' => $request->emp_ps_state,
+                        'emp_code' => $decrypted_id,
+                        'emid' => $Roledata->reg,
+                        'date_change' => date('Y-m-d', strtotime($request->emp_doj)),
+                    );
 
-                    'pass_docu' => $sm_cch_pass_docu,
-                    'pr_add_proof' => $sm_cch_pr_add_proof,
+                    if ($existingData) {
+                        $existingDataArray = (array)$existingData;
+                        unset($existingDataArray['id'], $existingDataArray['date_change'], $existingDataArray['created_at'], $existingDataArray['updated_at']);
+                        $changes = array_diff_assoc($datachangecir, $existingDataArray);
+                    } else {
+                        $changes = $datachangecir;
+                    }
 
-                    'emp_designation' => $request->emp_designation,
+                    if (!empty($changes)) {
+                        DB::table('change_circumstances_history')->insert($datachangecir);
+                    }
+                    DB::table('circumemployee_other_doc_history')
+                        ->where('emp_code', '=', $decrypted_id)
+                        ->where('emid', '=', $Roledata->reg)
+                        ->delete();
 
-                    'emp_ps_phone' => $request->emp_ps_phone,
+                // old code by ranjan 
+                // $datachangecir = array(
 
-                    'nationality' => $request->nationality,
-                    'ni_no' => $request->ni_no,
-                    'pass_doc_no' => $request->pass_doc_no,
-                    'pass_nat' => $request->pass_nat,
-                    'place_birth' => $request->place_birth,
-                    'issue_by' => $request->issue_by,
-                    'pas_iss_date' => date('Y-m-d', strtotime($request->pas_iss_date)),
-                    'pass_exp_date' => date('Y-m-d', strtotime($request->pass_exp_date)),
-                    'pass_review_date' => date('Y-m-d', strtotime($request->pass_review_date)),
+                //     'emp_fname' => strtoupper($request->emp_fname),
+                //     'emp_mname' => strtoupper($request->emp_mid_name),
+                //     'emp_lname' => strtoupper($request->emp_lname),
 
-                    'remarks' => $request->remarks,
-                    'cur_pass' => $request->cur_pass,
+                //     'visa_upload_doc' => $sm_cch_visa_upload_doc,
+                //     'visaback_doc' => $sm_cch_visaback_doc,
 
-                    'visa_doc_no' => $request->visa_doc_no,
-                    'visa_nat' => $request->visa_nat,
-                    'visa_issue' => $request->visa_issue,
-                    'visa_issue_date' => date('Y-m-d', strtotime($request->visa_issue_date)),
-                    'visa_exp_date' => date('Y-m-d', strtotime($request->visa_exp_date)),
-                    'visa_review_date' => date('Y-m-d', strtotime($request->visa_review_date)),
-                    'country_residence' => $request->country_residence,
-                    'visa_remarks' => $request->visa_remarks,
-                    'visa_cur' => $request->visa_cur,
+                //     'pass_docu' => $sm_cch_pass_docu,
+                //     'pr_add_proof' => $sm_cch_pr_add_proof,
 
-                    'dbs_ref_no' => $request->dbs_ref_no,
-                    'dbs_nation' => $request->dbs_nation,
-                    'dbs_issue_date' => date('Y-m-d', strtotime($request->dbs_issue_date)),
-                    'dbs_exp_date' => date('Y-m-d', strtotime($request->dbs_exp_date)),
-                    'dbs_review_date' => date('Y-m-d', strtotime($request->dbs_review_date)),
-                    'dbs_cur' => $request->dbs_cur,
-                    'dbs_remarks' => $request->dbs_remarks,
-                    'dbs_type' => $request->dbs_type,
+                //     'emp_designation' => $request->emp_designation,
 
-                    'euss_ref_no' => $request->euss_ref_no,
-                    'euss_nation' => $request->euss_nation,
-                    'euss_issue_date' => date('Y-m-d', strtotime($request->euss_issue_date)),
-                    'euss_exp_date' => date('Y-m-d', strtotime($request->euss_exp_date)),
-                    'euss_review_date' => date('Y-m-d', strtotime($request->euss_review_date)),
-                    'euss_cur' => $request->euss_cur,
-                    'euss_remarks' => $request->euss_remarks,
+                //     'emp_ps_phone' => $request->emp_ps_phone,
 
-                    'nat_id_no' => $request->nat_id_no,
-                    'nat_nation' => $request->nat_nation,
-                    'nat_country_res' => $request->nat_country_res,
-                    'nat_issue_date' => date('Y-m-d', strtotime($request->nat_issue_date)),
-                    'nat_exp_date' => date('Y-m-d', strtotime($request->nat_exp_date)),
-                    'nat_review_date' => date('Y-m-d', strtotime($request->nat_review_date)),
-                    'nat_cur' => $request->nat_cur,
+                //     'nationality' => $request->nationality,
+                //     'ni_no' => $request->ni_no,
+                //     'pass_doc_no' => $request->pass_doc_no,
+                //     'pass_nat' => $request->pass_nat,
+                //     'place_birth' => $request->place_birth,
+                //     'issue_by' => $request->issue_by,
+                //     'pas_iss_date' => date('Y-m-d', strtotime($request->pas_iss_date)),
+                //     'pass_exp_date' => date('Y-m-d', strtotime($request->pass_exp_date)),
+                //     'pass_review_date' => date('Y-m-d', strtotime($request->pass_review_date)),
 
-                    'nat_remarks' => $request->nat_remarks,
+                //     'remarks' => $request->remarks,
+                //     'cur_pass' => $request->cur_pass,
+
+                //     'visa_doc_no' => $request->visa_doc_no,
+                //     'visa_nat' => $request->visa_nat,
+                //     'visa_issue' => $request->visa_issue,
+                //     'visa_issue_date' => date('Y-m-d', strtotime($request->visa_issue_date)),
+                //     'visa_exp_date' => date('Y-m-d', strtotime($request->visa_exp_date)),
+                //     'visa_review_date' => date('Y-m-d', strtotime($request->visa_review_date)),
+                //     'country_residence' => $request->country_residence,
+                //     'visa_remarks' => $request->visa_remarks,
+                //     'visa_cur' => $request->visa_cur,
+
+                //     'dbs_ref_no' => $request->dbs_ref_no,
+                //     'dbs_nation' => $request->dbs_nation,
+                //     'dbs_issue_date' => date('Y-m-d', strtotime($request->dbs_issue_date)),
+                //     'dbs_exp_date' => date('Y-m-d', strtotime($request->dbs_exp_date)),
+                //     'dbs_review_date' => date('Y-m-d', strtotime($request->dbs_review_date)),
+                //     'dbs_cur' => $request->dbs_cur,
+                //     'dbs_remarks' => $request->dbs_remarks,
+                //     'dbs_type' => $request->dbs_type,
+
+                //     'euss_ref_no' => $request->euss_ref_no,
+                //     'euss_nation' => $request->euss_nation,
+                //     'euss_issue_date' => date('Y-m-d', strtotime($request->euss_issue_date)),
+                //     'euss_exp_date' => date('Y-m-d', strtotime($request->euss_exp_date)),
+                //     'euss_review_date' => date('Y-m-d', strtotime($request->euss_review_date)),
+                //     'euss_cur' => $request->euss_cur,
+                //     'euss_remarks' => $request->euss_remarks,
+
+                //     'nat_id_no' => $request->nat_id_no,
+                //     'nat_nation' => $request->nat_nation,
+                //     'nat_country_res' => $request->nat_country_res,
+                //     'nat_issue_date' => date('Y-m-d', strtotime($request->nat_issue_date)),
+                //     'nat_exp_date' => date('Y-m-d', strtotime($request->nat_exp_date)),
+                //     'nat_review_date' => date('Y-m-d', strtotime($request->nat_review_date)),
+                //     'nat_cur' => $request->nat_cur,
+
+                //     'nat_remarks' => $request->nat_remarks,
 
 
 
-                    'emp_dob' => date('Y-m-d', strtotime($request->emp_dob)),
-                    'emp_pr_street_no' => $request->emp_pr_street_no,
-                    'emp_per_village' => $request->emp_per_village,
-                    'emp_pr_city' => $request->emp_pr_city,
-                    'emp_pr_country' => $request->emp_pr_country,
-                    'emp_pr_pincode' => $request->emp_pr_pincode,
-                    'emp_pr_state' => $request->emp_pr_state,
+                //     'emp_dob' => date('Y-m-d', strtotime($request->emp_dob)),
+                //     'emp_pr_street_no' => $request->emp_pr_street_no,
+                //     'emp_per_village' => $request->emp_per_village,
+                //     'emp_pr_city' => $request->emp_pr_city,
+                //     'emp_pr_country' => $request->emp_pr_country,
+                //     'emp_pr_pincode' => $request->emp_pr_pincode,
+                //     'emp_pr_state' => $request->emp_pr_state,
 
-                    'emp_ps_street_no' => $request->emp_ps_street_no,
-                    'emp_ps_village' => $request->emp_ps_village,
-                    'emp_ps_city' => $request->emp_ps_city,
-                    'emp_ps_country' => $request->emp_ps_country,
-                    'emp_ps_pincode' => $request->emp_ps_pincode,
-                    'emp_ps_state' => $request->emp_ps_state,
+                //     'emp_ps_street_no' => $request->emp_ps_street_no,
+                //     'emp_ps_village' => $request->emp_ps_village,
+                //     'emp_ps_city' => $request->emp_ps_city,
+                //     'emp_ps_country' => $request->emp_ps_country,
+                //     'emp_ps_pincode' => $request->emp_ps_pincode,
+                //     'emp_ps_state' => $request->emp_ps_state,
 
-                    'emp_code' => $decrypted_id,
-                    'emid' => $Roledata->reg,
-                    'hr' => '',
-                    'home' => '',
-                    'res_remark' => '',
+                //     'emp_code' => $decrypted_id,
+                //     'emid' => $Roledata->reg,
+                //     'hr' => '',
+                //     'home' => '',
+                //     'res_remark' => '',
 
-                    'date_change' => date('Y-m-d', strtotime($request->emp_doj)),
-                    'change_last' => '',
-                    'stat_chage' => '',
+                //     'date_change' => date('Y-m-d', strtotime($request->emp_doj)),
+                //     'change_last' => '',
+                //     'stat_chage' => '',
 
-                    'unique_law' => '',
-                    'repo_ab' => '',
-                    'laeve_date' => '',
+                //     'unique_law' => '',
+                //     'repo_ab' => '',
+                //     'laeve_date' => '',
 
-                );
-
-                DB::table('change_circumstances_history')->insert($datachangecir);
-
-                DB::table('circumemployee_other_doc_history')->where('emp_code', '=', $decrypted_id)->where('emid', '=', $Roledata->reg)->delete();
+                // );
+                // DB::table('change_circumstances_history')->insert($datachangecir);
+                // DB::table('circumemployee_other_doc_history')->where('emp_code', '=', $decrypted_id)->where('emid', '=', $Roledata->reg)->delete();
 
                 $employee_otherd_doc_rs = DB::table('employee_other_doc')
 

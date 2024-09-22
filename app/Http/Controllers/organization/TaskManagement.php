@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskManagement extends Controller
 {
-    
+    protected $_routePrefix;
     public function __construct()
     {
         $this->_module      = 'Organization';
@@ -43,11 +43,9 @@ class TaskManagement extends Controller
                     ->where('email', '=', $email)
                     ->first();
 
-                $projects = $this->projectModel
-
-                    ->where('projects.emid', $Roledata->reg)
+                $projects = Project::where('projects.emid', $Roledata->reg)
                     ->leftJoin('users as u', 'u.id', '=', 'projects.createdBy')
-                    ->select('projects.*',  'u.name as owner')
+                    ->select('projects.*', 'u.name as owner')
                     ->get();
                 foreach ($projects as $k => $p) {
                     $projects[$k]['members'] = DB::select(DB::raw('select * from project_members where project_id=' . $p->id));

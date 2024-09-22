@@ -4,10 +4,10 @@ namespace App\Http\Controllers\organization;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserModel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Mail;
 use Exception;
-use PDF;
 use Session;
 use DB;
 
@@ -178,7 +178,7 @@ class OrganizationController extends Controller
             ->where('email', '=', $email)
             ->first();
          //dd($data['companies_rs']);
-         $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('my-profile-pdf', $data);
+         $pdf = Pdf::loadView('my-profile-pdf', $data);
          return $pdf->download('profile.pdf');
         //return view($this->_routePrefix . '.profile',$data);
     }

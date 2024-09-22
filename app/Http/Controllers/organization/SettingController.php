@@ -189,7 +189,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -304,7 +304,7 @@ class SettingController extends Controller
           Session::flash('error', 'Sub Cast Already Exits.');
           return redirect('org-settings/add-sub-caste');
         }
-        return redirect('org-settings/vw-subcast');
+        //return redirect('org-settings/vw-subcast');
       }
     }
 
@@ -403,7 +403,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -491,7 +491,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -585,7 +585,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -710,7 +710,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -793,7 +793,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -864,7 +864,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -921,7 +921,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -952,7 +952,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -1051,7 +1051,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1081,7 +1081,7 @@ class SettingController extends Controller
             return redirect('/');
         }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1120,7 +1120,7 @@ class SettingController extends Controller
             return redirect('/');
         }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1219,7 +1219,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1248,7 +1248,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1271,7 +1271,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1331,7 +1331,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -1357,7 +1357,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1392,7 +1392,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1421,7 +1421,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1500,7 +1500,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1531,7 +1531,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1566,7 +1566,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1668,7 +1668,7 @@ class SettingController extends Controller
             }
 
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1697,7 +1697,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1723,7 +1723,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1792,7 +1792,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1820,7 +1820,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1847,7 +1847,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1909,7 +1909,7 @@ class SettingController extends Controller
             return redirect('/');
         }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -1938,7 +1938,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1962,7 +1962,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -2008,7 +2008,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
     }
@@ -2039,7 +2039,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -2065,7 +2065,7 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -2101,12 +2101,13 @@ class SettingController extends Controller
                         'tax_ref' => 'required|max:255',
 
                     ],
-                        [
-                            'per_de.required' => 'Tax Code Required.',
-                            'per_de.required' => 'Percentage of Deduction Required',
-                            'tax_ref.required' => 'Tax Reference Required',
+                        // [
+                        //     'per_de.required' => 'Tax Code Required.',
+                        //     'per_de.required' => 'Percentage of Deduction Required',
+                        //     'tax_ref.required' => 'Tax Reference Required',
 
-                        ]);
+                        // ]
+                    );
 
                     if ($validator->fails()) {
                         return redirect('org-settings/tax')
@@ -2132,16 +2133,9 @@ class SettingController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
-
-
-
-
-
-
-
 
 
 

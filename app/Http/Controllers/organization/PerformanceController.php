@@ -12,7 +12,7 @@ use Session;
 
 class PerformanceController extends Controller
 {
-    
+    protected $_routePrefix;
     public function __construct()
     {
         $this->_module      = 'Organization';

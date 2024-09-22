@@ -21,6 +21,7 @@ use App\Models\RoleAuthorization;
 
 class UseraceesController extends Controller
 {
+    protected $_routePrefix;
     public function __construct()
     {
         $this->_module      = 'Organization';
@@ -76,7 +77,7 @@ class UseraceesController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -135,7 +136,7 @@ class UseraceesController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException();
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -198,7 +199,7 @@ class UseraceesController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -278,7 +279,7 @@ class UseraceesController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -329,7 +330,7 @@ class UseraceesController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -367,7 +368,7 @@ class UseraceesController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -470,7 +471,7 @@ class UseraceesController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -497,7 +498,7 @@ class UseraceesController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -520,7 +521,7 @@ class UseraceesController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 

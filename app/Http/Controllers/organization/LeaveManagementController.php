@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\organization;
 
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use view;
 use Validator;
@@ -10,7 +11,6 @@ use Session;
 use DB;
 use Illuminate\Support\Facades\Input;
 use Auth;
-use PDF;
 use App\Exports\ExcelFileExportBalance;
 use App\Exports\ExcelFileExportLeaveEmployee;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,6 +25,7 @@ use App\Models\leaveAllocation;
 
 class LeaveManagementController extends Controller
 {
+    protected $_routePrefix;
     public function __construct()
     {
         $this->_module      = 'Organization';
@@ -82,7 +83,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -117,7 +118,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -136,7 +137,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -224,7 +225,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -252,7 +253,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -307,7 +308,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -342,7 +343,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -451,7 +452,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -493,7 +494,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -534,7 +535,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -568,7 +569,7 @@ class LeaveManagementController extends Controller
               return redirect('/');
        }
 	    }catch(Exception $e){
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 	}
 
@@ -676,8 +677,7 @@ class LeaveManagementController extends Controller
                 return redirect('/');
         }
 	    }catch(Exception $e){
-	         return redirect('leave/save-leave-allocation');
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 
 	}
@@ -773,7 +773,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -820,7 +820,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -890,7 +890,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -942,7 +942,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -967,7 +967,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1097,7 +1097,7 @@ class LeaveManagementController extends Controller
             }
         } catch (Exception $e) {
             //dd('lll');
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1122,7 +1122,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1179,7 +1179,7 @@ class LeaveManagementController extends Controller
                     return redirect('/');
             }
 	    }catch(Exception $e){
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
 	}
 
@@ -1311,7 +1311,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -1424,7 +1424,7 @@ class LeaveManagementController extends Controller
                 return redirect("/");
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 

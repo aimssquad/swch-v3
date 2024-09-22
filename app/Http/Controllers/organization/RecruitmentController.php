@@ -4,6 +4,7 @@ namespace App\Http\Controllers\organization;
 use App\Http\Controllers\Controller;
 use App\Exports\ExcelFileExport;
 use App\Exports\ExcelFileExportStatus;
+use Barryvdh\DomPDF\Facade\Pdf;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -11,7 +12,6 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Request as Input;
 use Maatwebsite\Excel\Facades\Excel;
 use Mail;
-use PDF;
 use Session;
 use view;
 use ZipArchive;
@@ -33,8 +33,10 @@ use App\Models\CompanyJobs;
 use App\Models\job_post;
 use App\Models\Registration;
 
+
 class RecruitmentController extends Controller
 {
+    protected $_routePrefix;
     public function __construct()
     {
         $this->_module      = 'Organization';
@@ -555,7 +557,8 @@ class RecruitmentController extends Controller
                     return view($this->_routePrefix . '.add-new-job-list');
                     //return view('recruitment/add-new-job-list', $data);
                 } else {
-                    return redirect('org-recruitment/add-new-job-list', $data);
+                    
+                    return redirect('org-recruitment/add-new-job-list');
                 }
             }
             
@@ -1596,7 +1599,7 @@ class RecruitmentController extends Controller
 
             $datap = ['com_name' => $Roledata->com_name, 'com_logo' => $Roledata->logo, 'address' => $Roledata->address . ',' . $Roledata->address2 . ',' . $Roledata->road, 'addresssub' => $Roledata->city . ',' . $Roledata->zip . ',' . $Roledata->country,
                 'date' => date('Y-m-d'), 'name' => $job->name, 'job_title' => $job->job_title, 'st_date' => date('Y-m-d', strtotime($request->date_jo)), 'em_name' => $job->name, 'em_pos' => $job->job_title];
-            $pdf = PDF::loadView('myPDF', $datap);
+            $pdf = Pdf::loadView('myPDF', $datap);
 
             $pdf->save(public_path() . '/pdf/' . $filename);
             $data = array(
