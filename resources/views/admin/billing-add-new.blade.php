@@ -439,37 +439,37 @@
 
 
 
-    <?php
+        <?php
 
-$aryytestsys = array();
+            $aryytestsys = array();
 
-foreach ($or_de as $billdept) {
+            foreach ($or_de as $billdept) {
 
-    $aryytestsys[] = '"' . $billdept->com_name . '"';
-}
-$strpsys = implode(',', $aryytestsys);
+                $aryytestsys[] = '"' . $billdept->com_name . '"';
+            }
+            $strpsys = implode(',', $aryytestsys);
 
-$canarr = array();
-foreach ($candidate_rs as $cans) {
+            $canarr = array();
+            foreach ($candidate_rs as $cans) {
 
-    $canarr[] = '"' . $cans->name . '"';
-}
-$strpcant = implode(',', $canarr);
+                $canarr[] = '"' . $cans->name . '"';
+            }
+            $strpcant = implode(',', $canarr);
 
-?>
+        ?>
     <script src="{{ asset('js/jquery.autosuggest.js')}}"></script>
     <script>
-    var component_name = [<?=$strpsys;?>];
-    console.log(component_name);
-    $("#emidname").autosuggest({
-        sugggestionsArray: component_name
-    });
+        var component_name = [<?=$strpsys;?>];
+        console.log(component_name);
+        $("#emidname").autosuggest({
+            sugggestionsArray: component_name
+        });
 
-    var can_name = [<?=$strpcant;?>];
-    console.log(can_name);
-    $("#canidate_name").autosuggest({
-        sugggestionsArray: can_name
-    });
+        var can_name = [<?=$strpcant;?>];
+        console.log(can_name);
+        $("#canidate_name").autosuggest({
+            sugggestionsArray: can_name
+        });
 
     function checktypebillneww(val) {
         if (val == 'Organisation') {
@@ -619,7 +619,7 @@ $strpcant = implode(',', $canarr);
     function checkcandidate(val) {
         var empid = val;
         var emplpyee = document.getElementById("emid").value;
-//alert("{{url('pis/getremidnamepaykkByIdnecandidatenameinvc')}}/" + empid + '/' + emplpyee);
+    //alert("{{url('pis/getremidnamepaykkByIdnecandidatenameinvc')}}/" + empid + '/' + emplpyee);
         $.ajax({
             type: 'GET',
             url: "{{url('pis/getremidnamepaykkByIdnecandidatenameinvc')}}/" + empid + '/' + emplpyee,
@@ -726,7 +726,7 @@ $strpcant = implode(',', $canarr);
         var discount_input = document.getElementById("discount" + row).value;
         var discount_type = document.getElementById("discount_type" + row).value;
 
-    //    console.log(discount_type);
+        //    console.log(discount_type);
 
         var discount = 0;
 

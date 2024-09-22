@@ -2016,6 +2016,67 @@ class RecruitmentController extends Controller
             return redirect('/');
         }
     }
+
+    public function viewsendcandidatedetailsjobshorting($send_id)
+    {
+        if (!empty(Session::get('emp_email'))) {
+            $email = Session::get('emp_email');
+            $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+                ->where('email', '=', $email)
+                ->first();
+            $pdf = '';
+            $fo = '';
+            $job = DB::table('candidate')->where('id', '=', base64_decode($send_id))->first();
+            $job_d = DB::table('company_job')->where('id', '=', $job->job_id)->first();
+
+            $job_history = DB::table('candidate_history')->where('user_id', '=', base64_decode($send_id))
+
+                ->where('status', '=', 'Interview')
+
+                ->orderBy('id', 'desc')->first();
+
+            //dd($job_history);
+
+            $dataup = array('name' => $job->name, 'pos' => $job->job_title, 'job_code' => $job_d->job_code, 'status' => $job->status,
+                'date' => date('Y-m-d', strtotime($job_history->date)), 'from_time' => $job->from_time, 'to_time' => $job->to_time,
+                'place' => $job->place, 'panel' => $job->panel, 'Roledata' => $Roledata, 'job_d' => $job_d);
+
+            // dd($Roledata);
+            if (isset($job->email) && $job->email != '' && $job->email != null) {
+
+                $toemail = $job->email;
+                //$toemail = 'm.subhasish@gmail.com';
+
+                Mail::send('mailjobapplyinterview', $dataup, function ($message) use ($toemail) {
+                    $message->to($toemail, 'Workpermitcloud')->subject
+                        ('Interview Confirmation');
+
+                    $message->from('noreply@workpermitcloud.co.uk', 'Workpermitcloud');
+                });
+            }
+
+            if (isset($Roledata->authemail) && $Roledata->authemail != '' && $Roledata->authemail != null) {
+
+                $toemail = $Roledata->authemail;
+                //$toemail = 'm.subhasish@gmail.com';
+
+                Mail::send('mailjobapplyinterview', $dataup, function ($message) use ($toemail) {
+                    $message->to($toemail, 'Workpermitcloud')->subject
+                        ('Interview Confirmation');
+
+                    $message->from('noreply@workpermitcloud.co.uk', 'Workpermitcloud');
+                });
+            }
+
+            Session::flash('message', 'Job Interview  send Successfully.');
+
+            return redirect('org-recruitment/interview');
+        } else {
+            return redirect('/');
+        }
+
+    }
     
 
 

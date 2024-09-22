@@ -13,6 +13,7 @@ use App\InterviewCandidate;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\organization\OrganizationController;
+use App\Http\Controllers\AdminController;
 
 
 /*
@@ -412,12 +413,6 @@ Route::get('recruitment/dashboard', 'App\Http\Controllers\organization\Recruitme
 
 Route::get('recruitment/job_posting', 'App\Http\Controllers\organization\RecruitmentController@jobPosting')->name('recruitment.job-posting');
 Route::get('recruitment/job_published', 'App\Http\Controllers\organization\RecruitmentController@jobPublished')->name('recruitment.job-published');
-// Route::get('recruitment/job_applied', 'App\Http\Controllers\organization\RecruitmentController@jobApplied')->name('recruitment.job-applied');
-// Route::get('recruitment/short_listing', 'App\Http\Controllers\organization\RecruitmentController@shortListing')->name('recruitment.short-listing');
-// Route::get('recruitment/interview_result', 'App\Http\Controllers\organization\RecruitmentController@interview')->name('recruitment.interview_result');
-// Route::get('recruitment/hired_list', 'App\Http\Controllers\organization\RecruitmentController@hired')->name('recruitment.hired-list');
-// Route::get('recruitment/offer_letter', 'App\Http\Controllers\organization\RecruitmentController@offerLetter')->name('recruitment.offer-letter');
-// Route::get('recruitment/rejected', 'App\Http\Controllers\organization\RecruitmentController@rejected')->name('recruitment.rejected');
 
 Route::get('recruitment/edit_candidate/{candidate_id}', 'App\Http\Controllers\organization\RecruitmentController@candidateDetailsView')->name('edit-candidates');
 Route::post('recruitment/edit_candidate', 'App\Http\Controllers\RecruitmentController@savecandidatedetails');
@@ -446,6 +441,7 @@ Route::post('org-recruitment/edit-short-listing', 'App\Http\Controllers\organiza
 Route::get('org-recruitment/interview', 'App\Http\Controllers\organization\RecruitmentController@viewinterviewcandidate');
 Route::get('org-recruitment/edit-interview/{interview_id}', 'App\Http\Controllers\organization\RecruitmentController@viewinterviewcandidatedetails');
 Route::post('org-recruitment/edit-interview', 'App\Http\Controllers\organization\RecruitmentController@saveinterviewcandidatedetails');
+Route::get('org-recruitment/send-letter-job-shorting/{send_id}', 'App\Http\Controllers\organization\RecruitmentController@viewsendcandidatedetailsjobshorting');
 
 Route::get('org-recruitment/hired', 'App\Http\Controllers\organization\RecruitmentController@viewhiredcandidate');
 
@@ -471,6 +467,13 @@ Route::post('org-recruitment/add-message-centre', 'App\Http\Controllers\organiza
 
 
 //-----------------------------End Recruitment Section -------------------------------------------------------------
+#####################################################Sub-admin###############################################
+Route::get('sub-admin/dashboard', [AdminController::class, 'hh'])->name('sub-admin.dashboard');
+######################################################################################
+
+
+
+
 
 
 // old route
