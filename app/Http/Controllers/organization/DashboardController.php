@@ -3,18 +3,26 @@
 namespace App\Http\Controllers\organization;
 
 use App\Http\Controllers\Controller;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Exports\ExcelFileExportStaff;
 use Maatwebsite\Excel\Facades\Excel;
 use DB;
 use Mail;
+use Exception;
 use URL;
-use PDF;
 use Session;
 use view;
+use Carbon\Carbon;
+use App\Exports\CircumstancesExport;
+
+
 
 class DashboardController extends Controller
 {
+    protected $_module;
+    protected $_routePrefix;
+    protected $_model;
     public function __construct()
     {
         $this->_module      = 'Organization';
@@ -333,7 +341,7 @@ class DashboardController extends Controller
                 return redirect('/');
             }
         } catch (Exception $e) {
-            throw new \App\Exceptions\FrontException($e->getMessage());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -2723,6 +2731,7 @@ class DashboardController extends Controller
 
     public function viewchangecircumstancesedit()
     {
+       
         if (!empty(Session::get('emp_email'))) {
             $email = Session::get('emp_email');
             $Roledata = DB::table('registration')->where('status', '=', 'active')
@@ -2734,7 +2743,10 @@ class DashboardController extends Controller
                 ->where('email', '=', $email)
                 ->first();
             //dd($data['Roledata']);
-            $data['employee_type_rs'] = DB::table('employee_type')->where('emid', '=', $Roledata->reg)->where('employee_type_status', '=', 'Active')->get();
+            //$data['employee_type_rs'] = DB::table('employee_type')->where('emid', '=', $Roledata->reg)->where('employee_type_status', '=', 'Active')->get();
+            $data['employee_type_rs'] = DB::table('employee')->where('emid', '=', $Roledata->reg)->get();
+            //dd($data['employee_type_rs']);
+            $data['employee_code'] = ' ';
             return view($this->_routePrefix . '.change-list',$data);
             //return view('dashboard/change-list', $data);
         } else {
@@ -2766,412 +2778,646 @@ class DashboardController extends Controller
 
     }
 
+    // public function savechangecircumstancesedit(Request $request)
+    // {
+    //     if (!empty(Session::get('emp_email'))) {
+
+    //         $email = Session::get('emp_email');
+    //         $Roledata = DB::table('registration')->where('status', '=', 'active')
+
+    //             ->where('email', '=', $email)
+    //             ->first();
+    //         $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+
+    //             ->where('email', '=', $email)
+    //             ->first();
+
+    //         $employee_code = $request->employee_code;
+    //         $employee_type = $request->employee_type;
+    //         //dd($Roledata->reg);
+    //         $data['result'] = '';
+    //         //dd($leave_allocation_rs);
+    //         $f = 2;
+
+    //         $employeet = DB::table('employee')->where('emp_code', '=', $employee_code)->where('emid', '=', $Roledata->reg)->first();
+    //         $date1 = date('Y', strtotime($employeet->emp_doj)) . date('m-d');
+    //         $date2 = date('Y-m-d');
+
+    //         $diff = abs(strtotime($date2) - strtotime($date1));
+
+    //         $years = floor($diff / (365 * 60 * 60 * 24));
+    //         date('Y', strtotime($date1));
+    //         $endtyear = date('Y', strtotime($date1)) + ($years);
+
+    //         $employeetnew = DB::table('employee')->where('emp_code', '=', $employee_code)->where('emid', '=', $Roledata->reg)->first();
+    //         $employeetcircumnew = DB::table('change_circumstances_history')->where('emp_code', '=', $employee_code)->where('emid', '=', $Roledata->reg)->orderBy('id', 'DESC')->first();
+
+    //         $employeetemployeeother = DB::table('circumemployee_other_doc_history')->where('emp_code', '=', $employee_code)->where('emid', '=', $Roledata->reg)->orderBy('id', 'DESC')->get();
+
+    //         $dataeotherdoc = '';
+
+    //         if (count($employeetemployeeother) != 0) {
+    //             //dd('okk');
+    //             foreach ($employeetemployeeother as $valother) {
+    //                 if ($valother->doc_exp_date != '1970-01-01') {if ($valother->doc_exp_date != '') {
+    //                     $other_exp_date = date('d/m/Y', strtotime($valother->doc_exp_date));
+    //                 } else {
+    //                     $other_exp_date = '';
+    //                 }} else {
+    //                     $other_exp_date = '';
+    //                 }
+    //                 $dataeotherdoc .= $valother->doc_name . '( ' . $other_exp_date . ')';
+    //             }
+
+    //         }
+    //         if (!empty($employeetcircumnew)) { 
+    //             //dd('okkllll');
+    //             $date_doj = date('d/m/Y', strtotime($employeetcircumnew->date_change));
+    //             $anual_datenew = date('Y-m-d', strtotime($employeetcircumnew->date_change . '  + 1 year'));
+    //             $peradd = '';
+    //             $peradd = $employeetcircumnew->emp_pr_street_no;
+    //             if ($employeetcircumnew->emp_per_village) {$peradd .= ',' . $employeetcircumnew->emp_per_village;}
+    //             if ($employeetcircumnew->emp_pr_state) {$peradd .= ',' . $employeetcircumnew->emp_pr_state
+    //                 ;}if ($employeetcircumnew->emp_pr_city) {$peradd .= ',' . $employeetcircumnew->emp_pr_city;}
+    //             if ($employeetcircumnew->emp_pr_pincode) {$peradd .= ',' . $employeetcircumnew->emp_pr_pincode;}
+    //             if ($employeetcircumnew->emp_pr_country) {$peradd .= ',' . $employeetcircumnew->emp_pr_country;};
+
+    //             if ($employeetcircumnew->visa_exp_date != '1970-01-01') {if ($employeetcircumnew->visa_exp_date != '') {
+    //                 $visa_exp_date = date('d/m/Y', strtotime($employeetcircumnew->visa_exp_date));
+    //             } else {
+    //                 $visa_exp_date = '';
+    //             }} else {
+    //                 $visa_exp_date = '';
+    //             }
+    //             if ($employeetcircumnew->pass_exp_date != '1970-01-01') {if ($employeetcircumnew->pass_exp_date != '') {
+    //                 $stfol = date('d/m/Y', strtotime($employeetcircumnew->pass_exp_date));
+    //             } else {
+    //                 $stfol = '';
+    //             }} else {
+    //                 $stfol = '';
+
+    //             }
+
+    //             $euss_exp = '';
+    //             if ($employeetcircumnew->euss_exp_date != '1970-01-01') {
+    //                 if ($employeetcircumnew->euss_exp_date != 'null' && $employeetcircumnew->euss_exp_date != NULL) {
+    //                     $euss_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetcircumnew->euss_exp_date));
+    //                 }
+    //             }
+    //             $euss_exp = $employeetcircumnew->euss_ref_no . $euss_exp;
+
+    //             $dbs_exp = '';
+    //             if ($employeetcircumnew->dbs_exp_date != '1970-01-01') {
+    //                 if ($employeetcircumnew->dbs_exp_date != 'null' && $employeetcircumnew->dbs_exp_date != NULL) {
+    //                     $dbs_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetcircumnew->dbs_exp_date));
+    //                 }
+    //             }
+    //             $dbs_exp = $employeetcircumnew->dbs_ref_no . $dbs_exp;
+
+    //             $nid_exp = '';
+    //             if ($employeetcircumnew->nat_exp_date != '1970-01-01') {
+    //                 if ($employeetcircumnew->nat_exp_date != 'null' && $employeetcircumnew->nat_exp_date != NULL) {
+    //                     $nid_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetcircumnew->nat_exp_date));
+    //                 }
+    //             }
+    //             $nid_exp = $employeetcircumnew->nat_id_no . $nid_exp;
+
+
+    //             $desinf = $employeetcircumnew->emp_designation;
+    //             $newph = $employeetcircumnew->emp_ps_phone;
+    //             $newpnati = $employeetcircumnew->nationality;
+    //             $newpnavia = $employeetcircumnew->visa_doc_no;
+    //             $newpnapasas = $employeetcircumnew->pass_doc_no;
+    //         } else { 
+    //             //dd('oppps');
+    //             $date_doj = date('d/m/Y', strtotime($employeet->emp_doj));
+    //             $anual_datenew = date('Y-m-d', strtotime($employeet->emp_doj . '  + 1 year'));
+    //             $peradd = '';
+    //             $peradd = $employeetnew->emp_pr_street_no;
+    //             if ($employeetnew->emp_per_village) {$peradd .= ',' . $employeetnew->emp_per_village;}
+    //             if ($employeetnew->emp_pr_state) {$peradd .= ',' . $employeetnew->emp_pr_state
+    //                 ;}if ($employeetnew->emp_pr_city) {$peradd .= ',' . $employeetnew->emp_pr_city;}
+    //             if ($employeetnew->emp_pr_pincode) {$peradd .= ',' . $employeetnew->emp_pr_pincode;}
+    //             if ($employeetnew->emp_pr_country) {$peradd .= ',' . $employeetnew->emp_pr_country;};
+
+    //             if ($employeetnew->visa_exp_date != '1970-01-01') {if ($employeetnew->visa_exp_date != '') {
+    //                 $visa_exp_date = date('d/m/Y', strtotime($employeetnew->visa_exp_date));
+    //             } else {
+    //                 $visa_exp_date = '';
+    //             }} else {
+    //                 $visa_exp_date = '';
+    //             }
+    //             if ($employeetnew->pass_exp_date != '1970-01-01') {if ($employeetnew->pass_exp_date != '') {
+    //                 $stfol = date('d/m/Y', strtotime($employeetnew->pass_exp_date));
+    //             } else {
+    //                 $stfol = '';
+    //             }} else {
+    //                 $stfol = '';
+    //             }
+
+    //             $euss_exp = '';
+    //             if ($employeetnew->euss_exp_date != '1970-01-01') {
+    //                 if ($employeetnew->euss_exp_date != 'null' && $employeetnew->euss_exp_date != NULL) {
+    //                     $euss_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetnew->euss_exp_date));
+    //                 }
+    //             }
+    //             $euss_exp = $employeetnew->euss_ref_no . $euss_exp;
+
+    //             $dbs_exp = '';
+    //             if ($employeetnew->dbs_exp_date != '1970-01-01') {
+    //                 if ($employeetnew->dbs_exp_date != 'null' && $employeetnew->dbs_exp_date != NULL) {
+    //                     $dbs_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetnew->dbs_exp_date));
+    //                 }
+    //             }
+    //             $dbs_exp = $employeetnew->dbs_ref_no . $dbs_exp;
+
+    //             $nid_exp = '';
+    //             if ($employeetnew->nat_exp_date != '1970-01-01') {
+    //                 if ($employeetnew->nat_exp_date != 'null' && $employeetnew->nat_exp_date != NULL) {
+    //                     $nid_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetnew->nat_exp_date));
+    //                 }
+    //             }
+    //             $nid_exp = $employeetnew->nat_id_no . $nid_exp;
+
+
+    //             $desinf = $employeetnew->emp_designation;
+    //             $newph = $employeetnew->emp_ps_phone;
+    //             $newpnati = $employeetnew->nationality;
+    //             $newpnavia = $employeetnew->visa_doc_no;
+    //             $newpnapasas = $employeetnew->pass_doc_no;
+    //         }
+    //         $data['result'] .= 
+    //             '<tr>
+    //                 <td>1</td>
+    //                 <td>' . $date_doj . '</td>
+    //                 <td>' . $employee_type . '</td>
+    //                 <td>' . $employee_code . '</td>
+    //                 <td>' . $employeetnew->emp_fname . '  ' . $employeetnew->emp_mname . ' ' . $employeetnew->emp_lname . '</td>
+    //                 <td>' . $desinf . '</td>
+    //                 <td>' . $peradd . '</td>
+    //                 <td>' . $newph . '</td>
+    //                 <td>' . $newpnati . '</td>
+    //                 <td>' . $newpnavia . '</td>
+    //                 <td>' . $visa_exp_date . '</td>
+    //                 <td>Not Applicable </td>
+    //                 <td>' . $newpnapasas . '( ' . $stfol . ' )</td>
+    //                 <td>'.$euss_exp.'</td>
+    //                 <td>'.$dbs_exp.'</td>
+    //                 <td>'.$nid_exp.'</td>
+    //                 <td>' . $dataeotherdoc . '</td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td>' . date('d/m/Y', strtotime($anual_datenew)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_datenew) . '" target="_blank"><i class="fas fa-eye" ></i></a>
+    //                     &nbsp &nbsp <a href="' . env("BASE_URL") . 'employee/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_datenew) . '" ><i class="fas fa-paper-plane" ></i></a>
+    //                 </td>
+    //             </tr>';
+    //         //dd($employeet->emp_doj);
+    //         for ($m = date('Y', strtotime($employeet->emp_doj)); $m <= $endtyear; $m++) {
+    //             $strartye = date($m . '-01-01');
+    //             $endtye = date($m . '-12-31');
+    //             $leave_allocation_rs = DB::table('change_circumstances')
+    //                 ->join('employee', 'change_circumstances.emp_code', '=', 'employee.emp_code')
+    //                 ->where('change_circumstances.emp_code', '=', $employee_code)
+    //                 ->where('change_circumstances.emid', '=', $Roledata->reg)
+    //                 ->where('employee.emp_code', '=', $employee_code)
+    //                 ->where('employee.emid', '=', $Roledata->reg)
+    //                 ->where('employee.emp_status', '=', $employee_type)
+    //                 ->whereBetween('date_change', [$strartye, $endtye])
+    //                 ->orderBy('date_change', 'ASC')
+    //                 ->select('change_circumstances.*')
+    //                 ->get();
+    //             if (count($leave_allocation_rs) != 0) {
+    //                 //dd('okkmmmm');
+    //                 foreach ($leave_allocation_rs as $leave_allocation) {
+
+    //                     $peradd = '';
+    //                     $peradd = $leave_allocation->emp_pr_street_no;
+    //                     if ($leave_allocation->emp_per_village) {$peradd .= ',' . $leave_allocation->emp_per_village;}
+    //                     if ($leave_allocation->emp_pr_state) {$peradd .= ',' . $leave_allocation->emp_pr_state
+    //                         ;}if ($leave_allocation->emp_pr_city) {$peradd .= ',' . $leave_allocation->emp_pr_city;}
+    //                     if ($leave_allocation->emp_pr_pincode) {$peradd .= ',' . $leave_allocation->emp_pr_pincode;}
+    //                     if ($leave_allocation->emp_pr_country) {$peradd .= ',' . $leave_allocation->emp_pr_country;};
+
+    //                     $preadd = '';
+    //                     $preadd = $leave_allocation->emp_ps_street_no;
+    //                     if ($leave_allocation->emp_ps_village) {$preadd .= ',' . $leave_allocation->emp_ps_village;}
+    //                     if ($leave_allocation->emp_ps_state) {$preadd .= ',' . $leave_allocation->emp_ps_state
+    //                         ;}if ($leave_allocation->emp_ps_city) {$preadd .= ',' . $leave_allocation->emp_ps_city;}
+    //                     if ($leave_allocation->emp_ps_pincode) {$preadd .= ',' . $leave_allocation->emp_ps_pincode;}
+    //                     if ($leave_allocation->emp_ps_country) {$preadd .= ',' . $leave_allocation->emp_ps_country;};
+    //                     if ($leave_allocation->emp_dob != '1970-01-01') {if ($leave_allocation->emp_dob != '') {
+    //                         $dov = date('d/m/Y', strtotime($leave_allocation->emp_dob));
+    //                     } else {
+    //                         $dov = '';
+    //                     }} else {
+    //                         $dov = '';
+    //                     }
+    //                     if ($leave_allocation->visa_exp_date != '1970-01-01') {if ($leave_allocation->visa_exp_date != '') {
+    //                         $visa_exp_date = date('d/m/Y', strtotime($leave_allocation->visa_exp_date));
+    //                     } else {
+    //                         $visa_exp_date = '';
+    //                     }} else {
+    //                         $visa_exp_date = '';
+    //                     }
+    //                     if ($leave_allocation->pass_exp_date != '1970-01-01') {if ($leave_allocation->pass_exp_date != '') {
+    //                         $stfol = date('d/m/Y', strtotime($leave_allocation->pass_exp_date));
+    //                     } else {
+    //                         $stfol = '';
+    //                     }} else {
+    //                         $stfol = '';
+    //                     }
+
+    //                     $euss_exp = '';
+    //                     if ($leave_allocation->euss_exp_date != '1970-01-01') {
+    //                         if ($leave_allocation->euss_exp_date != 'null' && $leave_allocation->euss_exp_date != NULL) {
+    //                             $euss_exp = '  EXPIRE:' . date('jS F Y', strtotime($leave_allocation->euss_exp_date));
+    //                         }
+    //                     }
+    //                     $euss_exp = $leave_allocation->euss_ref_no . $euss_exp;
+
+    //                     $dbs_exp = '';
+    //                     if ($leave_allocation->dbs_exp_date != '1970-01-01') {
+    //                         if ($leave_allocation->dbs_exp_date != 'null' && $leave_allocation->dbs_exp_date != NULL) {
+    //                             $dbs_exp = '  EXPIRE:' . date('jS F Y', strtotime($leave_allocation->dbs_exp_date));
+    //                         }
+    //                     }
+    //                     $dbs_exp = $leave_allocation->dbs_ref_no . $dbs_exp;
+
+    //                     $nid_exp = '';
+    //                     if ($leave_allocation->nat_exp_date != '1970-01-01') {
+    //                         if ($leave_allocation->nat_exp_date != 'null' && $leave_allocation->nat_exp_date != NULL) {
+    //                             $nid_exp = '  EXPIRE:' . date('jS F Y', strtotime($leave_allocation->nat_exp_date));
+    //                         }
+    //                     }
+    //                     $nid_exp = $leave_allocation->nat_id_no . $nid_exp;
+
+
+    //                     $employeet = DB::table('employee')->where('emp_code', '=', $leave_allocation->emp_code)->where('emid', '=', $Roledata->reg)->first();
+
+    //                     $dojg = date('m-d', strtotime($employeet->emp_doj));
+
+    //                     $anual_date = date('Y-m-d', strtotime($m . '-' . $dojg . '  + 1 year'));
+
+    //                     $employeetemployeeother = DB::table('circumemployee_other_doc')->where('emp_code', '=', $leave_allocation->emp_code)->where('emid', '=', $Roledata->reg)
+    //                         ->where('cir_id', '=', $leave_allocation->id)->orderBy('id', 'DESC')->get();
+
+    //                     $dataeotherdoc = '';
+
+    //                     if (count($employeetemployeeother) != 0) {
+
+    //                         foreach ($employeetemployeeother as $valother) {
+    //                             if ($valother->doc_exp_date != '1970-01-01') {if ($valother->doc_exp_date != '') {
+    //                                 $other_exp_date = date('d/m/Y', strtotime($valother->doc_exp_date));
+    //                             } else {
+    //                                 $other_exp_date = '';
+    //                             }} else {
+    //                                 $other_exp_date = '';
+    //                             }
+    //                             $dataeotherdoc .= $valother->doc_name . '( ' . $other_exp_date . ')';
+    //                         }
+
+    //                     }
+
+    //                     $data['result'] .= 
+    //                         '<tr>
+    //                             <td>' . $f . '</td>
+    //                             <td>' . date('d/m/Y', strtotime($leave_allocation->date_change)) . '</td>
+    //                             <td>' . $employee_type . '</td>
+    //                             <td>' . $leave_allocation->emp_code . '</td>
+    //                             <td>' . $employeet->emp_fname . '  ' . $employeet->emp_mname . ' ' . $employeet->emp_lname . '</td>
+    //                             <td>' . $leave_allocation->emp_designation . '</td>
+    //                             <td>' . $peradd . '</td>
+    //                             <td>' . $leave_allocation->emp_ps_phone . '</td>
+    //                             <td>' . $leave_allocation->nationality . '</td>
+    //                             <td>' . $leave_allocation->visa_doc_no . '</td>
+    //                             <td>' . $visa_exp_date . '</td>
+    //                             <td>' . $leave_allocation->res_remark . '</td>
+    //                             <td>' . $leave_allocation->pass_doc_no . '( ' . $stfol . ' )</td>
+    //                             <td>'.$euss_exp.'</td>
+    //                             <td>'.$dbs_exp.'</td>
+    //                             <td>'.$nid_exp.'</td>
+    //                             <td>' . $dataeotherdoc . '</td>
+    //                             <td>' . $leave_allocation->hr . '</td>
+    //                             <td>' . $leave_allocation->home . '</td>
+    //                             <td>
+    //                                 ' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>
+    //                                             &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a>
+    //                             </td>
+    //                         </tr>';
+    //                     $f++;
+    //                 }
+    //             } else {
+    //                 //dd('dddd');
+    //                 $dojg = date('m-d', strtotime($employeet->emp_doj));
+    //                 $anual_date = date('Y-m-d', strtotime($m . '-' . $dojg . '  + 1 year'));
+    //                 $no = '';
+    //                 if (date('Y', strtotime($employeet->emp_doj)) != $m) {
+    //                     if ($endtyear != $m) {
+    //                         $no = 'no change ';
+    //                     } else {
+    //                         $no = '';
+    //                     }
+    //                     $data['result'] .= 
+    //                         '<tr>
+	// 			                    <td>' . $f . '</td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td> </td>
+    //                                 <td>' . $no . '</td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td></td>
+    //                                 <td>' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>&nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a></td>
+	// 					        </tr>';
+    //                     $f++;
+    //                     //dd($data['result']);
+    //                 }
+    //             }
+    //         }
+
+    //         for ($o = ($endtyear + 1); $o <= ($endtyear + 4); $o++) {
+    //             $dojg = date('m-d', strtotime($employeet->emp_doj));
+    //             $anual_date = date('Y-m-d', strtotime($o . '-' . $dojg . '  + 1 year'));
+    //             $data['result'] .= 
+    //             '<tr>
+	// 			    <td>' . $f . '</td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td> </td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td></td>
+    //                 <td>' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>&nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a></td>
+	// 			</tr>';
+    //             $f++;
+    //         }
+
+    //         $data['employee_type_rs'] = DB::table('employee_type')->where('emid', '=', $Roledata->reg)->where('employee_type_status', '=', 'Active')->get();
+    //         $data['employee_code'] = $employee_code;
+    //         $data['employee_type'] = $employee_type;
+    //         return view($this->_routePrefix . '.change-list',$data);
+    //         //return view('dashboard/change-list', $data);
+    //     } else {
+    //         return redirect('/');
+    //     }
+    // }
+
+    private function formatDate($date) {
+        if ($date != '1970-01-01' && $date != null) {
+            return date('d/m/Y', strtotime($date));
+        }
+        return '';
+    }
+
     public function savechangecircumstancesedit(Request $request)
-    {
-        if (!empty(Session::get('emp_email'))) {
+{
+    if (!Session::has('emp_email')) {
+        return redirect('/');
+    }
 
-            $email = Session::get('emp_email');
-            $Roledata = DB::table('registration')->where('status', '=', 'active')
+    $email = Session::get('emp_email');
+    $Roledata = DB::table('registration')->where('status', '=', 'active')
+                ->where('email', '=', $email)->first();
 
-                ->where('email', '=', $email)
-                ->first();
-            $data['Roledata'] = DB::table('registration')->where('status', '=', 'active')
+    $employee_code = $request->employee_code;
+    $employee_type = $request->employee_type;
+    
+    // Fetch employee data
+    $employee = DB::table('employee')
+                    ->where('emp_code', '=', $employee_code)
+                    ->where('emid', '=', $Roledata->reg)
+                    ->first();
 
-                ->where('email', '=', $email)
-                ->first();
+    if (!$employee) {
+        return redirect()->back()->withErrors('Employee not found.');
+    }
 
-            $employee_code = $request->employee_code;
-            $employee_type = $request->employee_type;
-            //dd($Roledata->reg);
-            $data['result'] = '';
-            //dd($leave_allocation_rs);
-            $f = 2;
+    // Calculate years of service
+    $date_of_joining = $employee->emp_doj;
+    $years_of_service = Carbon::now()->year - Carbon::parse($date_of_joining)->year;
+    $end_year = Carbon::parse($date_of_joining)->addYears($years_of_service)->year;
 
-            $employeet = DB::table('employee')->where('emp_code', '=', $employee_code)->where('emid', '=', $Roledata->reg)->first();
-            $date1 = date('Y', strtotime($employeet->emp_doj)) . date('m-d');
-            $date2 = date('Y-m-d');
+    // Get most recent change circumstance
+    $latestCircumstance = DB::table('change_circumstances_history')
+                            ->where('emp_code', '=', $employee_code)
+                            ->where('emid', '=', $Roledata->reg)
+                            ->orderBy('id', 'DESC')
+                            ->first();
 
-            $diff = abs(strtotime($date2) - strtotime($date1));
-
-            $years = floor($diff / (365 * 60 * 60 * 24));
-            date('Y', strtotime($date1));
-            $endtyear = date('Y', strtotime($date1)) + ($years);
-
-            $employeetnew = DB::table('employee')->where('emp_code', '=', $employee_code)->where('emid', '=', $Roledata->reg)->first();
-            $employeetcircumnew = DB::table('change_circumstances_history')->where('emp_code', '=', $employee_code)->where('emid', '=', $Roledata->reg)->orderBy('id', 'DESC')->first();
-
-            $employeetemployeeother = DB::table('circumemployee_other_doc_history')->where('emp_code', '=', $employee_code)->where('emid', '=', $Roledata->reg)->orderBy('id', 'DESC')->get();
-
-            $dataeotherdoc = '';
-
-            if (count($employeetemployeeother) != 0) {
-                //dd('okk');
-                foreach ($employeetemployeeother as $valother) {
-                    if ($valother->doc_exp_date != '1970-01-01') {if ($valother->doc_exp_date != '') {
-                        $other_exp_date = date('d/m/Y', strtotime($valother->doc_exp_date));
-                    } else {
-                        $other_exp_date = '';
-                    }} else {
-                        $other_exp_date = '';
-                    }
-                    $dataeotherdoc .= $valother->doc_name . '( ' . $other_exp_date . ')';
-                }
-
-            }
-            if (!empty($employeetcircumnew)) { 
-                //dd('okkllll');
-                $date_doj = date('d/m/Y', strtotime($employeetcircumnew->date_change));
-                $anual_datenew = date('Y-m-d', strtotime($employeetcircumnew->date_change . '  + 1 year'));
-                $peradd = '';
-                $peradd = $employeetcircumnew->emp_pr_street_no;
-                if ($employeetcircumnew->emp_per_village) {$peradd .= ',' . $employeetcircumnew->emp_per_village;}
-                if ($employeetcircumnew->emp_pr_state) {$peradd .= ',' . $employeetcircumnew->emp_pr_state
-                    ;}if ($employeetcircumnew->emp_pr_city) {$peradd .= ',' . $employeetcircumnew->emp_pr_city;}
-                if ($employeetcircumnew->emp_pr_pincode) {$peradd .= ',' . $employeetcircumnew->emp_pr_pincode;}
-                if ($employeetcircumnew->emp_pr_country) {$peradd .= ',' . $employeetcircumnew->emp_pr_country;};
-
-                if ($employeetcircumnew->visa_exp_date != '1970-01-01') {if ($employeetcircumnew->visa_exp_date != '') {
-                    $visa_exp_date = date('d/m/Y', strtotime($employeetcircumnew->visa_exp_date));
-                } else {
-                    $visa_exp_date = '';
-                }} else {
-                    $visa_exp_date = '';
-                }
-                if ($employeetcircumnew->pass_exp_date != '1970-01-01') {if ($employeetcircumnew->pass_exp_date != '') {
-                    $stfol = date('d/m/Y', strtotime($employeetcircumnew->pass_exp_date));
-                } else {
-                    $stfol = '';
-                }} else {
-                    $stfol = '';
-
-                }
-
-                $euss_exp = '';
-                if ($employeetcircumnew->euss_exp_date != '1970-01-01') {
-                    if ($employeetcircumnew->euss_exp_date != 'null' && $employeetcircumnew->euss_exp_date != NULL) {
-                        $euss_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetcircumnew->euss_exp_date));
-                    }
-                }
-                $euss_exp = $employeetcircumnew->euss_ref_no . $euss_exp;
-
-                $dbs_exp = '';
-                if ($employeetcircumnew->dbs_exp_date != '1970-01-01') {
-                    if ($employeetcircumnew->dbs_exp_date != 'null' && $employeetcircumnew->dbs_exp_date != NULL) {
-                        $dbs_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetcircumnew->dbs_exp_date));
-                    }
-                }
-                $dbs_exp = $employeetcircumnew->dbs_ref_no . $dbs_exp;
-
-                $nid_exp = '';
-                if ($employeetcircumnew->nat_exp_date != '1970-01-01') {
-                    if ($employeetcircumnew->nat_exp_date != 'null' && $employeetcircumnew->nat_exp_date != NULL) {
-                        $nid_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetcircumnew->nat_exp_date));
-                    }
-                }
-                $nid_exp = $employeetcircumnew->nat_id_no . $nid_exp;
-
-
-                $desinf = $employeetcircumnew->emp_designation;
-                $newph = $employeetcircumnew->emp_ps_phone;
-                $newpnati = $employeetcircumnew->nationality;
-                $newpnavia = $employeetcircumnew->visa_doc_no;
-                $newpnapasas = $employeetcircumnew->pass_doc_no;
-            } else { 
-                //dd('oppps');
-                $date_doj = date('d/m/Y', strtotime($employeet->emp_doj));
-                $anual_datenew = date('Y-m-d', strtotime($employeet->emp_doj . '  + 1 year'));
-                $peradd = '';
-                $peradd = $employeetnew->emp_pr_street_no;
-                if ($employeetnew->emp_per_village) {$peradd .= ',' . $employeetnew->emp_per_village;}
-                if ($employeetnew->emp_pr_state) {$peradd .= ',' . $employeetnew->emp_pr_state
-                    ;}if ($employeetnew->emp_pr_city) {$peradd .= ',' . $employeetnew->emp_pr_city;}
-                if ($employeetnew->emp_pr_pincode) {$peradd .= ',' . $employeetnew->emp_pr_pincode;}
-                if ($employeetnew->emp_pr_country) {$peradd .= ',' . $employeetnew->emp_pr_country;};
-
-                if ($employeetnew->visa_exp_date != '1970-01-01') {if ($employeetnew->visa_exp_date != '') {
-                    $visa_exp_date = date('d/m/Y', strtotime($employeetnew->visa_exp_date));
-                } else {
-                    $visa_exp_date = '';
-                }} else {
-                    $visa_exp_date = '';
-                }
-                if ($employeetnew->pass_exp_date != '1970-01-01') {if ($employeetnew->pass_exp_date != '') {
-                    $stfol = date('d/m/Y', strtotime($employeetnew->pass_exp_date));
-                } else {
-                    $stfol = '';
-                }} else {
-                    $stfol = '';
-                }
-
-                $euss_exp = '';
-                if ($employeetnew->euss_exp_date != '1970-01-01') {
-                    if ($employeetnew->euss_exp_date != 'null' && $employeetnew->euss_exp_date != NULL) {
-                        $euss_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetnew->euss_exp_date));
-                    }
-                }
-                $euss_exp = $employeetnew->euss_ref_no . $euss_exp;
-
-                $dbs_exp = '';
-                if ($employeetnew->dbs_exp_date != '1970-01-01') {
-                    if ($employeetnew->dbs_exp_date != 'null' && $employeetnew->dbs_exp_date != NULL) {
-                        $dbs_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetnew->dbs_exp_date));
-                    }
-                }
-                $dbs_exp = $employeetnew->dbs_ref_no . $dbs_exp;
-
-                $nid_exp = '';
-                if ($employeetnew->nat_exp_date != '1970-01-01') {
-                    if ($employeetnew->nat_exp_date != 'null' && $employeetnew->nat_exp_date != NULL) {
-                        $nid_exp = '  EXPIRE:' . date('jS F Y', strtotime($employeetnew->nat_exp_date));
-                    }
-                }
-                $nid_exp = $employeetnew->nat_id_no . $nid_exp;
-
-
-                $desinf = $employeetnew->emp_designation;
-                $newph = $employeetnew->emp_ps_phone;
-                $newpnati = $employeetnew->nationality;
-                $newpnavia = $employeetnew->visa_doc_no;
-                $newpnapasas = $employeetnew->pass_doc_no;
-            }
-            $data['result'] .= 
-                '<tr>
-                    <td>1</td>
-                    <td>' . $date_doj . '</td>
-                    <td>' . $employee_type . '</td>
-                    <td>' . $employee_code . '</td>
-                    <td>' . $employeetnew->emp_fname . '  ' . $employeetnew->emp_mname . ' ' . $employeetnew->emp_lname . '</td>
-                    <td>' . $desinf . '</td>
-                    <td>' . $peradd . '</td>
-                    <td>' . $newph . '</td>
-                    <td>' . $newpnati . '</td>
-                    <td>' . $newpnavia . '</td>
-                    <td>' . $visa_exp_date . '</td>
-                    <td>Not Applicable </td>
-                    <td>' . $newpnapasas . '( ' . $stfol . ' )</td>
-                    <td>'.$euss_exp.'</td>
-                    <td>'.$dbs_exp.'</td>
-                    <td>'.$nid_exp.'</td>
-                    <td>' . $dataeotherdoc . '</td>
-                    <td></td>
-                    <td></td>
-                    <td>' . date('d/m/Y', strtotime($anual_datenew)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_datenew) . '" target="_blank"><i class="fas fa-eye" ></i></a>
-                        &nbsp &nbsp <a href="' . env("BASE_URL") . 'employee/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_datenew) . '" ><i class="fas fa-paper-plane" ></i></a>
-                    </td>
-                </tr>';
-            //dd($employeet->emp_doj);
-            for ($m = date('Y', strtotime($employeet->emp_doj)); $m <= $endtyear; $m++) {
-                $strartye = date($m . '-01-01');
-                $endtye = date($m . '-12-31');
-                $leave_allocation_rs = DB::table('change_circumstances')
-                    ->join('employee', 'change_circumstances.emp_code', '=', 'employee.emp_code')
-                    ->where('change_circumstances.emp_code', '=', $employee_code)
-                    ->where('change_circumstances.emid', '=', $Roledata->reg)
-                    ->where('employee.emp_code', '=', $employee_code)
-                    ->where('employee.emid', '=', $Roledata->reg)
-                    ->where('employee.emp_status', '=', $employee_type)
-                    ->whereBetween('date_change', [$strartye, $endtye])
-                    ->orderBy('date_change', 'ASC')
-                    ->select('change_circumstances.*')
+    $otherDocs = DB::table('circumemployee_other_doc_history')
+                    ->where('emp_code', '=', $employee_code)
+                    ->where('emid', '=', $Roledata->reg)
+                    ->orderBy('id', 'DESC')
                     ->get();
-                if (count($leave_allocation_rs) != 0) {
-                    //dd('okkmmmm');
-                    foreach ($leave_allocation_rs as $leave_allocation) {
 
-                        $peradd = '';
-                        $peradd = $leave_allocation->emp_pr_street_no;
-                        if ($leave_allocation->emp_per_village) {$peradd .= ',' . $leave_allocation->emp_per_village;}
-                        if ($leave_allocation->emp_pr_state) {$peradd .= ',' . $leave_allocation->emp_pr_state
-                            ;}if ($leave_allocation->emp_pr_city) {$peradd .= ',' . $leave_allocation->emp_pr_city;}
-                        if ($leave_allocation->emp_pr_pincode) {$peradd .= ',' . $leave_allocation->emp_pr_pincode;}
-                        if ($leave_allocation->emp_pr_country) {$peradd .= ',' . $leave_allocation->emp_pr_country;};
+    // Process other documents if available
+    $otherDocDetails = $this->getOtherDocuments($otherDocs);
 
-                        $preadd = '';
-                        $preadd = $leave_allocation->emp_ps_street_no;
-                        if ($leave_allocation->emp_ps_village) {$preadd .= ',' . $leave_allocation->emp_ps_village;}
-                        if ($leave_allocation->emp_ps_state) {$preadd .= ',' . $leave_allocation->emp_ps_state
-                            ;}if ($leave_allocation->emp_ps_city) {$preadd .= ',' . $leave_allocation->emp_ps_city;}
-                        if ($leave_allocation->emp_ps_pincode) {$preadd .= ',' . $leave_allocation->emp_ps_pincode;}
-                        if ($leave_allocation->emp_ps_country) {$preadd .= ',' . $leave_allocation->emp_ps_country;};
-                        if ($leave_allocation->emp_dob != '1970-01-01') {if ($leave_allocation->emp_dob != '') {
-                            $dov = date('d/m/Y', strtotime($leave_allocation->emp_dob));
-                        } else {
-                            $dov = '';
-                        }} else {
-                            $dov = '';
-                        }
-                        if ($leave_allocation->visa_exp_date != '1970-01-01') {if ($leave_allocation->visa_exp_date != '') {
-                            $visa_exp_date = date('d/m/Y', strtotime($leave_allocation->visa_exp_date));
-                        } else {
-                            $visa_exp_date = '';
-                        }} else {
-                            $visa_exp_date = '';
-                        }
-                        if ($leave_allocation->pass_exp_date != '1970-01-01') {if ($leave_allocation->pass_exp_date != '') {
-                            $stfol = date('d/m/Y', strtotime($leave_allocation->pass_exp_date));
-                        } else {
-                            $stfol = '';
-                        }} else {
-                            $stfol = '';
-                        }
+    // Employee details for display
+    $data['result'] = $this->prepareEmployeeRow($employee, $latestCircumstance, $employee_type, $years_of_service, $otherDocDetails);
 
-                        $euss_exp = '';
-                        if ($leave_allocation->euss_exp_date != '1970-01-01') {
-                            if ($leave_allocation->euss_exp_date != 'null' && $leave_allocation->euss_exp_date != NULL) {
-                                $euss_exp = '  EXPIRE:' . date('jS F Y', strtotime($leave_allocation->euss_exp_date));
-                            }
-                        }
-                        $euss_exp = $leave_allocation->euss_ref_no . $euss_exp;
+    // Fetch change circumstances over the years
+    for ($year = Carbon::parse($date_of_joining)->year; $year <= $end_year; $year++) {
+        $circumstances = DB::table('change_circumstances')
+            ->join('employee', 'change_circumstances.emp_code', '=', 'employee.emp_code')
+            ->where('change_circumstances.emp_code', '=', $employee_code)
+            ->where('change_circumstances.emid', '=', $Roledata->reg)
+            ->where('employee.emp_status', '=', $employee_type)
+            ->whereBetween('date_change', [Carbon::createFromDate($year, 1, 1), Carbon::createFromDate($year, 12, 31)])
+            ->orderBy('date_change', 'ASC')
+            ->get();
 
-                        $dbs_exp = '';
-                        if ($leave_allocation->dbs_exp_date != '1970-01-01') {
-                            if ($leave_allocation->dbs_exp_date != 'null' && $leave_allocation->dbs_exp_date != NULL) {
-                                $dbs_exp = '  EXPIRE:' . date('jS F Y', strtotime($leave_allocation->dbs_exp_date));
-                            }
-                        }
-                        $dbs_exp = $leave_allocation->dbs_ref_no . $dbs_exp;
-
-                        $nid_exp = '';
-                        if ($leave_allocation->nat_exp_date != '1970-01-01') {
-                            if ($leave_allocation->nat_exp_date != 'null' && $leave_allocation->nat_exp_date != NULL) {
-                                $nid_exp = '  EXPIRE:' . date('jS F Y', strtotime($leave_allocation->nat_exp_date));
-                            }
-                        }
-                        $nid_exp = $leave_allocation->nat_id_no . $nid_exp;
-
-
-                        $employeet = DB::table('employee')->where('emp_code', '=', $leave_allocation->emp_code)->where('emid', '=', $Roledata->reg)->first();
-
-                        $dojg = date('m-d', strtotime($employeet->emp_doj));
-
-                        $anual_date = date('Y-m-d', strtotime($m . '-' . $dojg . '  + 1 year'));
-
-                        $employeetemployeeother = DB::table('circumemployee_other_doc')->where('emp_code', '=', $leave_allocation->emp_code)->where('emid', '=', $Roledata->reg)
-                            ->where('cir_id', '=', $leave_allocation->id)->orderBy('id', 'DESC')->get();
-
-                        $dataeotherdoc = '';
-
-                        if (count($employeetemployeeother) != 0) {
-
-                            foreach ($employeetemployeeother as $valother) {
-                                if ($valother->doc_exp_date != '1970-01-01') {if ($valother->doc_exp_date != '') {
-                                    $other_exp_date = date('d/m/Y', strtotime($valother->doc_exp_date));
-                                } else {
-                                    $other_exp_date = '';
-                                }} else {
-                                    $other_exp_date = '';
-                                }
-                                $dataeotherdoc .= $valother->doc_name . '( ' . $other_exp_date . ')';
-                            }
-
-                        }
-
-                        $data['result'] .= 
-                            '<tr>
-                                <td>' . $f . '</td>
-                                <td>' . date('d/m/Y', strtotime($leave_allocation->date_change)) . '</td>
-                                <td>' . $employee_type . '</td>
-                                <td>' . $leave_allocation->emp_code . '</td>
-                                <td>' . $employeet->emp_fname . '  ' . $employeet->emp_mname . ' ' . $employeet->emp_lname . '</td>
-                                <td>' . $leave_allocation->emp_designation . '</td>
-                                <td>' . $peradd . '</td>
-                                <td>' . $leave_allocation->emp_ps_phone . '</td>
-                                <td>' . $leave_allocation->nationality . '</td>
-                                <td>' . $leave_allocation->visa_doc_no . '</td>
-                                <td>' . $visa_exp_date . '</td>
-                                <td>' . $leave_allocation->res_remark . '</td>
-                                <td>' . $leave_allocation->pass_doc_no . '( ' . $stfol . ' )</td>
-                                <td>'.$euss_exp.'</td>
-                                <td>'.$dbs_exp.'</td>
-                                <td>'.$nid_exp.'</td>
-                                <td>' . $dataeotherdoc . '</td>
-                                <td>' . $leave_allocation->hr . '</td>
-                                <td>' . $leave_allocation->home . '</td>
-                                <td>
-                                    ' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>
-                                                &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a>
-                                </td>
-                            </tr>';
-                        $f++;
-                    }
-                } else {
-                    //dd('dddd');
-                    $dojg = date('m-d', strtotime($employeet->emp_doj));
-                    $anual_date = date('Y-m-d', strtotime($m . '-' . $dojg . '  + 1 year'));
-                    $no = '';
-                    if (date('Y', strtotime($employeet->emp_doj)) != $m) {
-                        if ($endtyear != $m) {
-                            $no = 'no change ';
-                        } else {
-                            $no = '';
-                        }
-                        $data['result'] .= 
-                            '<tr>
-				                    <td>' . $f . '</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td> </td>
-                                    <td>' . $no . '</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>&nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a></td>
-						        </tr>';
-                        $f++;
-                        //dd($data['result']);
-                    }
-                }
-            }
-
-            for ($o = ($endtyear + 1); $o <= ($endtyear + 4); $o++) {
-                $dojg = date('m-d', strtotime($employeet->emp_doj));
-                $anual_date = date('Y-m-d', strtotime($o . '-' . $dojg . '  + 1 year'));
-                $data['result'] .= 
-                '<tr>
-				    <td>' . $f . '</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td> </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>' . date('d/m/Y', strtotime($anual_date)) . ' &nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/change/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" target="_blank"><i class="fas fa-eye" ></i></a>&nbsp &nbsp <a href="' . env("BASE_URL") . 'dashboard/changesendlet/' . base64_encode($employee_code) . '/' . base64_encode($anual_date) . '" ><i class="fas fa-paper-plane" ></i></a></td>
-				</tr>';
-                $f++;
-            }
-
-            $data['employee_type_rs'] = DB::table('employee_type')->where('emid', '=', $Roledata->reg)->where('employee_type_status', '=', 'Active')->get();
-            $data['employee_code'] = $employee_code;
-            $data['employee_type'] = $employee_type;
-            return view($this->_routePrefix . '.change-list',$data);
-            //return view('dashboard/change-list', $data);
-        } else {
-            return redirect('/');
+        foreach ($circumstances as $circumstance) {
+            $data['result'] .= $this->prepareCircumstanceRow($circumstance, $year, $Roledata, $employee_type);
         }
     }
+
+    $data['employee_type_rs'] = DB::table('employee_type')
+        ->where('emid', '=', $Roledata->reg)
+        ->where('employee_type_status', '=', 'Active')
+        ->get();
+
+    $data['employee_code'] = $employee_code;
+    $data['employee_type'] = $employee_type;
+
+    $data['employee_type_rs'] = DB::table('employee')->where('emid', '=', $Roledata->reg)->get();
+ 
+   // dd($data);
+    return view($this->_routePrefix . '.change-list', $data);
+}
+
+// Prepare the employee row for the view
+private function prepareEmployeeRow($employee, $latestCircumstance, $employee_type, $years_of_service, $otherDocDetails)
+{
+    // If latest circumstance exists, use it; otherwise fallback to employee data
+    $data = $latestCircumstance ?? $employee;
+
+    // Prepare and format relevant data (use helper function for dates)
+    $visa_exp_date = $this->formatDate($data->visa_exp_date);
+    $passport_exp_date = $this->formatDate($data->pass_exp_date);
+    $euss_exp = $data->euss_ref_no . ($this->formatDate($data->euss_exp_date) ? ' EXPIRE:' . $this->formatDate($data->euss_exp_date) : '');
+
+    // HTML generation moved to Blade. Only pass the data.
+    return [
+        'date_doj' => $this->formatDate($data->emp_doj),
+        'employee_type' => $employee_type,
+        'employee_code' => $data->emp_code,
+        'name' => $data->emp_fname . ' ' . $data->emp_mname . ' ' . $data->emp_lname,
+        'designation' => $data->emp_designation,
+        'address' => $data->emp_pr_street_no . ' ' . $data->emp_per_village,
+        'phone' => $data->emp_ps_phone,
+        'nationality' => $data->nationality,
+        'visa_exp_date' => $visa_exp_date,
+        'passport_exp' => $passport_exp_date,
+        'euss_exp' => $euss_exp,
+        'other_docs' => $otherDocDetails
+    ];
+}
+
+// Helper to prepare the change circumstance row for display
+private function prepareCircumstanceRow($circumstance, $year, $Roledata, $employee_type)
+{
+    // Similar to prepareEmployeeRow, but for circumstances
+    return [
+        'date_change' => $this->formatDate($circumstance->date_change),
+        'designation' => $circumstance->emp_designation,
+        'address' => $circumstance->emp_pr_street_no,
+        'phone' => $circumstance->emp_ps_phone,
+        // Add other fields as necessary
+    ];
+}
+
+// Handle other document history
+private function getOtherDocuments($otherDocs)
+{
+    $docDetails = '';
+
+    foreach ($otherDocs as $doc) {
+        $exp_date = $this->formatDate($doc->doc_exp_date);
+        $docDetails .= $doc->doc_name . ' ( ' . $exp_date . ' ) ';
+    }
+
+    return $docDetails;
+}
+
+
+
+public function getEmployeeChangeOfCircumstance(Request $request)
+{
+    //dd($request->all());
+    // Validate incoming request
+    $request->validate([
+        'employee_code' => 'required'
+    ]);
+
+    $employee_code = $request->employee_code;
+    $Roledata = DB::table('registration')->where('status', '=', 'active')
+        ->where('email', '=', Session::get('emp_email'))
+        ->first();
+
+    // Step 1: Fetch employee details
+    $employee = DB::table('employee')
+        ->where('emp_code', '=', $employee_code)
+        ->where('emid', '=', $Roledata->reg)
+        ->first();
+
+    if (!$employee) {
+        return redirect()->back()->withErrors('Employee not found.');
+    }
+
+    // Step 2: Fetch all change of circumstances for the employee
+    $changeHistory = DB::table('change_circumstances_history')
+        ->where('emp_code', '=', $employee_code)
+        ->where('emid', '=', $Roledata->reg)
+        ->orderBy('date_change', 'DESC')
+        ->get();
+
+    // Step 3: Prepare data for the view
+    $data['employee'] = $employee;
+    $data['changeHistory'] = $changeHistory;
+    $data['employee_type_rs'] = DB::table('employee')->where('emid', '=', $Roledata->reg)->get();
+    $data['employee_code'] = $request->employee_code;
+    // Step 4: Return the view with data
+    return view($this->_routePrefix . '.change-list', $data);
+    //return view('employeer.change-of-circumstance-report', $data);
+}
+
+
+public function exportToExcel(Request $request)
+{
+    $employee_code = $request->employee_code;
+
+    // Fetch employee details
+    $employee = DB::table('employee')
+        ->where('emp_code', '=', $employee_code)
+        ->first();
+
+    if (!$employee) {
+        return redirect()->back()->withErrors('Employee not found.');
+    }
+
+    // Fetch all change of circumstances data for the employee
+    $changeHistory = DB::table('change_circumstances_history')
+        ->where('emp_code', '=', $employee_code)
+        ->orderBy('date_change', 'DESC')
+        ->get();
+    
+    // Call the CircumstancesExport class and pass data to it
+    return Excel::download(new CircumstancesExport($employee,$changeHistory), 'change_of_circumstances.xlsx');
+}
+
+public function exportToPDF(Request $request)
+{
+    $employee_code = $request->employee_code;
+
+    $Roledata = DB::table('registration')->where('status', '=', 'active')
+    ->where('email', '=', Session::get('emp_email'))
+    ->first();
+    // Fetch employee details
+    $employee = DB::table('employee')
+        ->where('emp_code', '=', $employee_code)
+        ->first();
+
+    if (!$employee) {
+        return redirect()->back()->withErrors('Employee not found.');
+    }
+
+    // Fetch all change of circumstances data for the employee
+    $changeHistory = DB::table('change_circumstances_history')
+        ->where('emp_code', '=', $employee_code)
+        ->orderBy('date_change', 'DESC')
+        ->get();
+
+    // Pass data to PDF view
+    $pdf = PDF::loadView('employeer.sopnsor-compliance.pdf-change-circumstances-report', compact('Roledata','employee', 'changeHistory'));
+    return $pdf->download('change_of_circumstances.pdf');
+}
+
+
+// end code
 
 
     public function saveemployeeagreement(Request $request)

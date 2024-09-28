@@ -24,9 +24,7 @@
             'title' => 'Change Of Circumstances',
             'icon' => 'la la-user',
             'items' => [
-                ['url' => 'organization/employee/employerdashboard', 'label' => 'Change Of Circumstances'],
-                ['url' => 'org-employee/change-of-circumstances-add', 'label' => 'Change Of Circumstances List'],
-                ['url' => 'org-dashboard/change-of-circumstances', 'label' => 'Change Of Circumstances List'],
+                ['url' => 'org-dashboard/change-of-circumstances', 'label' => 'Dashboard'],
             ]
         ],
         1 => [

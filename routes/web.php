@@ -122,9 +122,11 @@ Route::post('leave/leave-report-employee-wise-excel', 'App\Http\Controllers\orga
 Route::get('organization/circumstances','App\Http\Controllers\organization\CircumstanceController@dashboard')->name('organization/circumstances');
 Route::get('org-employee/change-of-circumstances-add', 'App\Http\Controllers\organization\CircumstanceController@viewchangecircumstanceseditadd');
 Route::get('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@viewchangecircumstancesedit')->name('org-dashboard/change-of-circumstances');
-Route::post('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@savechangecircumstancesedit');
+Route::post('org-dashboard/change-of-circumstances', 'App\Http\Controllers\organization\DashboardController@getEmployeeChangeOfCircumstance');
 Route::get('org-employee/change-of-circumstances-add-new', 'App\Http\Controllers\EmployeeController@viewchangecircumstanceseditnew');
-
+//export to excel and pdf for Change of Circumstances
+Route::post('employee/employee-circumstances-report-pdf', 'App\Http\Controllers\organization\DashboardController@exportToPDF')->name('coc.report');
+Route::post('employee/employee-circumstances-excel', 'App\Http\Controllers\organization\DashboardController@exportToExcel');
 //-------------------------------End Cirrcumstances -------------------------------------------------
 //----------------------------------- Attendance Mangement ---------------------------------------------
 Route::get('attendance-management/dashboard', 'App\Http\Controllers\organization\AttendanceController@dashboard');

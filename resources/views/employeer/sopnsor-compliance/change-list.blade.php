@@ -1,185 +1,155 @@
-@php
-
-//dd($employee_type_rs);
-@endphp
 @extends('employeer.include.app')
-@section('title', 'Change Of Circumstances')
-@php 
-$user_type = Session::get("user_type");
-$sidebarItems = \App\Helpers\Helper::getSidebarItems();
-@endphp
+@section('title', 'Employee Change of Circumstance Report')
+
 @section('content')
-@php
-function my_simple_crypt( $string, $action = 'encrypt' ) {
-// you may change these values to your own
-$secret_key = 'bopt_saltlake_kolkata_secret_key';
-$secret_iv = 'bopt_saltlake_kolkata_secret_iv';
-$output = false;
-$encrypt_method = "AES-256-CBC";
-$key = hash( 'sha256', $secret_key );
-$iv = substr( hash( 'sha256', $secret_iv ), 0, 16 );
-if( $action == 'encrypt' ) {
-$output = base64_encode( openssl_encrypt( $string, $encrypt_method, $key, 0, $iv ) );
-}
-else if( $action == 'decrypt' ){
-$output = openssl_decrypt( base64_decode( $string ), $encrypt_method, $key, 0, $iv );
-}
-return $output;
-}
-@endphp
 <!-- Page Content -->
-<div class="content container-fluid pb-0">
-   <!-- Page Header -->
-   <div class="page-header">
-      <div class="row align-items-center">
-         <div class="col">
-            <h3 class="page-title"> Change Of Circumstances</h3>
-            <ul class="breadcrumb">
-               <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
-               <li class="breadcrumb-item"><a href="{{url('org-dashboarddetails')}}">Sponsor Compliance Dashboard</a></li>
-               <li class="breadcrumb-item active">Change Of Circumstances</li>
-            </ul>
-         </div>
-      </div>
-   </div>
-   <!-- /Page Header -->
-   <div class="row">
-      <div class="col-md-12">
-         <div class="card custom-card">
-            <div class="card-body">
-               <form  method="post" action="{{ url('org-dashboard/change-of-circumstances') }}" enctype="multipart/form-data" >
-                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                  <div class="row form-group">
-                     <div class="col-md-3">
-                        <div class=" form-group">
-                           <label for="employee_type" class="col-form-label">Employment Type</label>
-                           <select id="employee_type" type="text" class="select" required="" name="employee_type" onchange="employeetype(this.value);"  style="margin-top: 20px;">
-                              <option value="">Select</option>
-                              @foreach($employee_type_rs as $employee_typ)
-                              <option value="{{$employee_typ->employee_type_name}}" <?php if(isset($employee_type) && $employee_type==$employee_typ->employee_type_name) { echo 'selected';}?> >{{$employee_typ->employee_type_name}}</option>
-                              @endforeach
-                           </select>
-                        </div>
-                     </div>
-                     <div class="col-md-3">
-                        <div class=" form-group">
-                           <label for="employee_code" class="col-form-label">Employee Code</label>
-                           <select id="employee_code" type="text" class="select"  required=""  name="employee_code"  style="margin-top: 20px;">
-                              <?php if(isset($employee_type_rs)) {
-                                 $employee_rs=DB::table('employee')
-                                 //->where('emp_status', '=',  $employee_type_status)
-                                 ->where('emid', '=',  $Roledata->reg)
-                                 ->get();
-                                 ?>
-                              <option value=''>Select</option>
-                              ";
-                              <?php
-                                 foreach($employee_rs as $bank)
-                                 {
-                                 ?>
-                              <option value="<?=$bank->emp_code;?>" <?php  if(isset($employee_code) && $employee_code==$bank->emp_code) { echo 'selected';}?>><?= $bank->emp_fname;?> <?= $bank->emp_mname;?> <?= $bank->emp_lname;?> (<?=$bank->emp_code;?>)</option>
-                              <?php } } ?>
-                           </select>
-                        </div>
-                     </div>
-                  </div>
-                  <br>
-                  <div class="row form-group">
-                     <div class="col-md-3">
-                        <a href="#">	
-                        <button class="btn btn-primary" type="submit">Go</button></a>
-                     </div>
-                  </div>
-               </form>
+<div class="content container-fluid">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Change of Circumstances Report</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{url('organization/employerdashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Change of Circumstances Report</li>
+                </ul>
             </div>
-         </div>
-      </div>
-   </div>
-   @if(Session::has('message'))										
-   <div class="alert alert-success" style="text-align:center;">{{ Session::get('message') }}</div>
-   @endif
-   <div class="row">
-      <div class="card">
-         <div class="card-header">
-            <h4 class="card-title"><i class="far fa-user"></i> Change Of Circumstances</h4>
-            <?php
-               if(isset($result) && $result!=''  ){
-                                                   ?>
-            <form  method="post" action="{{ url('employee/employee-circumstances-report') }}" enctype="multipart/form-data" >
-               <input type="hidden" name="_token" value="{{ csrf_token() }}">
-               <input type="hidden" name="employee_code" value="{{$employee_code}}">
-               <input type="hidden" name="employee_type" value="{{$employee_type}}">
-               <button class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Download PDF" style="margin-top: -30px;float:right;font-size:16px; margin-bottom:10px;background:none!important;" type="submit"><img  style="width: 35px;" src="{{ asset('img/dnld-pdf.png')}}"></button>	
-            </form>
-            <form  method="post" action="{{ url('employee/employee-circumstances-report-excel') }}" enctype="multipart/form-data" >
-               <input type="hidden" name="_token" value="{{ csrf_token() }}">
-               <input type="hidden" name="employee_code" value="{{ $employee_code }}">
-               <input type="hidden" name="employee_type" value="{{$employee_type}}">
-               <button  data-toggle="tooltip" data-placement="bottom" title="Download Excel" class="btn btn-default" style="margin-top: -30px;float:right;background:none!important;font-size:16px; margin-bottom:10px;" type="submit"><img  style="width: 35px;" src="{{ asset('img/excel-dnld.png')}}">  </button>	
-            </form>
-            <?php
-               }?>	
-         </div>
-         <div class="card-body">
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- Filter Form -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card custom-card">
+                <div class="card-body">
+                    <form method="POST" action="{{ url('org-dashboard/change-of-circumstances') }}">
+                        @csrf
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="employee_code" class="col-form-label">Employee Code</label>
+                                <select id="employee_code" class="form-control" name="employee_code" required>
+                                    <option value="">Select</option>
+                                    @foreach($employee_type_rs as $employee_type)
+                                        <option value="{{ $employee_type->emp_code }}" {{ $employee_code == $employee_type->emp_code ? 'selected' : '' }}>
+                                            {{ $employee_type->emp_fname }} {{ $employee_type->emp_mname }} {{ $employee_type->emp_lname }} ({{ $employee_type->emp_code }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-3 mt-4">
+                                <button class="btn btn-primary" type="submit">Go</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Filter Form -->
+
+    @if(Session::has('message'))
+        <div class="alert alert-success">{{ Session::get('message') }}</div>
+    @endif
+
+    <!-- Employee Report -->
+    @if(isset($employee) && isset($changeHistory))
+        <div class="row">
             <div class="col-md-12">
-               <div class="table-responsive">
-                  <table class="table table-striped custom-table" id="basic-datatables">
-                     <thead>
-                        <tr>
-                           <th>Sl No</th>
-                           <th>Updated Date</th>
-                           <th>Employment Type</th>
-                           <th>Employee ID</th>
-                           <th>Employee Name</th>
-                           <th>Job  Title</th>
-                           <th>Address</th>
-                           <th>Contact Number</th>
-                           <th>Nationality</th>
-                           <th>BRP  Number</th>
-                           <th>Visa Expired</th>
-                           <th>Remarks/Restriction to work</th>
-                           <th>Passport No</th>
-                           <th>EUSS Details</th>
-                           <th>DBS Details</th>
-                           <th>National Id Details</th>
-                           <th>Other Documents</th>
-                           <th>Are Sponsored migrants aware that they must<br> inform [HR/line manager] promptly of changes<br> in contact Details? </th>
-                           <th>Are Sponsored migrants  aware that they need to<br> cooperate Home Office interview by presenting original passports<br> during the Interview (In applicable cases)?</th>
-                           <th>Annual  Reminder Date</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <?php
-                           if(isset($result) && $result!=''  ){
-                              print_r($result); 
-                           }
-                        ?>
-                     </tbody>
-                  </table>
-               </div>
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <h4 class="card-title">Employee Details</h4>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Employee Name</th>
+                                <td>{{ $employee->emp_fname }} {{ $employee->emp_mname }} {{ $employee->emp_lname }}</td>
+                            </tr>
+                            <tr>
+                                <th>Employee Code</th>
+                                <td>{{ $employee->emp_code }}</td>
+                            </tr>
+                            <tr>
+                                <th>Designation</th>
+                                <td>{{ $employee->emp_designation }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>{{ $employee->emp_ps_phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nationality</th>
+                                <td>{{ $employee->nationality }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+               <div class="card custom-card">
+                  <div class="card-header d-flex justify-content-between align-items-center">
+                      <h4 class="card-title">
+                          <i class="far fa-user" aria-hidden="true" style="color:#ffa318;"></i>&nbsp;Change of Circumstances History 
+                      </h4>
+                      <div>
+                        <!-- PDF and Excel buttons side by side -->
+                        <form method="POST" action="{{ url('employee/employee-circumstances-report-pdf') }}" class="d-inline-block">
+                            @csrf
+                            <input type="hidden" name="employee_code" value="{{ $employee->emp_code }}">
+                            <button class="btn btn-info btn-sm">
+                                <i class="fas fa-file-pdf"></i> Export to PDF
+                            </button>
+                        </form>
+                        
+                        <form method="POST" action="{{ url('employee/employee-circumstances-excel') }}" class="d-inline-block">
+                            @csrf
+                            <input type="hidden" name="employee_code" value="{{ $employee->emp_code }}">
+                            <button class="btn btn-success btn-sm">
+                                <i class="fas fa-file-excel"></i> Export to Excel
+                            </button>
+                        </form>
+                    </div>
+                    
+                  </div>
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Date of Change</th>
+                                        <th>Designation</th>
+                                        <th>Phone</th>
+                                        <th>Nationality</th>
+                                        <th>Visa Expiration</th>
+                                        <th>Passport Expiration</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($changeHistory as $change)
+                                        <tr>
+                                            <td>{{ date('d/m/Y', strtotime($change->date_change)) }}</td>
+                                            <td>{{ $change->emp_designation }}</td>
+                                            <td>{{ $change->emp_ps_phone }}</td>
+                                            <td>{{ $change->nationality }}</td>
+                                            <td>{{ $change->visa_exp_date != '1970-01-01' ? date('d/m/Y', strtotime($change->visa_exp_date)) : 'N/A' }}</td>
+                                            <td>{{ $change->pass_exp_date != '1970-01-01' ? date('d/m/Y', strtotime($change->pass_exp_date)) : 'N/A' }}</td>
+                                            <td>{{ $change->remarks ?? 'None' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Download buttons -->
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
-<!-- /Page Content -->
-@endsection
-@section('script')
-<script>
-        $('#allval').click(function(event) {  
-   
-      if(this.checked) {
-         //alert("test");
-         // Iterate each checkbox
-         $(':checkbox').each(function() {
-            this.checked = true;                        
-         });
-      } else {
-         $(':checkbox').each(function() {
-            this.checked = false;                       
-         });
-      }
-   });
-   
-</script>
 @endsection
